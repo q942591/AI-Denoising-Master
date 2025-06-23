@@ -1,13 +1,13 @@
 import { SYSTEM_CONFIG } from "~/app";
-import { getCurrentUserOrRedirect } from "~/lib/auth";
+import { getCurrentSupabaseUserOrRedirect } from "~/lib/supabase/supabase-auth";
 
 import { SignInPageClient } from "./page.client";
 
 export default async function SignInPage() {
-  await getCurrentUserOrRedirect(
+  await getCurrentSupabaseUserOrRedirect(
     undefined,
     SYSTEM_CONFIG.redirectAfterSignIn,
-    true,
+    true
   );
 
   return <SignInPageClient />;

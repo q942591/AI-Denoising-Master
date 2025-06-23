@@ -4,8 +4,11 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { SEO_CONFIG } from "~/app";
-import { CartProvider } from "~/lib/hooks/use-cart";
+import { IntlProvider } from "~/components/providers/intl-provider";
 import "~/css/globals.css";
+import { NotificationsProvider } from "~/components/providers/notifications-provider";
+import { SupabaseProvider } from "~/components/providers/SupabaseProvider";
+import { CartProvider } from "~/lib/hooks/use-cart";
 import { Footer } from "~/ui/components/footer";
 import { Header } from "~/ui/components/header/header";
 import { ThemeProvider } from "~/ui/components/theme-provider";
@@ -43,19 +46,23 @@ export default function RootLayout({
           dark:from-neutral-950 dark:to-neutral-900 dark:text-neutral-100
         `}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          disableTransitionOnChange
-          enableSystem
-        >
-          <CartProvider>
-            <Header showAuth={true} />
-            <main className={`flex min-h-screen flex-col`}>{children}</main>
-            <Footer />
-            <Toaster />
-          </CartProvider>
-        </ThemeProvider>
+        <IntlProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            disableTransitionOnChange
+            enableSystem
+          >
+            <SupabaseProvider>
+              <NotificationsProvider>
+                <Header showAuth={true} />
+                <main className={`flex min-h-screen flex-col`}>{children}</main>
+                <Footer />
+                <Toaster />
+              </NotificationsProvider>
+            </SupabaseProvider>
+          </ThemeProvider>
+        </IntlProvider>
         <SpeedInsights />
       </body>
     </html>

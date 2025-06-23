@@ -24,12 +24,7 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   if (!mounted) {
     return (
-      <Button
-        className={cn("h-9 w-9 rounded-full", className)}
-        disabled
-        size="icon"
-        variant="ghost"
-      >
+      <Button mode="icon" shape="circle" size="sm" variant="ghost">
         <Sun className="h-[1.2rem] w-[1.2rem] opacity-70" />
         <span className="sr-only">Loading theme toggle</span>
       </Button>
@@ -45,9 +40,11 @@ export function ThemeToggle({ className }: { className?: string }) {
               h-9 w-9 rounded-full bg-background transition-colors
               hover:bg-muted
             `,
-            className,
+            className
           )}
-          size="icon"
+          mode="icon"
+          shape="circle"
+          size="sm"
           variant="ghost"
         >
           <Sun
@@ -71,7 +68,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         <DropdownMenuItem
           className={cn(
             "flex cursor-pointer items-center gap-2",
-            theme === "light" && "font-medium text-primary",
+            theme === "light" && "font-medium text-primary"
           )}
           onClick={() => setTheme("light")}
         >
@@ -81,7 +78,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         <DropdownMenuItem
           className={cn(
             "flex cursor-pointer items-center gap-2",
-            theme === "dark" && "font-medium text-primary",
+            theme === "dark" && "font-medium text-primary"
           )}
           onClick={() => setTheme("dark")}
         >
@@ -91,7 +88,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         <DropdownMenuItem
           className={cn(
             "flex cursor-pointer items-center gap-2",
-            (theme === "system" || !theme) && "font-medium text-primary",
+            (theme === "system" || !theme) && "font-medium text-primary"
           )}
           onClick={() => setTheme("system")}
         >

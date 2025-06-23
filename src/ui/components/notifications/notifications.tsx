@@ -2,14 +2,14 @@ import type * as React from "react";
 
 import { Bell, Check, X } from "lucide-react";
 
-import { cn } from "~/lib/cn";
+import type { Notification } from "~/db/schema";
+
+import { cn } from "~/lib/utils";
 import { Button } from "~/ui/primitives/button";
 import {
   DropdownMenuGroup,
   DropdownMenuItem,
 } from "~/ui/primitives/dropdown-menu";
-
-import type { Notification } from "./notification-center";
 
 interface NotificationsProps {
   notifications: Notification[];
@@ -20,31 +20,37 @@ interface NotificationsProps {
 function formatTimestamp(date: Date) {
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-  if (diffInSeconds < 60) return "Just now";
+  if (diffInSeconds < 60) return "刚刚";
   if (diffInSeconds < 3600) {
     const minutes = Math.floor(diffInSeconds / 60);
-    return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
+    return `${minutes} 分钟前`;
   }
   if (diffInSeconds < 86400) {
     const hours = Math.floor(diffInSeconds / 3600);
-    return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
+    return `${hours} 小时前`;
   }
   const days = Math.floor(diffInSeconds / 86400);
-  return days === 1 ? "1 day ago" : `${days} days ago`;
+  return `${days} 天前`;
 }
 
 function getNotificationIcon(type: Notification["type"]) {
   switch (type) {
+    case "credit":
+      return <div className="h-2 w-2 rounded-full bg-purple-500" />;
     case "error":
       return <div className="h-2 w-2 rounded-full bg-red-500" />;
+    case "generation":
+      return <div className="h-2 w-2 rounded-full bg-indigo-500" />;
     case "info":
       return <div className="h-2 w-2 rounded-full bg-blue-500" />;
     case "success":
       return <div className="h-2 w-2 rounded-full bg-green-500" />;
+    case "system":
+      return <div className="h-2 w-2 rounded-full bg-gray-500" />;
     case "warning":
       return <div className="h-2 w-2 rounded-full bg-yellow-500" />;
     default:
-      return null;
+      return <div className="h-2 w-2 rounded-full bg-gray-500" />;
   }
 }
 
@@ -59,9 +65,9 @@ export const Notifications: React.FC<NotificationsProps> = ({
         className={"flex flex-col items-center justify-center py-6 text-center"}
       >
         <Bell className="mb-2 h-10 w-10 text-muted-foreground/50" />
-        <p className="text-sm font-medium">No notifications yet</p>
+        <p className="text-sm font-medium">暂无通知</p>
         <p className="text-xs text-muted-foreground">
-          When you get notifications, they'll show up here
+          当您收到通知时，它们将显示在这里
         </p>
       </div>
     );
@@ -73,7 +79,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
         <DropdownMenuItem
           className={cn(
             "flex cursor-default flex-col items-start p-0",
-            !notification.read && "bg-muted/50",
+            !notification.isRead && "bg-muted/50"
           )}
           key={notification.id}
           onSelect={(e) => e.preventDefault()}
@@ -88,7 +94,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
                   {notification.title}
                 </p>
                 <span className="text-xs text-muted-foreground">
-                  {formatTimestamp(notification.timestamp)}
+                  {formatTimestamp(new Date(notification.createdAt))}
                 </span>
               </div>
               <p className="text-xs text-muted-foreground">
@@ -96,25 +102,23 @@ export const Notifications: React.FC<NotificationsProps> = ({
               </p>
             </div>
             <div className="flex flex-shrink-0 gap-1">
-              {!notification.read && (
+              {!notification.isRead && (
                 <Button
                   className="h-6 w-6"
                   onClick={() => onMarkAsRead?.(notification.id)}
-                  size="icon"
                   variant="ghost"
                 >
                   <Check className="h-3 w-3" />
-                  <span className="sr-only">Mark as read</span>
+                  <span className="sr-only">标为已读</span>
                 </Button>
               )}
               <Button
                 className="h-6 w-6"
                 onClick={() => onDismiss?.(notification.id)}
-                size="icon"
                 variant="ghost"
               >
                 <X className="h-3 w-3" />
-                <span className="sr-only">Dismiss</span>
+                <span className="sr-only">关闭</span>
               </Button>
             </div>
           </div>

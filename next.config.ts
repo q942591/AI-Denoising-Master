@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-export default {
+const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
   images: {
     formats: ["image/avif", "image/webp"],
@@ -14,4 +14,6 @@ export default {
       { hostname: "utfs.io", protocol: "https" },
     ],
   },
-} satisfies NextConfig;
+};
+
+export default nextConfig;

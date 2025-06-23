@@ -3,9 +3,11 @@
 import type React from "react";
 
 import { Bell } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
-import { cn } from "~/lib/cn";
+import type { Notification } from "~/db/schema";
+
+import { cn } from "~/lib/utils";
 import { Button } from "~/ui/primitives/button";
 import { CardFooter } from "~/ui/primitives/card";
 import {
@@ -18,57 +20,42 @@ import {
 
 import { Notifications } from "./notifications";
 
-export interface Notification {
-  description: string;
-  id: string;
-  read: boolean;
-  timestamp: Date;
-  title: string;
-  type: "error" | "info" | "success" | "warning";
-}
-
-type NotificationCenterProps = React.HTMLAttributes<HTMLDivElement> & {
+interface NotificationCenterProps extends React.HTMLAttributes<HTMLDivElement> {
   notifications: Notification[];
-  onClearAll?: () => void;
-  onDismiss?: (id: string) => void;
-  onMarkAllAsRead?: () => void;
+  onClearAll: () => void;
+  onDismiss: (id: string) => void;
   onMarkAsRead?: (id: string) => void;
-};
+}
 
 export function NotificationCenter({
   className,
   notifications,
   onClearAll,
   onDismiss,
-  onMarkAllAsRead,
   onMarkAsRead,
   ...props
 }: NotificationCenterProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const unreadCount = notifications.filter(
+    (notification) => !notification.isRead
+  ).length;
 
-  const handleMarkAsRead = useCallback(
-    (id: string) => onMarkAsRead?.(id),
-    [onMarkAsRead],
-  );
-
-  const handleMarkAllAsRead = useCallback(
-    () => onMarkAllAsRead?.(),
-    [onMarkAllAsRead],
-  );
-
-  const handleDismiss = useCallback(
-    (id: string) => onDismiss?.(id),
-    [onDismiss],
-  );
-
-  const handleClearAll = useCallback(() => onClearAll?.(), [onClearAll]);
+  // 处理全部标为已读的函数
+  const handleMarkAllAsRead = () => {
+    if (onMarkAsRead) {
+      for (const notification of notifications) {
+        if (!notification.isRead) {
+          onMarkAsRead(notification.id);
+        }
+      }
+    }
+  };
 
   return (
     <div className={cn("relative", className)} {...props}>
       <DropdownMenu onOpenChange={setIsOpen} open={isOpen}>
         <DropdownMenuTrigger asChild>
-          <Button className="relative" size="icon" variant="ghost">
+          <Button className="relative" variant="ghost">
             <Bell className="h-5 w-5" />
             {unreadCount > 0 && (
               <span
@@ -86,26 +73,37 @@ export function NotificationCenter({
 
         <DropdownMenuContent align="end" className="w-80">
           <DropdownMenuLabel className="flex items-center justify-between">
-            <span>Notifications</span>
-            {unreadCount > 0 && (
+            <span>通知</span>
+            {unreadCount > 0 && onMarkAsRead && (
               <Button
                 className="h-auto p-0 text-xs font-normal text-primary"
                 onClick={handleMarkAllAsRead}
                 size="sm"
                 variant="ghost"
               >
-                Mark all as read
+                全部标为已读
               </Button>
             )}
           </DropdownMenuLabel>
 
           <DropdownMenuSeparator />
 
-          <Notifications
-            notifications={notifications}
-            onDismiss={handleDismiss}
-            onMarkAsRead={handleMarkAsRead}
-          />
+          {notifications.length === 0 ? (
+            <div
+              className={`
+                flex items-center justify-center p-4 text-sm
+                text-muted-foreground
+              `}
+            >
+              暂无通知
+            </div>
+          ) : (
+            <Notifications
+              notifications={notifications}
+              onDismiss={onDismiss}
+              onMarkAsRead={onMarkAsRead}
+            />
+          )}
 
           {notifications.length > 0 && (
             <>
@@ -113,11 +111,11 @@ export function NotificationCenter({
               <CardFooter className="p-2">
                 <Button
                   className="w-full"
-                  onClick={handleClearAll}
+                  onClick={onClearAll}
                   size="sm"
                   variant="outline"
                 >
-                  Clear all notifications
+                  清除所有通知
                 </Button>
               </CardFooter>
             </>

@@ -2,14 +2,14 @@ import { createSupabaseClient } from "~/lib/supabase/client";
 import { createSupabaseServerClient } from "~/lib/supabase/server";
 
 // server-side storage operations
-export const createStorageServerClient = () => {
-  const supabase = createSupabaseServerClient();
+export const createStorageServerClient = async () => {
+  const supabase = await createSupabaseServerClient();
   return supabase.storage;
 };
 
 // client-side storage operations
-export const createStorageClient = () => {
-  const supabase = createSupabaseClient();
+export const createStorageClient = async () => {
+  const supabase = await createSupabaseClient();
   return supabase.storage;
 };
 
@@ -24,7 +24,7 @@ export const uploadFile = async (
     upsert?: boolean;
   },
 ) => {
-  const storage = createStorageClient();
+  const storage = await createStorageClient();
 
   return await storage.from(bucket).upload(path, file, {
     cacheControl: options?.cacheControl || "3600",
@@ -35,13 +35,13 @@ export const uploadFile = async (
 
 // delete file from supabase storage
 export const deleteFile = async (bucket: string, path: string) => {
-  const storage = createStorageServerClient();
+  const storage = await createStorageServerClient();
   return await storage.from(bucket).remove([path]);
 };
 
 // get public url for file
-export const getPublicUrl = (bucket: string, path: string) => {
-  const storage = createStorageClient();
+export const getPublicUrl = async (bucket: string, path: string) => {
+  const storage = await createStorageClient();
   const { data } = storage.from(bucket).getPublicUrl(path);
   return data.publicUrl;
 };
@@ -52,6 +52,6 @@ export const getSignedUrl = async (
   path: string,
   expiresIn = 3600,
 ) => {
-  const storage = createStorageServerClient();
+  const storage = await createStorageServerClient();
   return await storage.from(bucket).createSignedUrl(path, expiresIn);
 };

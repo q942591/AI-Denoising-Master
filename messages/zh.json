@@ -1,0 +1,47 @@
+{
+  "Auth": {
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "退出登录",
+    "emailAddress": "邮箱地址",
+    "password": "密码",
+    "forgotPassword": "忘记密码？",
+    "signInDescription": "欢迎回来！请登录您的账户",
+    "registrationSuccess": "注册成功！请登录您的账户",
+    "signingIn": "登录中...",
+    "orContinueWith": "或者继续使用",
+    "oauthLoginFailed": "OAuth 登录失败，请重试",
+    "confirmSignOut": "确认退出登录",
+    "confirmSignOutDescription": "您确定要退出登录吗？这将清除您的登录状态。",
+    "noAccount": "还没有账户？",
+    "createAccount": "创建账户",
+    "enterDetailsToCreateAccount": "输入您的详细信息来创建账户",
+    "name": "姓名",
+    "namePlaceholder": "请输入您的姓名",
+    "creatingAccount": "创建账户中...",
+    "alreadyHaveAccount": "已经有账户？",
+    "signUpFailed": "注册失败，请重试",
+    "googleSignUpFailed": "Google 注册失败，请重试",
+    "invalidCredentials": "邮箱或密码错误",
+    "googleLoginFailed": "Google 登录失败，请重试"
+  },
+  "Nav": {
+    "home": "首页",
+    "products": "产品",
+    "dashboard": "仪表板",
+    "profile": "个人资料",
+    "settings": "设置",
+    "uploads": "上传",
+    "admin": "管理员",
+    "stats": "统计"
+  },
+  "Common": {
+    "loading": "加载中...",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "confirm": "确认",
+    "back": "返回"
+  }
+}

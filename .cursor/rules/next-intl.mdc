@@ -1,0 +1,119 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# next-intl 国际化规则
+
+## 总体架构
+
+我们使用 **next-intl** 进行国际化，但不在 URL 中添加语种后缀。语言偏好存储在 localStorage 中，默认根据浏览器语言选择，不支持时降级到英文。
+
+## 关键配置
+
+### 1. 语言配置 (src/i18n.ts)
+- 支持语言：`['en', 'zh']`
+- 默认语言：根据浏览器语言自动选择，不支持时默认英文
+- 存储方式：localStorage，key 为 'locale'
+
+### 2. 提供者组件 (src/components/providers/intl-provider.tsx)
+- 客户端动态加载翻译文件
+- 全局状态管理，通过 `window.__changeLocale` 和 `window.__currentLocale` 提供 API
+- 支持语言切换时的异步加载和错误处理
+
+### 3. 翻译文件结构
+```
+messages/
+├── zh.json
+└── en.json
+```
+
+## 开发规范
+
+### 使用翻译
+```tsx
+import { useTranslations } from 'next-intl';
+
+function Component() {
+  const t = useTranslations();
+  
+  return (
+    <div>
+      <h1>{t('Auth.signIn')}</h1>
+      <p>{t('Nav.home')}</p>
+    </div>
+  );
+}
+```
+
+### 翻译键命名规范
+- 使用 PascalCase 分组：`Auth.signIn`、`Nav.home`、`Common.save`
+- 保持语义化：描述功能而非位置
+- 分组结构：
+  - `Auth.*` - 认证相关
+  - `Nav.*` - 导航相关  
+  - `Common.*` - 通用操作
+  - `Form.*` - 表单相关
+  - `Error.*` - 错误信息
+
+### 语言切换
+使用 `LanguageToggle` 组件：
+- 自动检测当前语言状态
+- 支持异步切换
+- 本地存储持久化
+
+### 添加新翻译
+1. 在 `messages/zh.json` 和 `messages/en.json` 中添加对应的 key-value
+2. 保持两个文件的 key 结构一致
+3. 中文为主要语言，英文为备选语言
+
+## 最佳实践
+
+### 1. 组件内使用
+- 始终使用 `useTranslations()` 而非直接访问翻译对象
+- 避免在组件外层使用翻译（如 constants 文件）
+
+### 2. 动态内容
+```tsx
+// 正确：在组件内部动态获取
+const t = useTranslations();
+const dynamicMessage = t('Common.welcome', { name: user.name });
+
+// 错误：在组件外部静态定义
+const MESSAGES = { welcome: t('Common.welcome') }; // ❌
+```
+
+### 3. 条件翻译
+```tsx
+const t = useTranslations();
+const message = isError 
+  ? t('Error.loginFailed') 
+  : t('Auth.loginSuccess');
+```
+
+### 4. 服务端渲染注意事项
+- 初次渲染使用默认语言，避免水合错误
+- 语言切换仅在客户端进行
+- 使用 Loading 状态处理异步语言加载
+
+## 错误处理
+
+### 1. 翻译文件加载失败
+- 自动降级到英文
+- 控制台输出错误日志
+- 保持应用可用性
+
+### 2. localStorage 不可用
+- 静默处理，使用内存状态
+- 降级到浏览器语言检测
+
+### 3. 缺失翻译 key
+- next-intl 会显示 key 本身作为降级
+- 开发环境会在控制台警告
+
+## 注意事项
+
+- 不要在 next.config.ts 中配置 i18n（我们不使用路由模式）
+- 语言切换后会重新挂载整个应用（通过 IntlProvider）
+- 翻译文件采用 JSON 格式，支持嵌套对象结构
+- 所有用户可见文本都应该通过翻译系统处理

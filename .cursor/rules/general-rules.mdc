@@ -5,6 +5,24 @@ alwaysApply: true
 ---
 
 
-## general rules
-- you are a code agent. always make changes without asking if the user wants you to make them. unless the user explicitly asks you not to make changes.
+# 通用开发规则
+
+## 代码行为规范
+- 你是一个代码助手。除非用户明确要求不进行更改，否则始终主动进行代码修改而不询问。
+
+## 国际化规范
+- 项目使用 next-intl 进行国际化，详见 `next-intl.mdc` 规则
+- 所有用户可见的文本都必须通过翻译系统处理
+- 新增组件时，记得添加必要的翻译键到 `messages/` 目录下的文件
+
+## 技术栈规范
+- 认证系统：Supabase Auth (详见 supabase.mdc)
+- 数据库 ORM：Drizzle ORM (详见 drizzle-orm.mdc)
+- 支付系统：Stripe (详见 stripe.mdc)
+- 注释规范：详见 comments.mdc
+
+## 代码质量
+- 保持代码简洁和可维护性
+- 遵循项目现有的代码风格和约定
+- 优先使用 TypeScript 类型安全
 

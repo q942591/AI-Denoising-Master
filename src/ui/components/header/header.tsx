@@ -1,17 +1,18 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { SEO_CONFIG } from "~/app";
-import { useCurrentUser } from "~/lib/auth-client";
+import { useSupabase } from "~/components/providers/SupabaseProvider";
 import { cn } from "~/lib/cn";
-import { Cart } from "~/ui/components/cart";
 import { Button } from "~/ui/primitives/button";
 import { Skeleton } from "~/ui/primitives/skeleton";
 
+import { LanguageToggle } from "../language-toggle";
 import { NotificationsWidget } from "../notifications/notifications-widget";
 import { ThemeToggle } from "../theme-toggle";
 import { HeaderUserDropdown } from "./header-user";
@@ -23,20 +24,21 @@ interface HeaderProps {
 
 export function Header({ showAuth = true }: HeaderProps) {
   const pathname = usePathname();
-  const { isPending, user } = useCurrentUser();
+  const { isLoading, user } = useSupabase();
+  const t = useTranslations();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const mainNavigation = [
-    { href: "/", name: "Home" },
-    { href: "/products", name: "Products" },
+    { href: "/", name: t("Nav.home") },
+    { href: "/products", name: t("Nav.products") },
   ];
 
   const dashboardNavigation = [
-    { href: "/dashboard/stats", name: "Stats" },
-    { href: "/dashboard/profile", name: "Profile" },
-    { href: "/dashboard/settings", name: "Settings" },
-    { href: "/dashboard/uploads", name: "Uploads" },
-    { href: "/admin/summary", name: "Admin" },
+    { href: "/dashboard/stats", name: t("Nav.stats") },
+    { href: "/dashboard/profile", name: t("Nav.profile") },
+    { href: "/dashboard/settings", name: t("Nav.settings") },
+    { href: "/dashboard/uploads", name: t("Nav.uploads") },
+    { href: "/admin/summary", name: t("Nav.admin") },
   ];
 
   const isDashboard =
@@ -68,7 +70,7 @@ export function Header({ showAuth = true }: HeaderProps) {
                     `
                       bg-gradient-to-r from-primary to-primary/70 bg-clip-text
                       tracking-tight text-transparent
-                    `,
+                    `
                 )}
               >
                 {SEO_CONFIG.name}
@@ -81,7 +83,7 @@ export function Header({ showAuth = true }: HeaderProps) {
               `}
             >
               <ul className="flex items-center gap-6">
-                {isPending
+                {isLoading
                   ? Array.from({ length: navigation.length }).map((_, i) => (
                       <li key={i}>
                         <Skeleton className="h-6 w-20" />
@@ -102,7 +104,7 @@ export function Header({ showAuth = true }: HeaderProps) {
                               `,
                               isActive
                                 ? "font-semibold text-primary"
-                                : "text-muted-foreground",
+                                : "text-muted-foreground"
                             )}
                             href={item.href}
                           >
@@ -116,14 +118,7 @@ export function Header({ showAuth = true }: HeaderProps) {
           </div>
 
           <div className="flex items-center gap-4">
-            {!isDashboard &&
-              (isPending ? (
-                <Skeleton className={`h-9 w-9 rounded-full`} />
-              ) : (
-                <Cart />
-              ))}
-
-            {isPending ? (
+            {isLoading ? (
               <Skeleton className="h-9 w-9 rounded-full" />
             ) : (
               <NotificationsWidget />
@@ -139,29 +134,33 @@ export function Header({ showAuth = true }: HeaderProps) {
                 {user ? (
                   <HeaderUserDropdown
                     isDashboard={!!isDashboard}
-                    userEmail={user.email}
-                    userImage={user.image}
-                    userName={user.name}
+                    userEmail={user.email || ""}
+                    userImage={user.user_metadata?.avatar_url}
+                    userName={
+                      user.user_metadata?.name || user.user_metadata?.full_name
+                    }
                   />
-                ) : isPending ? (
+                ) : isLoading ? (
                   <Skeleton className="h-10 w-32" />
                 ) : (
                   <div className="flex items-center gap-2">
                     <Link href="/auth/sign-in">
                       <Button size="sm" variant="ghost">
-                        Log in
+                        {t("Auth.signIn")}
                       </Button>
                     </Link>
                     <Link href="/auth/sign-up">
-                      <Button size="sm">Sign up</Button>
+                      <Button size="sm">{t("Auth.signUp")}</Button>
                     </Link>
                   </div>
                 )}
               </div>
             )}
 
+            <LanguageToggle />
+
             {!isDashboard &&
-              (isPending ? (
+              (isLoading ? (
                 <Skeleton className={`h-9 w-9 rounded-full`} />
               ) : (
                 <ThemeToggle />
@@ -171,7 +170,6 @@ export function Header({ showAuth = true }: HeaderProps) {
             <Button
               className="md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              size="icon"
               variant="ghost"
             >
               {mobileMenuOpen ? (
@@ -188,7 +186,7 @@ export function Header({ showAuth = true }: HeaderProps) {
       {mobileMenuOpen && (
         <div className="md:hidden">
           <div className="space-y-1 border-b px-4 py-3">
-            {isPending
+            {isLoading
               ? Array.from({ length: navigation.length }).map((_, i) => (
                   <div className="py-2" key={i}>
                     <Skeleton className="h-6 w-32" />
@@ -208,7 +206,7 @@ export function Header({ showAuth = true }: HeaderProps) {
                           : `
                             text-foreground
                             hover:bg-muted/50 hover:text-primary
-                          `,
+                          `
                       )}
                       href={item.href}
                       key={item.name}
@@ -230,7 +228,7 @@ export function Header({ showAuth = true }: HeaderProps) {
                 href="/auth/sign-in"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Log in
+                {t("Auth.signIn")}
               </Link>
               <Link
                 className={`
@@ -241,7 +239,7 @@ export function Header({ showAuth = true }: HeaderProps) {
                 href="/auth/sign-up"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Sign up
+                {t("Auth.signUp")}
               </Link>
             </div>
           )}

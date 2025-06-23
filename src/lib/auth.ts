@@ -12,7 +12,7 @@ export type UserDbType = User;
 
 // get current user from supabase
 export const getCurrentUser = async (): Promise<null | UserDbType> => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   try {
     const {
@@ -59,7 +59,7 @@ export const getCurrentUserOrRedirect = async (
 
 // sign out function
 export const signOut = async () => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
   redirect("/auth/sign-in");
 };

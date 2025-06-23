@@ -1,10 +1,20 @@
-export * from "./uploads/relations";
-export * from "./uploads/tables";
-export * from "./uploads/types";
+// 积分系统
+export * from "./credits/relations";
+export * from "./credits/tables";
+export * from "./credits/types";
+
+// 通知系统
+export * from "./notifications/relations";
+export * from "./notifications/tables";
+export * from "./notifications/types";
 
 export * from "./payments/relations";
 export * from "./payments/tables";
 export * from "./payments/types";
+
+export * from "./uploads/relations";
+export * from "./uploads/tables";
+export * from "./uploads/types";
 
 // relations
 export * from "./users/relations";

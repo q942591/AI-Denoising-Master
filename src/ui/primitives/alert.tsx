@@ -1,6 +1,7 @@
+import type * as React from "react";
+
 import { cva, type VariantProps } from "class-variance-authority";
 import { X } from "lucide-react";
-import type * as React from "react";
 
 import { cn } from "~/lib/utils";
 import { Button } from "~/ui/primitives/button";
@@ -14,8 +15,7 @@ const alertVariants = cva(
     compoundVariants: [
       {
         appearance: "solid",
-        className:
-          `
+        className: `
             bg-muted text-foreground
             *:data-alert-close:text-foreground
           `,
@@ -23,8 +23,7 @@ const alertVariants = cva(
       },
       {
         appearance: "solid",
-        className:
-          `
+        className: `
             bg-primary text-primary-foreground
             *:data-alert-close:text-primary-foreground
           `,
@@ -32,8 +31,7 @@ const alertVariants = cva(
       },
       {
         appearance: "solid",
-        className:
-          `
+        className: `
             bg-destructive text-destructive-foreground
             *:data-alert-close:text-destructive-foreground
           `,
@@ -65,8 +63,7 @@ const alertVariants = cva(
       },
       {
         appearance: "solid",
-        className:
-          `
+        className: `
             bg-zinc-950 text-white
             *:data-alert-close:text-white
             dark:bg-zinc-300 dark:text-black dark:*:data-alert-close:text-black
@@ -76,8 +73,7 @@ const alertVariants = cva(
 
       {
         appearance: "outline",
-        className:
-          `
+        className: `
             border border-border bg-background text-foreground
             *:data-alert-close:text-foreground
           `,
@@ -85,8 +81,7 @@ const alertVariants = cva(
       },
       {
         appearance: "outline",
-        className:
-          `
+        className: `
             border border-border bg-background text-primary
             *:data-alert-close:text-foreground
           `,
@@ -94,8 +89,7 @@ const alertVariants = cva(
       },
       {
         appearance: "outline",
-        className:
-          `
+        className: `
             border border-border bg-background text-destructive
             *:data-alert-close:text-foreground
           `,
@@ -103,8 +97,7 @@ const alertVariants = cva(
       },
       {
         appearance: "outline",
-        className:
-          `
+        className: `
             border border-border bg-background text-green-500
             *:data-alert-close:text-foreground
           `,
@@ -112,8 +105,7 @@ const alertVariants = cva(
       },
       {
         appearance: "outline",
-        className:
-          `
+        className: `
             border border-border bg-background text-violet-600
             *:data-alert-close:text-foreground
           `,
@@ -121,8 +113,7 @@ const alertVariants = cva(
       },
       {
         appearance: "outline",
-        className:
-          `
+        className: `
             border border-border bg-background text-yellow-500
             *:data-alert-close:text-foreground
           `,
@@ -130,8 +121,7 @@ const alertVariants = cva(
       },
       {
         appearance: "outline",
-        className:
-          `
+        className: `
             border border-border bg-background text-foreground
             *:data-alert-close:text-foreground
           `,
@@ -140,8 +130,7 @@ const alertVariants = cva(
 
       {
         appearance: "stroke",
-        className:
-          `
+        className: `
             border border-border bg-background
             [&>div:first-of-type>svg]:text-foreground
           `,
@@ -149,8 +138,7 @@ const alertVariants = cva(
       },
       {
         appearance: "stroke",
-        className:
-          `
+        className: `
             border border-border bg-background
             [&>div:first-of-type>svg]:text-primary
           `,
@@ -158,8 +146,7 @@ const alertVariants = cva(
       },
       {
         appearance: "stroke",
-        className:
-          `
+        className: `
             border border-border bg-background
             [&>div:first-of-type>svg]:text-destructive
           `,
@@ -167,8 +154,7 @@ const alertVariants = cva(
       },
       {
         appearance: "stroke",
-        className:
-          `
+        className: `
             border border-border bg-background
             [&>div:first-of-type>svg]:text-green-500
           `,
@@ -176,8 +162,7 @@ const alertVariants = cva(
       },
       {
         appearance: "stroke",
-        className:
-          `
+        className: `
             border border-border bg-background
             [&>div:first-of-type>svg]:text-violet-600
           `,
@@ -185,8 +170,7 @@ const alertVariants = cva(
       },
       {
         appearance: "stroke",
-        className:
-          `
+        className: `
             border border-border bg-background
             [&>div:first-of-type>svg]:text-yellow-500
           `,
@@ -194,8 +178,7 @@ const alertVariants = cva(
       },
       {
         appearance: "stroke",
-        className:
-          `
+        className: `
             border border-border bg-background
             [&>div:first-of-type>svg]:text-foreground
           `,
@@ -209,8 +192,7 @@ const alertVariants = cva(
       },
       {
         appearance: "light",
-        className:
-          `
+        className: `
             border border-primary/10 bg-primary/5 text-foreground
             [&>div:first-of-type>svg]:text-primary
           `,
@@ -218,8 +200,7 @@ const alertVariants = cva(
       },
       {
         appearance: "light",
-        className:
-          `
+        className: `
             border border-destructive/10 bg-destructive/5 text-foreground
             [&>div:first-of-type>svg]:text-destructive
           `,
@@ -227,8 +208,7 @@ const alertVariants = cva(
       },
       {
         appearance: "light",
-        className:
-          `
+        className: `
             border border-green-200 bg-green-50 text-foreground
             dark:border-green-950/50 dark:bg-green-950/30
             [&>div:first-of-type>svg]:text-green-500
@@ -237,8 +217,7 @@ const alertVariants = cva(
       },
       {
         appearance: "light",
-        className:
-          `
+        className: `
             border border-violet-200 bg-violet-50 text-foreground
             dark:border-violet-950/50 dark:bg-violet-950/30
             [&>div:first-of-type>svg]:text-violet-600
@@ -247,8 +226,7 @@ const alertVariants = cva(
       },
       {
         appearance: "light",
-        className:
-          `
+        className: `
             border border-yellow-200 bg-yellow-50 text-foreground
             dark:border-yellow-950/50 dark:bg-yellow-950/30
             [&>div:first-of-type>svg]:text-yellow-500
@@ -258,48 +236,48 @@ const alertVariants = cva(
 
       {
         className: "[&>div:first-of-type>svg]:text-primary",
-        icon: 'primary',
+        icon: "primary",
         variant: "mono",
       },
       {
         className: "[&>div:first-of-type>svg]:text-yellow-500",
-        icon: 'warning',
+        icon: "warning",
         variant: "mono",
       },
       {
         className: "[&>div:first-of-type>svg]:text-green-500",
-        icon: 'success',
+        icon: "success",
         variant: "mono",
       },
       {
         className: "[&>div:first-of-type>svg]:text-destructive",
-        icon: 'destructive',
+        icon: "destructive",
         variant: "mono",
       },
       {
-        className: "[&>div:first-of-type>svg]:text-violet-600',
-        icon: 'info',
-        variant: 'mono",
+        className: "[&>div:first-of-type>svg]:text-violet-600",
+        icon: "info",
+        variant: "mono",
       },
     ],
     defaultVariants: {
-      appearance: 'solid',
-      size: 'md',
+      appearance: "solid",
+      size: "md",
       variant: "secondary",
     },
     variants: {
       appearance: {
-        light: '',
-        outline: '",
-        solid: '',
-        stroke: 'text-foreground",
+        light: "",
+        outline: "",
+        solid: "",
+        stroke: "text-foreground",
       },
       icon: {
-        destructive: '',
-        info: '',
-        primary: '',
-        success: '',
-        warning: '',
+        destructive: "",
+        info: "",
+        primary: "",
+        success: "",
+        warning: "",
       },
       size: {
         lg: `
@@ -321,16 +299,16 @@ const alertVariants = cva(
         `,
       },
       variant: {
-        destructive: "',
-        info: '',
-        mono: '',
-        primary: '',
-        secondary: "',
-        success: '',
-        warning: '',
+        destructive: "",
+        info: "",
+        mono: "",
+        primary: "",
+        secondary: "",
+        success: "",
+        warning: "",
       },
     },
-  },
+  }
 );
 
 interface AlertIconProps
@@ -359,7 +337,7 @@ function Alert({
     <div
       className={cn(
         alertVariants({ appearance, icon, size, variant }),
-        className,
+        className
       )}
       data-slot="alert"
       role="alert"
@@ -399,7 +377,7 @@ function AlertContent({
           space-y-2
           [&_[data-slot=alert-title]]:font-semibold
         `,
-        className,
+        className
       )}
       data-slot="alert-content"
       {...props}
@@ -418,7 +396,7 @@ function AlertDescription({
         text-sm
         [&_p]:mb-2 [&_p]:leading-relaxed
       `,
-        className,
+        className
       )}
       data-slot="alert-description"
       {...props}

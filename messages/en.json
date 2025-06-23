@@ -1,0 +1,47 @@
+{
+  "Auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "signInDescription": "Welcome back! Please sign in to your account",
+    "registrationSuccess": "Registration successful! Please sign in to your account",
+    "signingIn": "Signing in...",
+    "orContinueWith": "Or continue with",
+    "oauthLoginFailed": "OAuth login failed, please try again",
+    "confirmSignOut": "Confirm Sign Out",
+    "confirmSignOutDescription": "Are you sure you want to sign out? This will clear your login session.",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create Account",
+    "enterDetailsToCreateAccount": "Enter your details to create your account",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "creatingAccount": "Creating Account...",
+    "alreadyHaveAccount": "Already have an account?",
+    "signUpFailed": "Sign up failed, please try again",
+    "googleSignUpFailed": "Google sign up failed, please try again",
+    "invalidCredentials": "Invalid email or password",
+    "googleLoginFailed": "Google login failed, please try again"
+  },
+  "Nav": {
+    "home": "Home",
+    "products": "Products",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "settings": "Settings",
+    "uploads": "Uploads",
+    "admin": "Admin",
+    "stats": "Stats"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "back": "Back"
+  }
+}
