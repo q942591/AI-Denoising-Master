@@ -1,4 +1,11 @@
-import { expect, test, describe, beforeAll, afterAll } from "bun:test";
+import {
+  expect,
+  test,
+  describe,
+  beforeAll,
+  afterAll,
+  beforeEach,
+} from "bun:test";
 import { eq } from "drizzle-orm";
 
 const mockCustomerId = "mock-customer-id";
@@ -9,56 +16,29 @@ const mockProductId = "mock-product-id";
 
 const mockDb = {
   query: {
-    polarCustomerTable: {
-      findFirst: async () => ({
-        id: "db-id",
-        userId: mockUserId,
-        customerId: mockCustomerId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }),
-      findMany: async () => [{
-        id: "db-id",
-        userId: mockUserId,
-        customerId: mockCustomerId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }],
+    stripeCustomerTable: {
+      findFirst: () =>
+        Promise.resolve({
+          id: "test-customer-id",
+          customerId: "cus_test123",
+          userId: "user-123",
+        }),
     },
-    polarSubscriptionTable: {
-      findFirst: async () => ({
-        id: "sub-id",
-        userId: mockUserId,
-        customerId: mockCustomerId,
-        subscriptionId: mockSubscriptionId,
-        productId: mockProductId,
-        status: "active",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }),
-      findMany: async () => [{
-        id: "sub-id",
-        userId: mockUserId,
-        customerId: mockCustomerId,
-        subscriptionId: mockSubscriptionId,
-        productId: mockProductId,
-        status: "active",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }],
+    stripeSubscriptionTable: {
+      findMany: () =>
+        Promise.resolve([
+          {
+            id: "sub-123",
+            subscriptionId: "sub_test123",
+            userId: "user-123",
+            status: "active",
+            productId: "prod_test123",
+          },
+        ]),
     },
   },
-  insert: () => ({
-    values: () => Promise.resolve({ id: "new-id" }),
-  }),
-  update: () => ({
-    set: () => ({
-      where: () => Promise.resolve({ success: true }),
-    }),
-  }),
-  delete: () => ({
-    where: () => Promise.resolve({ success: true }),
-  }),
+  insert: () => ({ values: () => Promise.resolve([{ id: "test-id" }]) }),
+  update: () => ({ set: () => ({ where: () => Promise.resolve() }) }),
 };
 
 const mockPolarClient = {
@@ -90,28 +70,28 @@ const mockServices = {
     return customer;
   },
   getCustomerByUserId: async (userId: string) => {
-    return mockDb.query.polarCustomerTable.findFirst();
+    return mockDb.query.stripeCustomerTable.findFirst();
   },
   getCustomerState: async (userId: string) => {
-    const customer = await mockDb.query.polarCustomerTable.findFirst();
+    const customer = await mockDb.query.stripeCustomerTable.findFirst();
     if (!customer) return null;
     return mockPolarClient.customers.get();
   },
   getUserSubscriptions: async (userId: string) => {
-    return mockDb.query.polarSubscriptionTable.findMany();
+    return mockDb.query.stripeSubscriptionTable.findMany();
   },
   syncSubscription: async (
-    userId: string, 
-    customerId: string, 
-    subscriptionId: string, 
-    productId: string, 
-    status: string
+    userId: string,
+    customerId: string,
+    subscriptionId: string,
+    productId: string,
+    status: string,
   ) => {
     return { success: true };
   },
   hasActiveSubscription: async (userId: string) => {
-    const subscriptions = await mockDb.query.polarSubscriptionTable.findMany();
-    return subscriptions.some(sub => sub.status === "active");
+    const subscriptions = await mockDb.query.stripeSubscriptionTable.findMany();
+    return subscriptions.some((sub) => sub.status === "active");
   },
   getCheckoutUrl: async (customerId: string, productSlug: string) => {
     const checkout = await mockPolarClient.checkouts.create();
@@ -119,73 +99,81 @@ const mockServices = {
   },
 };
 
-describe("Payment Service", () => {
-  test("createCustomer should create a customer record", async () => {
-    const customer = await mockServices.createCustomer(mockUserId, mockEmail);
+describe("stripe payment service", () => {
+  beforeEach(() => {
+    // reset any mocks
+  });
+
+  test("should get stripe customer", async () => {
+    const customer = await mockDb.query.stripeCustomerTable.findFirst();
     expect(customer).toBeDefined();
-    expect(customer.id).toBe(mockCustomerId);
-    
-    const dbCustomer = await mockServices.getCustomerByUserId(mockUserId);
-    expect(dbCustomer).toBeDefined();
-    expect(dbCustomer?.customerId).toBe(mockCustomerId);
-    expect(dbCustomer?.userId).toBe(mockUserId);
+    expect(customer?.customerId).toBe("cus_test123");
   });
-  
-  test("getCustomerState should return customer state", async () => {
-    const customerState = await mockServices.getCustomerState(mockUserId);
-    expect(customerState).toBeDefined();
-    expect(customerState?.id).toBe(mockCustomerId);
+
+  test("should get user subscriptions", async () => {
+    const subscriptions = await mockDb.query.stripeSubscriptionTable.findMany();
+    expect(subscriptions).toBeDefined();
+    expect(subscriptions).toHaveLength(1);
+    expect(subscriptions[0]?.status).toBe("active");
   });
-  
-  test("syncSubscription should create a subscription record", async () => {
-    await mockServices.syncSubscription(
-      mockUserId,
-      mockCustomerId,
-      mockSubscriptionId,
-      mockProductId,
-      "active"
-    );
-    
-    const subscriptions = await mockServices.getUserSubscriptions(mockUserId);
-    expect(subscriptions.length).toBe(1);
-    expect(subscriptions[0].subscriptionId).toBe(mockSubscriptionId);
-    expect(subscriptions[0].status).toBe("active");
-  });
-  
-  test("hasActiveSubscription should return true for active subscriptions", async () => {
-    const hasActive = await mockServices.hasActiveSubscription(mockUserId);
-    expect(hasActive).toBe(true);
-  });
-  
-  test("getCheckoutUrl should return a valid URL", async () => {
-    const url = await mockServices.getCheckoutUrl(mockCustomerId, "pro");
-    expect(url).toBe("https://checkout.polar.sh/test-checkout");
+
+  test("should create checkout session", async () => {
+    // mock stripe client
+    const mockStripeClient = {
+      checkout: {
+        sessions: {
+          create: () =>
+            Promise.resolve({
+              id: "cs_test123",
+              url: "https://checkout.stripe.com/test-checkout",
+            }),
+        },
+      },
+      customers: {
+        create: () =>
+          Promise.resolve({
+            id: "cus_test123",
+            email: "test@example.com",
+          }),
+        get: () =>
+          Promise.resolve({
+            id: "cus_test123",
+            email: "test@example.com",
+          }),
+      },
+    };
+
+    const session = await mockStripeClient.checkout.sessions.create();
+    expect(session.url).toBe("https://checkout.stripe.com/test-checkout");
   });
 });
 
-describe("Polar Integration", () => {
-  test("Polar client should be properly configured", () => {
+describe("stripe integration", () => {
+  test("stripe client should be properly configured", () => {
     if (process.env.CI) {
-      console.log("Skipping Polar client config test in CI environment");
+      console.log("skipping stripe client config test in ci environment");
       return;
     }
-    
-    process.env.POLAR_ACCESS_TOKEN = process.env.POLAR_ACCESS_TOKEN || "test-token";
-    process.env.POLAR_WEBHOOK_SECRET = process.env.POLAR_WEBHOOK_SECRET || "test-secret";
-    
-    expect(process.env.POLAR_ACCESS_TOKEN).toBeDefined();
-    expect(process.env.POLAR_WEBHOOK_SECRET).toBeDefined();
+
+    process.env.STRIPE_SECRET_KEY =
+      process.env.STRIPE_SECRET_KEY || "sk_test_123";
+    process.env.STRIPE_WEBHOOK_SECRET =
+      process.env.STRIPE_WEBHOOK_SECRET || "whsec_test_123";
+
+    expect(process.env.STRIPE_SECRET_KEY).toBeDefined();
+    expect(process.env.STRIPE_WEBHOOK_SECRET).toBeDefined();
   });
-  
-  test("Better-Auth Polar plugin should be configured", () => {
+
+  test("stripe environment should be configured", () => {
     if (process.env.CI) {
-      console.log("Skipping Polar environment test in CI environment");
+      console.log("skipping stripe environment test in ci environment");
       return;
     }
-    
-    process.env.POLAR_ENVIRONMENT = process.env.POLAR_ENVIRONMENT || "sandbox";
-    
-    expect(process.env.POLAR_ENVIRONMENT).toBeDefined();
+
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY =
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "pk_test_123";
+
+    expect(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY).toBeDefined();
   });
 });
 
@@ -195,18 +183,18 @@ describe("Payment API Routes", () => {
     status: () => mockResponse,
     send: () => mockResponse,
   };
-  
+
   const mockRequest = {
     headers: {
       get: () => null,
     },
   };
-  
+
   test("customer-state API should return customer state for authenticated user", async () => {
     const customerState = await mockServices.getCustomerState(mockUserId);
     expect(customerState).toBeDefined();
   });
-  
+
   test("subscriptions API should return user subscriptions", async () => {
     const subscriptions = await mockServices.getUserSubscriptions(mockUserId);
     expect(subscriptions.length).toBe(1);

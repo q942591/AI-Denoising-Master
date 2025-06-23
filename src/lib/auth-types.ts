@@ -1,6 +1,7 @@
-import type { User as UserDbInfer } from "~/db/schema/users/types";
+import type { User } from "@supabase/supabase-js";
 
-export type UserDbType = UserDbInfer;
+// user type from supabase
+export type UserDbType = User;
 
 // import type { User as UserRawInfer } from "better-auth";
 // export type UserRawType = UserRawInfer;

@@ -1,0 +1,100 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# stripe integration rules
+
+this project uses stripe for payment processing instead of polar.
+
+## environment variables
+
+the following environment variables must be configured:
+
+```bash
+# stripe configuration (required)
+STRIPE_SECRET_KEY=sk_test_xxx  # or sk_live_xxx for production
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx  # or pk_live_xxx for production
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+
+# stripe price ids for products (optional, used in stripe checkout component)
+STRIPE_PRO_MONTHLY_PRICE_ID=price_xxx
+STRIPE_PRO_YEARLY_PRICE_ID=price_xxx
+STRIPE_PREMIUM_MONTHLY_PRICE_ID=price_xxx
+STRIPE_PREMIUM_YEARLY_PRICE_ID=price_xxx
+```
+
+## stripe configuration
+
+- `src/lib/stripe/config.ts` - server-side stripe configuration
+- `src/lib/stripe/client.ts` - client-side stripe configuration
+
+## database schema
+
+- customer records: `stripeCustomerTable` (replaces `polarCustomerTable`)
+- subscription records: `stripeSubscriptionTable` (replaces `polarSubscriptionTable`)
+
+## payment service functions
+
+located in `src/api/payments/service.ts`:
+
+- `getStripeCustomer(userId)` - get customer by user id
+- `getCustomerState(userId)` - get customer from stripe api
+- `getUserSubscriptions(userId)` - get user subscriptions
+- `createStripeCustomer(userId, email, name?)` - create new stripe customer
+- `createCheckoutSession(userId, priceId, successUrl, cancelUrl)` - create checkout session
+- `createBillingPortalSession(userId, returnUrl)` - create billing portal session
+
+## api routes
+
+- `POST /api/stripe/checkout` - create checkout session
+- `POST /api/stripe/billing-portal` - create billing portal session
+- `POST /api/stripe/webhook` - handle stripe webhooks (not implemented yet)
+- `GET /api/payments/subscriptions` - get user subscriptions
+- `GET /api/payments/customer-state` - get customer state
+
+## frontend components
+
+- `StripeCheckout` - checkout component with pricing plans
+- use in place of the old `PaymentForm` component
+
+## webhook handling
+
+stripe webhooks should be configured to point to `/api/stripe/webhook`. important events to handle:
+
+- `customer.subscription.created`
+- `customer.subscription.updated` 
+- `customer.subscription.deleted`
+- `invoice.payment_succeeded`
+- `invoice.payment_failed`
+
+## stripe dashboard setup
+
+1. create products and prices in stripe dashboard
+2. configure webhook endpoints
+3. set up billing portal configuration
+4. configure payment methods and currencies
+
+## migration notes
+
+this project was migrated from polar to stripe. key changes:
+
+- table names: `polar_*` → `stripe_*`
+- api structure: polar sdk → stripe api
+- checkout flow: polar checkout → stripe checkout sessions
+- customer portal: polar portal → stripe billing portal
+
+## testing
+
+use stripe test keys and test cards for development:
+- test card: 4242 4242 4242 4242
+- test webhooks: use stripe cli for local testing
+
+## best practices
+
+1. always use stripe's secure checkout sessions instead of handling card details directly
+2. validate webhooks with stripe signatures
+3. use idempotency keys for critical operations
+4. store minimal customer data - rely on stripe's customer portal for self-service
+5. handle edge cases like failed payments, subscription cancellations, etc.
+6. use stripe's test mode for development and staging environments

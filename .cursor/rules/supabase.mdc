@@ -1,0 +1,92 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# how to work with supabase (llm guide)
+
+## key files
+
+- client config: `~/lib/supabase/client.ts` (browser client)
+- server config: `~/lib/supabase/server.ts` (server client)
+- storage: `~/lib/supabase/storage.ts` (file upload/storage helpers)
+- auth: `~/lib/auth.ts` (auth helpers)
+- auth client: `~/lib/auth-client.ts` (hooks and client auth)
+- middleware: `middleware.ts` (session refresh)
+- callback: `~/app/auth/callback/route.ts` (oauth callback)
+- upload api: `~/app/api/upload/route.ts` (file upload endpoint)
+- file upload component: `~/ui/components/file-upload.tsx` (drag & drop upload ui)
+
+## core concepts
+
+- client vs server: use `createSupabaseClient()` in client components, `createSupabaseServerClient()` in server components
+- auth: supabase handles all auth (sign up, sign in, oauth, etc.) through its own api
+- session management: middleware refreshes sessions, hooks provide client-side state
+- database: use supabase client for all database operations
+- storage: supabase storage for file uploads (images, videos, documents, etc.)
+- realtime: supabase provides realtime subscriptions for data changes
+
+## auth patterns
+
+- server-side: use `getCurrentUser()` or `getCurrentUserOrRedirect()` in server components
+- client-side: use `useCurrentUser()` or `useCurrentUserOrRedirect()` hooks
+- sign in: use `signIn(email, password)` or `signInWithProvider('github'|'google')`
+- sign up: use `signUp(email, password)`
+- sign out: use `signOut()`
+
+## database operations
+
+```typescript
+// select
+const { data, error } = await supabase.from('table').select('*')
+
+// insert
+const { data, error } = await supabase.from('table').insert({ ... })
+
+// update
+const { data, error } = await supabase.from('table').update({ ... }).eq('id', id)
+
+// delete
+const { data, error } = await supabase.from('table').delete().eq('id', id)
+```
+
+## storage operations
+
+```typescript
+// upload file
+const { data, error } = await uploadFile('bucket', 'path/file.jpg', file)
+
+// delete file
+const { data, error } = await deleteFile('bucket', 'path/file.jpg')
+
+// get public url
+const publicUrl = getPublicUrl('bucket', 'path/file.jpg')
+
+// get signed url (private files)
+const { data, error } = await getSignedUrl('bucket', 'path/file.jpg', 3600)
+```
+
+## environment variables
+
+- `NEXT_PUBLIC_SUPABASE_URL`: your supabase project url
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: your supabase anon/public key
+
+## storage setup
+
+- create a storage bucket in supabase dashboard (e.g., "uploads")
+- set bucket policies for public/private access
+- configure RLS (row level security) if needed
+- for public files, make bucket public in settings
+
+## tips
+
+- always check for errors in supabase responses
+- use server components for initial data fetching when possible
+- use client components with hooks for interactive auth state
+- oauth providers need to be configured in supabase dashboard
+- middleware ensures sessions stay fresh across page loads
+- callback route handles oauth redirects back to your app
+- storage files are organized by user id and file type (e.g., `userId/images/fileId.jpg`)
+- use `FileUpload` component for drag & drop file uploads
+- validate file types and sizes before uploading
+- files in public buckets are accessible via direct urls

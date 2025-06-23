@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import type { MediaUpload } from "~/db/schema/uploads/types";
 import type { GalleryMediaItem } from "~/ui/components/blocks/bento-media-gallery";
 
-import { UploadButton } from "~/lib/uploadthing";
+import { FileUpload } from "~/ui/components/file-upload";
 import { BentoMediaGallery } from "~/ui/components/blocks/bento-media-gallery";
 import { Alert, AlertDescription, AlertTitle } from "~/ui/primitives/alert";
 import { Button } from "~/ui/primitives/button";
@@ -38,7 +38,9 @@ export default function UploadsPageClient() {
         desc: `Uploaded on ${new Date(upload.createdAt).toLocaleDateString()}`,
         id: upload.id,
         span: "md:col-span-1 md:row-span-2 sm:col-span-1 sm:row-span-2",
-        title: `${upload.type === "image" ? "Image" : "Video"} ${upload.key.substring(0, 8)}...`,
+        title: `${upload.type === "image" ? "Image" : "Video"} ${
+          upload.path.split("/").pop()?.substring(0, 8) || "Unknown"
+        }...`,
         type: upload.type,
         url: upload.url,
       }));
@@ -47,7 +49,7 @@ export default function UploadsPageClient() {
       console.error(err);
       toast.error("Failed to load media");
       setError(
-        err instanceof Error ? err.message : "An unknown error occurred",
+        err instanceof Error ? err.message : "An unknown error occurred"
       );
     } finally {
       setIsMediaLoading(false);
@@ -84,7 +86,7 @@ export default function UploadsPageClient() {
       console.error(err);
       toast.error("Failed to upload from URL");
       setError(
-        err instanceof Error ? err.message : "Failed to upload from URL",
+        err instanceof Error ? err.message : "Failed to upload from URL"
       );
     } finally {
       setIsUploadingFromUrl(false);
@@ -121,26 +123,28 @@ export default function UploadsPageClient() {
   return (
     <div className="space-y-8">
       <div className="space-y-4">
-        <div className="flex gap-4">
-          <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              console.log("Image(s) uploaded: ", res);
+        <div className="grid gap-4 md:grid-cols-2">
+          <FileUpload
+            type="image"
+            onUploadComplete={(results) => {
+              console.log("Image(s) uploaded: ", results);
+              toast.success(
+                `${results.length} image(s) uploaded successfully!`
+              );
               void loadMediaGallery();
             }}
-            onUploadError={(uploadError: Error) => {
-              toast.error(`Image Upload ERROR! ${uploadError.message}`);
-            }}
+            maxFiles={10}
           />
-          <UploadButton
-            endpoint="videoUploader"
-            onClientUploadComplete={(res) => {
-              console.log("Video(s) uploaded: ", res);
+          <FileUpload
+            type="video"
+            onUploadComplete={(results) => {
+              console.log("Video(s) uploaded: ", results);
+              toast.success(
+                `${results.length} video(s) uploaded successfully!`
+              );
               void loadMediaGallery();
             }}
-            onUploadError={(uploadError: Error) => {
-              toast.error(`Video Upload ERROR! ${uploadError.message}`);
-            }}
+            maxFiles={5}
           />
         </div>
         <div className="flex items-center gap-2">
