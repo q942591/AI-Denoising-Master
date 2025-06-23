@@ -1,85 +1,45 @@
-"use client";
+'use client';
 
-import * as SliderPrimitive from "@radix-ui/react-slider";
-import * as React from "react";
-
-import { cn } from "~/lib/cn";
+import * as React from 'react';
+import { cn } from '~/lib/utils';
+import * as SliderPrimitive from '@radix-ui/react-slider';
 
 function Slider({
   className,
-  defaultValue,
-  max = 100,
-  min = 0,
-  value,
+  children,
   ...props
-}: React.ComponentProps<typeof SliderPrimitive.Root>) {
-  const _values = React.useMemo(
-    () =>
-      Array.isArray(value)
-        ? value
-        : Array.isArray(defaultValue)
-          ? defaultValue
-          : [min, max],
-    [value, defaultValue, min, max],
-  );
-
+}: React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>) {
   return (
     <SliderPrimitive.Root
+      data-slot="slider"
       className={cn(
-        `
-          relative flex w-full touch-none items-center select-none
-          data-[disabled]:opacity-50
-          data-[orientation=vertical]:h-full
-          data-[orientation=vertical]:min-h-44
-          data-[orientation=vertical]:w-auto
-          data-[orientation=vertical]:flex-col
-        `,
+        'relative flex h-4 w-full touch-none select-none items-center',
         className,
       )}
-      data-slot="slider"
-      defaultValue={defaultValue}
-      max={max}
-      min={min}
-      value={value}
       {...props}
     >
-      <SliderPrimitive.Track
-        className={cn(
-          `
-            relative grow overflow-hidden rounded-full bg-muted
-            data-[orientation=horizontal]:h-1.5
-            data-[orientation=horizontal]:w-full
-            data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5
-          `,
-        )}
-        data-slot="slider-track"
-      >
-        <SliderPrimitive.Range
-          className={cn(
-            `
-              absolute bg-primary
-              data-[orientation=horizontal]:h-full
-              data-[orientation=vertical]:w-full
-            `,
-          )}
-          data-slot="slider-range"
-        />
+      <SliderPrimitive.Track className="relative h-1.5 w-full overflow-hidden rounded-full bg-accent">
+        <SliderPrimitive.Range className="absolute h-full bg-primary" />
       </SliderPrimitive.Track>
-      {Array.from({ length: _values.length }, (_, index) => (
-        <SliderPrimitive.Thumb
-          className={`
-            block size-4 shrink-0 rounded-full border border-primary
-            bg-background shadow-sm ring-ring/50 transition-[color,box-shadow]
-            hover:ring-4
-            focus-visible:ring-4 focus-visible:outline-hidden
-            disabled:pointer-events-none disabled:opacity-50
-          `}
-          data-slot="slider-thumb"
-          key={index}
-        />
-      ))}
+      {children}
     </SliderPrimitive.Root>
   );
 }
 
-export { Slider };
+function SliderThumb({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SliderPrimitive.Thumb>) {
+  return (
+    <SliderPrimitive.Thumb
+      data-slot="slider-thumb"
+      className={cn(
+        'box-content block size-4 shrink-0 cursor-pointer rounded-full border-[2px] border-primary bg-primary-foreground shadow-xs shadow-black/5 outline-hidden focus:outline-hidden',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export { Slider, SliderThumb };

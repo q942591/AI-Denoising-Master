@@ -5,8 +5,34 @@ import type * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 
-import { cn } from "~/lib/cn";
+import { cn } from "~/lib/utils";
 import { buttonVariants } from "~/ui/primitives/button";
+
+const ChevronComponent = (props: {
+  className?: string;
+  disabled?: boolean;
+  orientation?: "down" | "left" | "right" | "up";
+  size?: number;
+}) => {
+  if (props.orientation === "left") {
+    return (
+      <ChevronLeft
+        className={`
+          h-4 w-4
+          rtl:rotate-180
+        `}
+      />
+    );
+  }
+  return (
+    <ChevronRight
+      className={`
+        h-4 w-4
+        rtl:rotate-180
+      `}
+    />
+  );
+};
 
 function Calendar({
   className,
@@ -18,83 +44,48 @@ function Calendar({
     <DayPicker
       className={cn("p-3", className)}
       classNames={{
-        caption: "flex justify-center pt-1 relative items-center w-full",
-        caption_label: "text-sm font-medium",
-        cell: cn(
-          `
-            relative p-0 text-center text-sm
-            focus-within:relative focus-within:z-20
-            [&:has([aria-selected])]:bg-accent
-            [&:has([aria-selected].day-range-end)]:rounded-r-md
-          `,
-          props.mode === "range"
-            ? `
-              [&:has(>.day-range-end)]:rounded-r-md
-              [&:has(>.day-range-start)]:rounded-l-md
-              first:[&:has([aria-selected])]:rounded-l-md
-              last:[&:has([aria-selected])]:rounded-r-md
-            `
-            : "[&:has([aria-selected])]:rounded-md",
-        ),
-        day: cn(
+        button_next: cn(
           buttonVariants({ variant: "ghost" }),
           `
-            size-8 p-0 font-normal
-            aria-selected:opacity-100
-          `,
-        ),
-        day_disabled: "text-muted-foreground opacity-50",
-        day_hidden: "invisible",
-        day_outside:
-          "day-outside text-muted-foreground aria-selected:text-muted-foreground",
-        day_range_end:
-          "day-range-end aria-selected:bg-primary aria-selected:text-primary-foreground",
-        day_range_middle:
-          "aria-selected:bg-accent aria-selected:text-accent-foreground",
-        day_range_start:
-          "day-range-start aria-selected:bg-primary aria-selected:text-primary-foreground",
-        day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-        day_today: "bg-accent text-accent-foreground",
-        head_cell:
-          "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
-        head_row: "flex",
-        month: "flex flex-col gap-4",
-        months: "flex flex-col sm:flex-row gap-2",
-        nav: "flex items-center gap-1",
-        nav_button: cn(
-          buttonVariants({ variant: "outline" }),
+            size-8 p-0 text-muted-foreground/80
+            hover:text-foreground
           `
-            size-7 bg-transparent p-0 opacity-50
-            hover:opacity-100
-          `,
         ),
-        nav_button_next: "absolute right-1",
-        nav_button_previous: "absolute left-1",
-        row: "flex w-full mt-2",
-        table: "w-full border-collapse space-x-1",
+        button_previous: cn(
+          buttonVariants({ variant: "ghost" }),
+          `
+            size-8 p-0 text-muted-foreground/80
+            hover:text-foreground
+          `
+        ),
+        caption_label: "text-sm font-medium",
+        day: "group size-8 px-0 py-px text-sm",
+        day_button:
+          "cursor-pointer relative flex size-8 items-center justify-center whitespace-nowrap rounded-md p-0 text-foreground transition-200 group-[[data-selected]:not(.range-middle)]:[transition-property:color,background-color,border-radius,box-shadow] group-[[data-selected]:not(.range-middle)]:duration-150 group-data-disabled:pointer-events-none focus-visible:z-10 hover:not-in-data-selected:bg-accent group-data-selected:bg-primary hover:not-in-data-selected:text-foreground group-data-selected:text-primary-foreground group-data-disabled:text-foreground/30 group-data-disabled:line-through group-data-outside:text-foreground/30 group-data-selected:group-data-outside:text-primary-foreground outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] group-[.range-start:not(.range-end)]:rounded-e-none group-[.range-end:not(.range-start)]:rounded-s-none group-[.range-middle]:rounded-none group-[.range-middle]:group-data-selected:bg-accent group-[.range-middle]:group-data-selected:text-foreground",
+        hidden: "invisible",
+        month: "w-full",
+        month_caption:
+          "relative mx-10 mb-1 flex h-8 items-center justify-center z-20",
+        months: "relative flex flex-col sm:flex-row gap-4",
+        nav: "absolute top-0 flex w-full justify-between z-10",
+        outside:
+          "text-muted-foreground data-selected:bg-accent/50 data-selected:text-muted-foreground",
+        range_end: "range-end",
+        range_middle: "range-middle",
+        range_start: "range-start",
+        today:
+          "*:after:pointer-events-none *:after:absolute *:after:bottom-1 *:after:start-1/2 *:after:z-10 *:after:size-[3px] *:after:-translate-x-1/2 rtl:*:after:translate-x-1/2 *:after:rounded-full *:after:bg-primary [&[data-selected]:not(.range-middle)>*]:after:bg-background [&[data-disabled]>*]:after:bg-foreground/30 *:after:transition-colors",
+        week_number: "size-8 p-0 text-xs font-medium text-muted-foreground/80",
+        weekday: "size-8 p-0 text-xs font-medium text-muted-foreground/80",
         ...classNames,
       }}
       components={{
-        Chevron: CalendarChevron,
+        Chevron: ChevronComponent,
       }}
       showOutsideDays={showOutsideDays}
       {...props}
     />
   );
-}
-
-function CalendarChevron({
-  className,
-  orientation = "right",
-}: {
-  className?: string;
-  disabled?: boolean;
-  orientation?: "down" | "left" | "right" | "up";
-  size?: number;
-}) {
-  const Icon = orientation === "left" ? ChevronLeft : ChevronRight;
-  return <Icon className={cn("size-4", className)} />;
 }
 
 export { Calendar };

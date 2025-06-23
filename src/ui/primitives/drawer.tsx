@@ -59,7 +59,7 @@ function DrawerContent({
             data-[vaul-drawer-direction=left]:border-r
             data-[vaul-drawer-direction=left]:sm:max-w-sm
           `,
-          className,
+          className
         )}
         data-slot="drawer-content"
         {...props}
@@ -121,7 +121,7 @@ function DrawerOverlay({
           data-[state=closed]:animate-out data-[state=closed]:fade-out-0
           data-[state=open]:animate-in data-[state=open]:fade-in-0
         `,
-        className,
+        className
       )}
       data-slot="drawer-overlay"
       {...props}
