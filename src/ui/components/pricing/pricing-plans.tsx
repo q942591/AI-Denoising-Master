@@ -279,6 +279,7 @@ export function PricingPlans({
                 isSelected && "ring-2 ring-primary"
               )}
               key={plan.id}
+              variant="accent"
             >
               {/* 热门标签 */}
               {plan.badge && (
@@ -299,46 +300,107 @@ export function PricingPlans({
                 </div>
               )}
 
-              <CardHeader className="pb-4 text-center">
-                {/* 图标 */}
-                <div
-                  className={cn(
-                    "mx-auto mb-4 rounded-full p-3",
-                    plan.isPopular
-                      ? "bg-primary/10 text-primary"
-                      : "bg-muted text-muted-foreground"
-                  )}
-                >
-                  {plan.icon}
+              <CardHeader className="relative p-8 text-center">
+                {/* 图标和标题组 */}
+                <div className="relative mb-6">
+                  {/* 装饰性背景圆圈 */}
+                  <div
+                    className={`
+                    absolute inset-0 flex items-center justify-center
+                  `}
+                  >
+                    <div
+                      className={cn(
+                        "h-20 w-20 rounded-full opacity-10",
+                        plan.isPopular ? "bg-primary" : "bg-muted-foreground"
+                      )}
+                    />
+                  </div>
+
+                  {/* 图标 */}
+                  <div
+                    className={cn(
+                      `
+                        relative mx-auto mb-4 flex h-16 w-16 items-center
+                        justify-center rounded-full border-2 shadow-sm
+                        transition-all duration-300
+                      `,
+                      plan.isPopular
+                        ? `
+                          border-primary/20 bg-primary/10 text-primary
+                          shadow-primary/20
+                        `
+                        : `
+                          border-muted-foreground/20 bg-muted
+                          text-muted-foreground
+                        `
+                    )}
+                  >
+                    <div className="scale-125">{plan.icon}</div>
+                  </div>
+
+                  {/* 标题和描述 */}
+                  <div className="space-y-2">
+                    <h3
+                      className={cn(
+                        "text-2xl font-bold tracking-tight",
+                        plan.isPopular ? "text-primary" : "text-foreground"
+                      )}
+                    >
+                      {plan.name}
+                    </h3>
+                    <p
+                      className={`
+                      mx-auto max-w-48 text-sm leading-relaxed
+                      text-muted-foreground
+                    `}
+                    >
+                      {plan.description}
+                    </p>
+                  </div>
                 </div>
 
-                {/* 套餐名称 */}
-                <h3 className="text-xl font-semibold">{plan.name}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {plan.description}
-                </p>
-
-                {/* 价格 */}
-                <div className="mt-4">
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="text-3xl font-bold">
+                {/* 价格组 */}
+                <div className="space-y-3">
+                  <div className="flex items-baseline justify-center gap-3">
+                    <span
+                      className={cn(
+                        "text-4xl font-extrabold tracking-tight",
+                        plan.isPopular ? "text-primary" : "text-foreground"
+                      )}
+                    >
                       {formatPrice(plan.price)}
                     </span>
                     {plan.originalPrice && (
                       <span
-                        className={`text-lg text-muted-foreground line-through`}
+                        className={`
+                        text-xl text-muted-foreground/60 line-through
+                      `}
                       >
                         {formatPrice(plan.originalPrice)}
                       </span>
                     )}
                   </div>
+
                   {discount > 0 && (
-                    <div className="mt-1 text-sm font-medium text-green-600">
+                    <div
+                      className={`
+                      inline-flex items-center rounded-full bg-green-100 px-3
+                      py-1 text-sm font-semibold text-green-700
+                      dark:bg-green-900/20 dark:text-green-400
+                    `}
+                    >
                       {t("discount", { percent: discount })}
                     </div>
                   )}
-                  <div className="mt-1 text-sm text-muted-foreground">
-                    {plan.credits} {t("credits")}
+
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-lg font-semibold text-foreground">
+                      {plan.credits}
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {t("credits")}
+                    </span>
                   </div>
                 </div>
               </CardHeader>
@@ -359,7 +421,7 @@ export function PricingPlans({
                 </ul>
               </CardContent>
 
-              <CardFooter className="px-6 pt-4">
+              <CardFooter className="px-6">
                 <Button
                   className="w-full"
                   disabled={loading}

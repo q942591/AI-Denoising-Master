@@ -4,11 +4,11 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { SEO_CONFIG } from "~/app";
-import { IntlProvider } from "~/components/providers/intl-provider";
 import "~/css/globals.css";
+import { IntlProvider } from "~/components/providers/intl-provider";
 import { NotificationsProvider } from "~/components/providers/notifications-provider";
+import { StagewiseProvider } from "~/components/providers/stagewise-provider";
 import { SupabaseProvider } from "~/components/providers/SupabaseProvider";
-import { CartProvider } from "~/lib/hooks/use-cart";
 import { Footer } from "~/ui/components/footer";
 import { Header } from "~/ui/components/header/header";
 import { ThemeProvider } from "~/ui/components/theme-provider";
@@ -64,6 +64,7 @@ export default function RootLayout({
           </ThemeProvider>
         </IntlProvider>
         <SpeedInsights />
+        <StagewiseProvider />
       </body>
     </html>
   );
