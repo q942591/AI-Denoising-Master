@@ -3,6 +3,11 @@ export * from "./credits/relations";
 export * from "./credits/tables";
 export * from "./credits/types";
 
+// 生成系统
+export * from "./generations/relations";
+export * from "./generations/tables";
+export * from "./generations/types";
+
 // 通知系统
 export * from "./notifications/relations";
 export * from "./notifications/tables";

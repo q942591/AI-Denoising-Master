@@ -34,7 +34,8 @@
     "settings": "Settings",
     "uploads": "Uploads",
     "admin": "Admin",
-    "stats": "Stats"
+    "stats": "Stats",
+    "generate": "Generate"
   },
   "Common": {
     "loading": "Loading...",
@@ -126,6 +127,53 @@
         "question": "How can I get free credits?",
         "answer": "We offer a daily login bonus system where users can earn 2 credits each day by logging in and claiming them on their profile page. This is our way of rewarding users and encouraging continued use of our service. Please check your profile page's account tab to claim your daily bonus."
       }
+    }
+  },
+  "ImageDenoise": {
+    "meta": {
+      "title": "AI Image Denoising - Smart Noise Reduction",
+      "description": "Use advanced AI technology to intelligently denoise your images and improve image quality"
+    },
+    "title": "AI Image Denoising",
+    "subtitle": "Upload your image and let AI intelligently denoise it to enhance image clarity",
+    "uploadArea": {
+      "title": "Upload Your Image",
+      "description": "Supports JPG, PNG formats, max 4MB",
+      "dragText": "Drag image here or click to select file",
+      "selectButton": "Select Image"
+    },
+    "processing": {
+      "uploading": "Uploading image...",
+      "denoising": "AI is denoising...",
+      "completed": "Denoising completed!",
+      "failed": "Processing failed, please try again"
+    },
+    "result": {
+      "title": "Denoising Result",
+      "original": "Original",
+      "denoised": "Denoised",
+      "download": "Download Result",
+      "processAgain": "Process Another Image",
+      "creditsUsed": "Used {credits} credits"
+    },
+    "errors": {
+      "noFileSelected": "Please select an image file",
+      "fileTooLarge": "File too large, please select an image under 4MB",
+      "invalidFormat": "Unsupported file format, please select JPG or PNG",
+      "uploadFailed": "Upload failed, please try again",
+      "denoiseFailed": "Denoising failed, please try again",
+      "insufficientCredits": "Insufficient credits, please recharge first"
+    },
+    "features": {
+      "title": "Features",
+      "aiPowered": "AI Powered",
+      "aiPoweredDesc": "Based on advanced deep learning algorithms to intelligently identify and remove image noise",
+      "highQuality": "High Quality Output",
+      "highQualityDesc": "Effective denoising while preserving original image details, outputting high-quality images",
+      "fastProcessing": "Fast Processing",
+      "fastProcessingDesc": "Usually completed within 30 seconds, efficient and convenient",
+      "multiFormat": "Multi-format Support",
+      "multiFormatDesc": "Supports common image formats like JPG, PNG"
     }
   }
 }

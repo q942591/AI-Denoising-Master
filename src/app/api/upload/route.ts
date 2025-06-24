@@ -1,12 +1,13 @@
 import { createId } from "@paralleldrive/cuid2";
+import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 
 import { db } from "~/db";
-import { uploadsTable } from "~/db/schema";
+import { uploadsTable, userTable } from "~/db/schema";
 import { getCurrentUser } from "~/lib/auth";
 import { getPublicUrl, uploadFile } from "~/lib/supabase/storage";
 
-const BUCKET_NAME = "uploads"; // make sure this bucket exists in your supabase project
+const BUCKET_NAME = "medias"; // make sure this bucket exists in your supabase project
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,6 +16,8 @@ export async function POST(request: NextRequest) {
     if (!user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    // user should already exist from login/registration process
 
     // get form data
     const formData = await request.formData();
@@ -53,15 +56,20 @@ export async function POST(request: NextRequest) {
     }
 
     // get public url
-    const publicUrl = getPublicUrl(BUCKET_NAME, filePath);
+    const publicUrl = await getPublicUrl(BUCKET_NAME, filePath);
 
     // save to database
     try {
       const uploadRecord = await db
         .insert(uploadsTable)
         .values({
+          bucketName: BUCKET_NAME,
+          fileName: file.name,
+          fileSize: file.size,
           id: fileId,
+          mimeType: file.type,
           path: filePath,
+          status: "completed",
           type: type as "image" | "video",
           url: publicUrl,
           userId: user.id,

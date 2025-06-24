@@ -36,6 +36,7 @@ export function Header({ showAuth = true }: HeaderProps) {
 
   const dashboardNavigation = [
     { href: "/dashboard/stats", name: t("Nav.stats") },
+    { href: "/dashboard/generate", name: t("Nav.generate") },
     { href: "/dashboard/profile", name: t("Nav.profile") },
     { href: "/dashboard/settings", name: t("Nav.settings") },
     { href: "/dashboard/uploads", name: t("Nav.uploads") },

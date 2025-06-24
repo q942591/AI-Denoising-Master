@@ -34,7 +34,8 @@
     "settings": "设置",
     "uploads": "上传",
     "admin": "管理员",
-    "stats": "统计"
+    "stats": "统计",
+    "generate": "生成"
   },
   "Common": {
     "loading": "加载中...",
@@ -126,6 +127,55 @@
         "question": "如何获得免费积分？",
         "answer": "我们提供每日登录奖励系统，用户每天登录并在个人资料页面领取可获得2个积分。这是我们奖励用户并鼓励持续使用我们服务的方式。请在您的个人资料页面的账户标签页领取每日奖励。"
       }
+    }
+  },
+  "ImageDenoise": {
+    "meta": {
+      "title": "AI图片降噪 - 智能降噪处理",
+      "description": "使用先进的AI技术为您的图片进行智能降噪处理，提升图片质量"
+    },
+    "title": "AI图片降噪",
+    "subtitle": "上传图片，让AI为您进行智能降噪处理，提升图片清晰度",
+    "uploadArea": {
+      "title": "上传您的图片",
+      "description": "支持 JPG、PNG 格式，最大 4MB",
+      "dragText": "拖拽图片到此处或点击选择文件",
+      "selectButton": "选择图片"
+    },
+    "processing": {
+      "uploading": "正在上传图片...",
+      "denoising": "AI正在降噪处理中...",
+      "completed": "降噪处理完成！",
+      "failed": "处理失败，请重试"
+    },
+    "result": {
+      "title": "降噪结果",
+      "original": "原图",
+      "denoised": "降噪后",
+      "download": "下载结果",
+      "processAgain": "处理其他图片",
+      "creditsUsed": "已消耗 {credits} 积分"
+    },
+    "errors": {
+      "noFileSelected": "请选择图片文件",
+      "fileTooLarge": "文件太大，请选择小于4MB的图片",
+      "invalidFormat": "不支持的文件格式，请选择JPG或PNG格式",
+      "uploadFailed": "上传失败，请重试",
+      "denoiseFailed": "降噪处理失败，请重试",
+      "insufficientCredits": "积分不足，请先充值",
+      "currentBalance": "当前余额",
+      "required": "需要"
+    },
+    "features": {
+      "title": "功能特色",
+      "aiPowered": "AI驱动",
+      "aiPoweredDesc": "基于先进的深度学习算法，智能识别并去除图片噪点",
+      "highQuality": "高质量输出",
+      "highQualityDesc": "保持原图细节的同时有效降噪，输出高质量图片",
+      "fastProcessing": "快速处理",
+      "fastProcessingDesc": "通常在30秒内完成处理，高效便捷",
+      "multiFormat": "多格式支持",
+      "multiFormatDesc": "支持JPG、PNG等常见图片格式"
     }
   }
 }
