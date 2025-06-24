@@ -17,6 +17,7 @@ import { Badge } from "~/ui/primitives/badge";
 import { Button } from "~/ui/primitives/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/ui/primitives/card";
 import { Image } from "~/ui/primitives/image";
+import { Skeleton } from "~/ui/primitives/skeleton";
 
 interface DenoiseResult {
   creditsUsed: number;
@@ -358,7 +359,7 @@ export default function ImageDenoisePageClient() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {!result ? (
+            {!result && !isProcessing && !isUploading ? (
               <div
                 className={`
                   flex h-64 items-center justify-center rounded-lg border-2
@@ -370,7 +371,38 @@ export default function ImageDenoisePageClient() {
                   <p>Processing result will appear here</p>
                 </div>
               </div>
-            ) : (
+            ) : (isUploading || isProcessing) && !result ? (
+              <div className="space-y-4">
+                {/* 状态标签占位 */}
+                <div className="flex items-center justify-between">
+                  <Skeleton className="h-6 w-24" />
+                  <Skeleton className="h-4 w-16" />
+                </div>
+
+                {/* 图片对比占位 */}
+                <div
+                  className={`
+                    grid gap-4
+                    md:grid-cols-2
+                  `}
+                >
+                  <div>
+                    <Skeleton className="mb-2 h-4 w-16" />
+                    <Skeleton className="aspect-square w-full rounded-lg" />
+                  </div>
+                  <div>
+                    <Skeleton className="mb-2 h-4 w-16" />
+                    <Skeleton className="aspect-square w-full rounded-lg" />
+                  </div>
+                </div>
+
+                {/* 按钮占位 */}
+                <div className="flex gap-2">
+                  <Skeleton className="h-9 flex-1" />
+                  <Skeleton className="h-9 flex-1" />
+                </div>
+              </div>
+            ) : result ? (
               <div className="space-y-4">
                 {/* Status Badge */}
                 <div className="flex items-center justify-between">
@@ -470,16 +502,65 @@ export default function ImageDenoisePageClient() {
 
                 {/* Processing State */}
                 {result.status === "processing" && (
-                  <div className="py-8 text-center">
-                    <Sparkles
+                  <div className="space-y-4">
+                    {/* 处理中的图片对比占位 */}
+                    <div
                       className={`
-                        mx-auto mb-4 h-12 w-12 animate-pulse text-primary
+                        grid gap-4
+                        md:grid-cols-2
                       `}
-                    />
-                    <p className="text-muted-foreground">
-                      AI is working on your image... This may take up to 30
-                      seconds.
-                    </p>
+                    >
+                      <div>
+                        <p className="mb-2 text-sm font-medium">
+                          {t("result.original")}
+                        </p>
+                        {previewUrl ? (
+                          <div className="overflow-hidden rounded-lg">
+                            <Image
+                              alt="Original"
+                              className="aspect-square w-full object-cover"
+                              height={250}
+                              src={previewUrl}
+                              width={250}
+                            />
+                          </div>
+                        ) : (
+                          <Skeleton className="aspect-square w-full rounded-lg" />
+                        )}
+                      </div>
+
+                      <div>
+                        <p className="mb-2 text-sm font-medium">
+                          {t("result.denoised")}
+                        </p>
+                        <div className="relative">
+                          <Skeleton className="aspect-square w-full rounded-lg" />
+                          <div
+                            className={`
+                              absolute inset-0 flex items-center justify-center
+                            `}
+                          >
+                            <div className="text-center">
+                              <Sparkles
+                                className={`
+                                  mx-auto mb-2 h-8 w-8 animate-pulse
+                                  text-primary
+                                `}
+                              />
+                              <p className="text-sm text-muted-foreground">
+                                AI 处理中...
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 按钮占位 */}
+                    <div className="flex gap-2">
+                      <Skeleton className="h-9 flex-1" />
+                      <Skeleton className="h-9 flex-1" />
+                    </div>
                   </div>
                 )}
 
@@ -496,7 +577,7 @@ export default function ImageDenoisePageClient() {
                   </div>
                 )}
               </div>
-            )}
+            ) : null}
           </CardContent>
         </Card>
       </div>

@@ -81,14 +81,6 @@ export async function GET(request: NextRequest) {
                   record.id,
                 );
 
-                // 扣除积分
-                const creditTransactionId = await deductUserCredits(
-                  user.id,
-                  CREDITS_PER_IMAGE,
-                  record.id,
-                  `Image denoising - Task ${record.id}`,
-                );
-
                 // 更新数据库记录
                 await db
                   .update(userGenerateRecordsTable)
@@ -97,7 +89,6 @@ export async function GET(request: NextRequest) {
                     outputUrl: supabaseImageUrl,
                     resultMetadata: JSON.stringify({
                       ...taskResult.output,
-                      creditTransactionId,
                       supabaseUrl: supabaseImageUrl,
                     }),
                     status: "completed",
@@ -237,12 +228,21 @@ export async function POST(request: NextRequest) {
     const recordId = createId();
 
     try {
+      // 先扣除积分
+      const creditTransactionId = await deductUserCredits(
+        user.id,
+        CREDITS_PER_IMAGE,
+        recordId,
+        `Image denoising - Task ${recordId}`,
+      );
+
       // 创建数据库记录
       await db.insert(userGenerateRecordsTable).values({
         creditConsumed: CREDITS_PER_IMAGE,
         id: recordId,
         inputUrl: imageUrl,
         parameters: JSON.stringify({
+          creditTransactionId,
           function: "super_resolution",
           model: "wanx2.1-imageedit",
         }),
@@ -255,7 +255,11 @@ export async function POST(request: NextRequest) {
       const editResult = await dashscope.createEditTask({
         base_image_url: imageUrl,
         function: "super_resolution",
-        prompt: "enhance image quality, reduce noise, improve clarity", // 提示词用于降噪
+        prompt: "图像超分",
+        parameters: {
+          upscale_factor: 4,
+          n: 1,
+        }, // 提示词用于降噪
       });
 
       if (editResult.output?.task_id) {
@@ -276,7 +280,14 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      // 任务创建失败
+      // 任务创建失败，退还积分
+      await refundUserCredits(
+        user.id,
+        CREDITS_PER_IMAGE,
+        recordId,
+        "Refund for failed AI task creation",
+      );
+
       await db
         .update(userGenerateRecordsTable)
         .set({
@@ -291,6 +302,18 @@ export async function POST(request: NextRequest) {
       );
     } catch (aiError) {
       console.error("AI processing error:", aiError);
+
+      // 退还积分
+      try {
+        await refundUserCredits(
+          user.id,
+          CREDITS_PER_IMAGE,
+          recordId,
+          "Refund for AI processing error",
+        );
+      } catch (refundError) {
+        console.error("Failed to refund credits:", refundError);
+      }
 
       // 更新数据库记录为失败状态
       try {
@@ -411,4 +434,31 @@ async function getUserCreditBalance(userId: string): Promise<number> {
   });
 
   return transactions.length > 0 ? transactions[0].balanceAfter : 0;
+}
+
+// 退还用户积分
+async function refundUserCredits(
+  userId: string,
+  amount: number,
+  recordId: string,
+  description: string,
+): Promise<string> {
+  const currentBalance = await getUserCreditBalance(userId);
+
+  const transactionId = createId();
+  const newBalance = currentBalance + amount;
+
+  await db.insert(creditTransactionTable).values({
+    amount: amount, // 正数表示增加
+    balanceAfter: newBalance,
+    description,
+    id: transactionId,
+    relatedEntityId: recordId,
+    relatedEntityType: "generation",
+    status: "completed",
+    type: "refund",
+    userId,
+  });
+
+  return transactionId;
 }

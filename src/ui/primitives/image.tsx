@@ -225,12 +225,25 @@ export function ImageComponent({
   }, [preview, openPreview, onClick]);
 
   const imageElement = (
-    <div className={cn("relative inline-block", className)}>
+    <div
+      className={cn(
+        "relative",
+        // 如果传入的className包含h-full w-full，使用block让图片撑满容器
+        className?.includes("h-full") && className?.includes("w-full")
+          ? "block h-full w-full"
+          : "inline-block",
+        className
+      )}
+    >
       <Image
         alt={alt}
         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Rq5wdwcWb2DEcTFqJNqF4Pqd1/I5quabrfA7/ANU9wuFl1PcL1n3Ggh9H+1U7X0Jy11dY1mLxL3Atco/vOhJ6WSnmVq42TJQmYEz/2Q=="
         className={cn(
-          "block transition-opacity duration-300",
+          "transition-opacity duration-300",
+          // 当容器为block时，图片也需要撑满
+          className?.includes("h-full") && className?.includes("w-full")
+            ? "h-full w-full object-cover"
+            : "block",
           preview &&
             imageState === "loaded" &&
             `

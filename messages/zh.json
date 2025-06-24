@@ -228,6 +228,7 @@
     "title": "个人资料",
     "welcome": "欢迎回来，{name}！",
     "stats": {
+      "overview": "数据概览",
       "currentBalance": "当前积分",
       "totalGenerations": "总生成次数",
       "successfulGenerations": "成功生成",
@@ -265,6 +266,7 @@
       "transactions": "交易记录",
       "empty": "暂无交易记录",
       "emptyDescription": "开始使用AI功能或充值积分后，交易记录将显示在这里",
+      "searchTransactions": "搜索交易记录...",
       "transaction": {
         "type": "类型",
         "amount": "金额",
@@ -338,5 +340,18 @@
       "saved": "设置已保存",
       "saveError": "保存失败，请重试"
     }
+  },
+  "Notifications": {
+    "title": "通知",
+    "empty": "暂无通知",
+    "emptyDescription": "当您收到通知时，它们将显示在这里",
+    "markAllAsRead": "全部标为已读",
+    "markAsRead": "标为已读",
+    "dismiss": "关闭",
+    "clearAll": "清除所有通知",
+    "justNow": "刚刚",
+    "minutesAgo": "{minutes} 分钟前",
+    "hoursAgo": "{hours} 小时前",
+    "daysAgo": "{days} 天前"
   }
 }

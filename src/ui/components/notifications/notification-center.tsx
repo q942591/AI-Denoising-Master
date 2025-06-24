@@ -3,6 +3,7 @@
 import type React from "react";
 
 import { Bell } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { Notification } from "~/db/schema";
@@ -35,6 +36,7 @@ export function NotificationCenter({
   onMarkAsRead,
   ...props
 }: NotificationCenterProps) {
+  const t = useTranslations("Notifications");
   const [isOpen, setIsOpen] = useState(false);
   const unreadCount = notifications.filter(
     (notification) => !notification.isRead
@@ -73,7 +75,7 @@ export function NotificationCenter({
 
         <DropdownMenuContent align="end" className="w-80">
           <DropdownMenuLabel className="flex items-center justify-between">
-            <span>通知</span>
+            <span>{t("title")}</span>
             {unreadCount > 0 && onMarkAsRead && (
               <Button
                 className="h-auto p-0 text-xs font-normal text-primary"
@@ -81,7 +83,7 @@ export function NotificationCenter({
                 size="sm"
                 variant="ghost"
               >
-                全部标为已读
+                {t("markAllAsRead")}
               </Button>
             )}
           </DropdownMenuLabel>
@@ -95,7 +97,7 @@ export function NotificationCenter({
                 text-muted-foreground
               `}
             >
-              暂无通知
+              {t("empty")}
             </div>
           ) : (
             <Notifications
@@ -115,7 +117,7 @@ export function NotificationCenter({
                   size="sm"
                   variant="outline"
                 >
-                  清除所有通知
+                  {t("clearAll")}
                 </Button>
               </CardFooter>
             </>

@@ -1,6 +1,7 @@
 import type * as React from "react";
 
 import { Bell, Check, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import type { Notification } from "~/db/schema";
 
@@ -17,20 +18,20 @@ interface NotificationsProps {
   onMarkAsRead?: (id: string) => void;
 }
 
-function formatTimestamp(date: Date) {
+function formatTimestamp(date: Date, t: ReturnType<typeof useTranslations>) {
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-  if (diffInSeconds < 60) return "刚刚";
+  if (diffInSeconds < 60) return t("justNow");
   if (diffInSeconds < 3600) {
     const minutes = Math.floor(diffInSeconds / 60);
-    return `${minutes} 分钟前`;
+    return t("minutesAgo", { minutes });
   }
   if (diffInSeconds < 86400) {
     const hours = Math.floor(diffInSeconds / 3600);
-    return `${hours} 小时前`;
+    return t("hoursAgo", { hours });
   }
   const days = Math.floor(diffInSeconds / 86400);
-  return `${days} 天前`;
+  return t("daysAgo", { days });
 }
 
 function getNotificationIcon(type: Notification["type"]) {
@@ -59,16 +60,16 @@ export const Notifications: React.FC<NotificationsProps> = ({
   onDismiss,
   onMarkAsRead,
 }) => {
+  const t = useTranslations("Notifications");
+
   if (notifications.length === 0) {
     return (
       <div
         className={"flex flex-col items-center justify-center py-6 text-center"}
       >
         <Bell className="mb-2 h-10 w-10 text-muted-foreground/50" />
-        <p className="text-sm font-medium">暂无通知</p>
-        <p className="text-xs text-muted-foreground">
-          当您收到通知时，它们将显示在这里
-        </p>
+        <p className="text-sm font-medium">{t("empty")}</p>
+        <p className="text-xs text-muted-foreground">{t("emptyDescription")}</p>
       </div>
     );
   }
@@ -94,7 +95,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
                   {notification.title}
                 </p>
                 <span className="text-xs text-muted-foreground">
-                  {formatTimestamp(new Date(notification.createdAt))}
+                  {formatTimestamp(new Date(notification.createdAt), t)}
                 </span>
               </div>
               <p className="text-xs text-muted-foreground">
@@ -109,7 +110,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
                   variant="ghost"
                 >
                   <Check className="h-3 w-3" />
-                  <span className="sr-only">标为已读</span>
+                  <span className="sr-only">{t("markAsRead")}</span>
                 </Button>
               )}
               <Button
@@ -118,7 +119,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
                 variant="ghost"
               >
                 <X className="h-3 w-3" />
-                <span className="sr-only">关闭</span>
+                <span className="sr-only">{t("dismiss")}</span>
               </Button>
             </div>
           </div>

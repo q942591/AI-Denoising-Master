@@ -226,6 +226,7 @@
     "title": "Profile",
     "welcome": "Welcome back, {name}!",
     "stats": {
+      "overview": "Overview",
       "currentBalance": "Current Balance",
       "totalGenerations": "Total Generations",
       "successfulGenerations": "Successful",
@@ -263,6 +264,7 @@
       "transactions": "Transaction History",
       "empty": "No transactions yet",
       "emptyDescription": "Start using AI features or purchase credits to see your transaction history",
+      "searchTransactions": "Search transactions...",
       "transaction": {
         "type": "Type",
         "amount": "Amount",
@@ -336,5 +338,18 @@
       "saved": "Settings saved",
       "saveError": "Failed to save settings. Please try again."
     }
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "empty": "No notifications",
+    "emptyDescription": "When you receive notifications, they will appear here",
+    "markAllAsRead": "Mark all as read",
+    "markAsRead": "Mark as read",
+    "dismiss": "Dismiss",
+    "clearAll": "Clear all notifications",
+    "justNow": "just now",
+    "minutesAgo": "{minutes} minutes ago",
+    "hoursAgo": "{hours} hours ago",
+    "daysAgo": "{days} days ago"
   }
 }

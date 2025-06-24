@@ -5,6 +5,7 @@ import { createContext, use, useCallback, useEffect, useState } from "react";
 import type { Notification } from "~/db/schema";
 
 import { useSupabase } from "~/components/providers/SupabaseProvider";
+import { createSupabaseClient } from "~/lib/supabase/client";
 import { notificationsRealtime } from "~/lib/supabase/supabase-notifications";
 
 interface NotificationsContextType {
@@ -36,7 +37,7 @@ export function NotificationsProvider({
     (notification) => !notification.isRead
   ).length;
 
-  // 加载用户通知
+  // 使用 supabase 直接查询加载用户通知
   const loadNotifications = useCallback(async () => {
     if (!user) {
       setNotifications([]);
@@ -46,12 +47,19 @@ export function NotificationsProvider({
 
     try {
       setLoading(true);
-      const response = await fetch("/api/notifications");
-      if (!response.ok) {
-        throw new Error("加载通知失败");
+      const supabase = createSupabaseClient();
+
+      const { data, error } = await supabase
+        .from("notifications")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        throw new Error(`加载通知失败: ${error.message}`);
       }
-      const data = (await response.json()) as { notifications: Notification[] };
-      setNotifications(data.notifications || []);
+
+      setNotifications(data || []);
     } catch (error) {
       console.error("加载通知失败:", error);
       setNotifications([]);
@@ -60,97 +68,90 @@ export function NotificationsProvider({
     }
   }, [user]);
 
-  // 标记通知为已读
+  // 使用 supabase 标记通知为已读
   const markAsRead = async (notificationId: string) => {
     if (!user) return;
 
     try {
-      const response = await fetch("/api/notifications", {
-        body: JSON.stringify({ id: notificationId }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PATCH",
-      });
+      const supabase = createSupabaseClient();
 
-      if (!response.ok) throw new Error("标记通知已读失败");
+      const { error } = await supabase
+        .from("notifications")
+        .update({ is_read: true })
+        .eq("id", notificationId)
+        .eq("user_id", user.id);
 
-      // 更新本地状态
-      setNotifications((prev) =>
-        prev.map((notification) =>
-          notification.id === notificationId
-            ? { ...notification, isRead: true }
-            : notification
-        )
-      );
+      if (error) throw new Error(`标记通知已读失败: ${error.message}`);
+
+      // 实时订阅会自动更新本地状态，这里不需要手动更新
     } catch (error) {
       console.error("标记通知已读失败:", error);
     }
   };
 
-  // 标记所有通知为已读
+  // 使用 supabase 标记所有通知为已读
   const markAllAsRead = async () => {
     if (!user) return;
 
     try {
-      const response = await fetch("/api/notifications", {
-        body: JSON.stringify({ markAll: true }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PATCH",
-      });
+      const supabase = createSupabaseClient();
 
-      if (!response.ok) throw new Error("标记所有通知已读失败");
+      const { error } = await supabase
+        .from("notifications")
+        .update({ is_read: true })
+        .eq("user_id", user.id)
+        .eq("is_read", false); // 只更新未读的通知
 
-      // 更新本地状态
-      setNotifications((prev) =>
-        prev.map((notification) => ({ ...notification, isRead: true }))
-      );
+      if (error) throw new Error(`标记所有通知已读失败: ${error.message}`);
+
+      // 实时订阅会自动更新本地状态，这里不需要手动更新
     } catch (error) {
       console.error("标记所有通知已读失败:", error);
     }
   };
 
-  // 删除通知
+  // 使用 supabase 删除通知
   const dismissNotification = async (notificationId: string) => {
     if (!user) return;
 
     try {
-      const response = await fetch(`/api/notifications?id=${notificationId}`, {
-        method: "DELETE",
-      });
+      const supabase = createSupabaseClient();
 
-      if (!response.ok) throw new Error("删除通知失败");
+      const { error } = await supabase
+        .from("notifications")
+        .delete()
+        .eq("id", notificationId)
+        .eq("user_id", user.id);
 
-      // 更新本地状态
-      setNotifications((prev) =>
-        prev.filter((notification) => notification.id !== notificationId)
-      );
+      if (error) throw new Error(`删除通知失败: ${error.message}`);
+
+      // 实时订阅会自动更新本地状态，这里不需要手动更新
     } catch (error) {
       console.error("删除通知失败:", error);
     }
   };
 
-  // 清除所有通知
+  // 使用 supabase 清除所有通知
   const clearAllNotifications = async () => {
     if (!user) return;
 
     try {
-      const response = await fetch("/api/notifications?clearAll=true", {
-        method: "DELETE",
-      });
+      const supabase = createSupabaseClient();
 
-      if (!response.ok) throw new Error("清除所有通知失败");
+      const { error } = await supabase
+        .from("notifications")
+        .delete()
+        .eq("user_id", user.id);
 
-      // 更新本地状态
-      setNotifications([]);
+      if (error) throw new Error(`清除所有通知失败: ${error.message}`);
+
+      // 实时订阅会自动更新本地状态，这里不需要手动更新
     } catch (error) {
       console.error("清除所有通知失败:", error);
     }
   };
 
-  // 刷新通知
+  // 刷新通知 - 现在主要依赖实时订阅，但保留手动刷新功能
   const refreshNotifications = async () => {
     await loadNotifications();
   };

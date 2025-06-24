@@ -1,20 +1,21 @@
 "use client";
 
 import { useState } from "react";
+
 import { Button } from "~/ui/primitives/button";
 
 interface FileUploadProps {
-  type: "image" | "video";
-  onUploadComplete?: (result: any) => void;
-  maxFiles?: number;
   className?: string;
+  maxFiles?: number;
+  onUploadComplete?: (result: any) => void;
+  type: "image" | "video";
 }
 
 export function FileUpload({
-  type,
-  onUploadComplete,
-  maxFiles = 10,
   className,
+  maxFiles = 10,
+  onUploadComplete,
+  type,
 }: FileUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
@@ -33,8 +34,8 @@ export function FileUpload({
           formData.append("type", type);
 
           const response = await fetch("/api/upload", {
-            method: "POST",
             body: formData,
+            method: "POST",
           });
 
           if (!response.ok) {
@@ -78,26 +79,29 @@ export function FileUpload({
     <div className={className}>
       <div
         className={`
-          relative border-2 border-dashed rounded-lg p-6 text-center
+          relative rounded-lg border-2 border-dashed p-6 text-center
           transition-colors duration-200
           ${
             dragOver
               ? "border-primary bg-primary/5"
-              : "border-muted-foreground/25 hover:border-muted-foreground/50"
+              : `
+                border-muted-foreground/25
+                hover:border-muted-foreground/50
+              `
           }
-          ${uploading ? "opacity-50 pointer-events-none" : ""}
+          ${uploading ? "pointer-events-none opacity-50" : ""}
         `}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
       >
         <input
-          type="file"
           accept={acceptedTypes}
+          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+          disabled={uploading}
           multiple={maxFiles > 1}
           onChange={(e) => e.target.files && handleFileSelect(e.target.files)}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          disabled={uploading}
+          type="file"
         />
 
         <div className="space-y-4">
@@ -115,10 +119,10 @@ export function FileUpload({
           </div>
 
           <Button
+            className="pointer-events-none"
+            disabled={uploading}
             type="button"
             variant="outline"
-            disabled={uploading}
-            className="pointer-events-none"
           >
             {uploading ? "Uploading..." : `Choose ${type}s`}
           </Button>

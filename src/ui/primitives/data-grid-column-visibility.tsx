@@ -1,43 +1,33 @@
 import type { Table } from "@tanstack/react-table";
+import type { ReactNode } from "react";
 
-import { Settings2 } from "lucide-react";
-
-import { Button } from "~/ui/primitives/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/ui/primitives/dropdown-menu";
 
-export function DataTableViewOptions<TData>({
+function DataGridColumnVisibility<TData>({
   table,
-}: { table: Table<TData> }) {
+  trigger,
+}: {
+  table: Table<TData>;
+  trigger: ReactNode;
+}) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          className={`
-            ml-auto hidden h-8
-            lg:flex
-          `}
-          size="sm"
-          variant="outline"
-        >
-          <Settings2 className="mr-2 h-4 w-4" />
-          View
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-[150px]">
+        <DropdownMenuLabel className="font-medium">
+          Toggle Columns
+        </DropdownMenuLabel>
         {table
           .getAllColumns()
           .filter(
             (column) =>
-              typeof column.accessorFn !== "undefined" && column.getCanHide(),
+              typeof column.accessorFn !== "undefined" && column.getCanHide()
           )
           .map((column) => {
             return (
@@ -46,8 +36,9 @@ export function DataTableViewOptions<TData>({
                 className="capitalize"
                 key={column.id}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                onSelect={(event) => event.preventDefault()}
               >
-                {column.id}
+                {column.columnDef.meta?.headerTitle || column.id}
               </DropdownMenuCheckboxItem>
             );
           })}
@@ -55,3 +46,5 @@ export function DataTableViewOptions<TData>({
     </DropdownMenu>
   );
 }
+
+export { DataGridColumnVisibility };
