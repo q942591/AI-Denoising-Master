@@ -125,7 +125,7 @@
       },
       "bonusCredits": {
         "question": "How can I get free credits?",
-        "answer": "We offer a daily login bonus system where users can earn 2 credits each day by logging in and claiming them on their profile page. This is our way of rewarding users and encouraging continued use of our service. Please check your profile page's account tab to claim your daily bonus."
+        "answer": "We offer a daily login bonus system where users can earn 5 credits each day by logging in. You'll automatically receive the reward and get a notification in the message center. This is our way of rewarding users and encouraging continued use of our service. You can also click the gift icon in the top right corner to manually claim your reward."
       }
     }
   },
@@ -174,6 +174,48 @@
       "fastProcessingDesc": "Usually completed within 30 seconds, efficient and convenient",
       "multiFormat": "Multi-format Support",
       "multiFormatDesc": "Supports common image formats like JPG, PNG"
+    }
+  },
+  "DailyReward": {
+    "title": "Daily Login Reward",
+    "todayAvailable": "Today's reward available!",
+    "todayReceived": "Today's reward claimed",
+    "loginToEarn": "Login to earn 5 credits",
+    "comeBackTomorrow": "Come back tomorrow for more rewards～",
+    "claiming": "Claiming...",
+    "claimButton": "Claim 5 Credits",
+    "loadFailed": "Loading failed",
+    "claimFailed": "Claim failed, please try again",
+    "notification": {
+      "title": "🎁 Daily Login Reward",
+      "description": "Congratulations! You earned 5 credits from daily login bonus! Come back tomorrow for more～"
+    },
+    "messages": {
+      "alreadyReceived": "You have already received today's login reward",
+      "grantSuccess": "Daily login reward granted successfully",
+      "grantError": "Error occurred while granting reward"
+    },
+    "stats": {
+      "totalDays": "Total login days",
+      "totalCredits": "Total reward credits",
+      "lastClaim": "Last claimed",
+      "days": "days",
+      "credits": "credits"
+    }
+  },
+  "Image": {
+    "preview": {
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "rotateLeft": "Rotate Left",
+      "rotateRight": "Rotate Right",
+      "close": "Close",
+      "operations": {
+        "wheelZoom": "Wheel to zoom",
+        "dragMove": "Drag to move",
+        "keyRotate": "Arrow keys to rotate",
+        "escClose": "ESC to close"
+      }
     }
   }
 }

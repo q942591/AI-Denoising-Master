@@ -4,6 +4,7 @@ import {
   Settings,
   Shield,
   Upload,
+  User,
   UserIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -69,38 +70,13 @@ export function HeaderUserDropdown({
           `}
           variant="ghost"
         >
-          <Avatar
-            className={`
-              h-9 w-9 transition-all duration-200
-              group-hover:ring-2 group-hover:ring-primary/30
-            `}
-          >
+          <Avatar className="size-8">
             <AvatarImage
               alt={userName || "User"}
-              className={`
-                transition-all duration-200
-                group-hover:scale-110
-              `}
               src={userImage || undefined}
             />
-            <AvatarFallback
-              className={`
-                bg-gradient-to-br from-primary/10 to-primary/5 font-semibold
-                text-primary
-              `}
-            >
-              {userName ? (
-                userName
-                  .split(" ")
-                  .map((n: string) => n[0])
-                  .join("")
-                  .slice(0, 2)
-                  .toUpperCase()
-              ) : userEmail ? (
-                userEmail.charAt(0).toUpperCase()
-              ) : (
-                <UserIcon className="h-4 w-4" />
-              )}
+            <AvatarFallback className="bg-primary/10 text-primary">
+              <User className="size-4" />
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -150,6 +126,7 @@ export function HeaderUserDropdown({
           </div>
         </div>
         <DropdownMenuSeparator className="my-1" />
+
         <DropdownMenuItem asChild>
           <Link
             className={`
@@ -157,64 +134,13 @@ export function HeaderUserDropdown({
               hover:bg-primary/5
               focus:bg-primary/5
             `}
-            href="/dashboard/stats"
-          >
-            <BarChart className="mr-2 h-4 w-4 text-primary/60" />
-            {t("Nav.stats")}
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link
-            className={`
-              cursor-pointer transition-all
-              hover:bg-primary/5
-              focus:bg-primary/5
-            `}
-            href="/dashboard/profile"
+            href="/profile"
           >
             <UserIcon className="mr-2 h-4 w-4 text-primary/60" />
             {t("Nav.profile")}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link
-            className={`
-              cursor-pointer transition-all
-              hover:bg-primary/5
-              focus:bg-primary/5
-            `}
-            href="/dashboard/settings"
-          >
-            <Settings className="mr-2 h-4 w-4 text-primary/60" />
-            {t("Nav.settings")}
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link
-            className={`
-              cursor-pointer transition-all
-              hover:bg-primary/5
-              focus:bg-primary/5
-            `}
-            href="/dashboard/uploads"
-          >
-            <Upload className="mr-2 h-4 w-4 text-primary/60" />
-            {t("Nav.uploads")}
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link
-            className={`
-              cursor-pointer transition-all
-              hover:bg-primary/5
-              focus:bg-primary/5
-            `}
-            href="/admin/summary"
-          >
-            <Shield className="mr-2 h-4 w-4 text-primary/60" />
-            {t("Nav.admin")}
-          </Link>
-        </DropdownMenuItem>
+
         <DropdownMenuSeparator className="my-1" />
         <DropdownMenuItem
           className={cn(

@@ -12,41 +12,139 @@ import { cn } from "~/lib/cn";
 import { Button } from "~/ui/primitives/button";
 import { Skeleton } from "~/ui/primitives/skeleton";
 
+import { DailyRewardWidget } from "../daily-reward/daily-reward-widget";
 import { LanguageToggle } from "../language-toggle";
 import { NotificationsWidget } from "../notifications/notifications-widget";
 import { ThemeToggle } from "../theme-toggle";
 import { HeaderUserDropdown } from "./header-user";
 
-interface HeaderProps {
-  children?: React.ReactNode;
-  showAuth?: boolean;
-}
+// Custom denoising icon component
+const DenoisingIcon = ({ className }: { className?: string }) => (
+  <div className={cn("relative", className)}>
+    <svg
+      aria-label="AI Image Denoising Icon"
+      className={`
+        transition-all duration-300
+        group-hover:scale-110
+      `}
+      fill="none"
+      height="24"
+      role="img"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>AI Image Denoising Icon</title>
+      {/* Background grid representing noise */}
+      <defs>
+        <pattern
+          className="opacity-30"
+          height="2"
+          id="noise"
+          patternUnits="userSpaceOnUse"
+          width="2"
+        >
+          <circle
+            className="opacity-40"
+            cx="1"
+            cy="1"
+            fill="currentColor"
+            r="0.5"
+          />
+        </pattern>
 
-export function Header({ showAuth = true }: HeaderProps) {
+        {/* Gradient for the clean image effect */}
+        <linearGradient id="cleanGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.8" />
+          <stop offset="50%" stopColor="currentColor" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0.9" />
+        </linearGradient>
+      </defs>
+
+      {/* Noisy background rectangle */}
+      <rect
+        className="opacity-50"
+        fill="url(#noise)"
+        height="12"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1"
+        width="8"
+        x="2"
+        y="6"
+      />
+
+      {/* Clean enhanced rectangle */}
+      <rect
+        className="shadow-sm"
+        fill="url(#cleanGradient)"
+        height="12"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1"
+        width="8"
+        x="14"
+        y="6"
+      />
+
+      {/* Arrow indicating transformation */}
+      <path
+        className="animate-pulse"
+        d="M11 11 L13 12 L11 13"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+
+      {/* Sparkle effects around clean image */}
+      <circle
+        className="animate-pulse opacity-70"
+        cx="20"
+        cy="8"
+        fill="currentColor"
+        r="0.8"
+      />
+      <circle
+        className="animate-pulse opacity-60"
+        cx="16"
+        cy="10"
+        fill="currentColor"
+        r="0.6"
+        style={{ animationDelay: "0.2s" }}
+      />
+      <circle
+        className="animate-pulse opacity-80"
+        cx="21"
+        cy="15"
+        fill="currentColor"
+        r="0.7"
+        style={{ animationDelay: "0.4s" }}
+      />
+    </svg>
+
+    {/* Subtle glow effect */}
+    <div
+      className={`
+        absolute inset-0 rounded-full bg-primary/20 opacity-0 blur-sm
+        transition-opacity duration-300
+        group-hover:opacity-50
+      `}
+    />
+  </div>
+);
+
+export function Header(): React.ReactElement {
   const pathname = usePathname();
   const { isLoading, user } = useSupabase();
   const t = useTranslations();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const mainNavigation = [
+  const navigation = [
     { href: "/", name: t("Nav.home") },
-    // { href: "/products", name: t("Nav.products") },
+    { href: "/generate", name: t("Nav.generate") },
     { href: "/pricing", name: t("Nav.pricing") },
   ];
-
-  const dashboardNavigation = [
-    { href: "/dashboard/stats", name: t("Nav.stats") },
-    { href: "/dashboard/generate", name: t("Nav.generate") },
-    { href: "/dashboard/profile", name: t("Nav.profile") },
-    { href: "/dashboard/settings", name: t("Nav.settings") },
-    { href: "/dashboard/uploads", name: t("Nav.uploads") },
-    { href: "/admin/summary", name: t("Nav.admin") },
-  ];
-
-  const isDashboard =
-    user &&
-    (pathname.startsWith("/dashboard") || pathname.startsWith("/admin")); // todo: remove /admin when admin role is implemented
-  const navigation = isDashboard ? dashboardNavigation : mainNavigation;
 
   const renderContent = () => (
     <header
@@ -67,24 +165,20 @@ export function Header({ showAuth = true }: HeaderProps) {
           <div className="flex items-center gap-6">
             <Link
               className={`
-                group flex items-center gap-2 transition-all
+                group flex items-center gap-3 transition-all
                 hover:scale-105
               `}
               href="/"
             >
+              <DenoisingIcon className="h-6 w-6" />
               <span
                 className={cn(
                   "text-xl font-bold transition-all",
-                  !isDashboard
-                    ? `
-                      bg-gradient-to-r from-primary via-primary/80 to-primary/60
-                      bg-clip-text tracking-tight text-transparent
-                      group-hover:from-primary/90 group-hover:to-primary/50
-                    `
-                    : `
-                      text-foreground
-                      group-hover:text-primary
-                    `
+                  `
+                    bg-gradient-to-r from-primary via-primary/80 to-primary/60
+                    bg-clip-text tracking-tight text-transparent
+                    group-hover:from-primary/90 group-hover:to-primary/50
+                  `
                 )}
               >
                 {SEO_CONFIG.name}
@@ -146,62 +240,51 @@ export function Header({ showAuth = true }: HeaderProps) {
               <NotificationsWidget />
             )}
 
-            {showAuth && (
-              <div
-                className={`
-                  hidden
-                  md:block
-                `}
-              >
-                {user ? (
-                  <HeaderUserDropdown
-                    isDashboard={!!isDashboard}
-                    userEmail={user.email || ""}
-                    userImage={user.user_metadata?.avatar_url}
-                    userName={
-                      user.user_metadata?.name || user.user_metadata?.full_name
-                    }
-                  />
-                ) : isLoading ? (
-                  <Skeleton className="h-10 w-32 rounded-lg" />
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <Link href="/auth/sign-in">
-                      <Button
-                        className={`
-                          transition-all
-                          hover:scale-105 hover:bg-primary/10
-                        `}
-                        size="sm"
-                        variant="ghost"
-                      >
-                        {t("Auth.signIn")}
-                      </Button>
-                    </Link>
-                    <Link href="/auth/sign-up">
-                      <Button
-                        className={`
-                          transition-all
-                          hover:scale-105 hover:shadow-md
-                        `}
-                        size="sm"
-                      >
-                        {t("Auth.signUp")}
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            )}
+            {user && !isLoading && <DailyRewardWidget />}
 
             <LanguageToggle />
 
-            {!isDashboard &&
-              (isLoading ? (
-                <Skeleton className="h-9 w-9 rounded-full" />
+            {isLoading ? (
+              <Skeleton className="h-9 w-9 rounded-full" />
+            ) : (
+              <ThemeToggle />
+            )}
+
+            <div
+              className={`
+                hidden
+                md:block
+              `}
+            >
+              {user ? (
+                <HeaderUserDropdown
+                  isDashboard={false}
+                  userEmail={user.email || ""}
+                  userImage={user.user_metadata?.avatar_url}
+                  userName={
+                    user.user_metadata?.name || user.user_metadata?.full_name
+                  }
+                />
+              ) : isLoading ? (
+                <Skeleton className="h-10 w-32 rounded-lg" />
               ) : (
-                <ThemeToggle />
-              ))}
+                <Link
+                  href={`/auth/sign-in?redirect=${encodeURIComponent(
+                    pathname
+                  )}`}
+                >
+                  <Button
+                    className={`
+                      transition-all
+                      hover:scale-105 hover:shadow-md
+                    `}
+                    size="sm"
+                  >
+                    Get Started
+                  </Button>
+                </Link>
+              )}
+            </div>
 
             {/* Mobile menu button */}
             <Button
@@ -273,29 +356,18 @@ export function Header({ showAuth = true }: HeaderProps) {
                 })}
           </div>
 
-          {showAuth && !user && (
-            <div className="space-y-2 border-b bg-background/30 px-4 py-3">
-              <Link
-                className={`
-                  block rounded-lg px-3 py-2 text-base font-medium
-                  transition-all duration-200
-                  hover:scale-105 hover:bg-primary/5 hover:text-primary
-                `}
-                href="/auth/sign-in"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {t("Auth.signIn")}
-              </Link>
+          {!user && (
+            <div className="border-b bg-background/30 px-4 py-3">
               <Link
                 className={`
                   block rounded-lg bg-primary px-3 py-2 text-base font-medium
                   text-primary-foreground shadow-sm transition-all duration-200
                   hover:scale-105 hover:bg-primary/90 hover:shadow-md
                 `}
-                href="/auth/sign-up"
+                href={`/auth/sign-in?redirect=${encodeURIComponent(pathname)}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {t("Auth.signUp")}
+                Get Started
               </Link>
             </div>
           )}

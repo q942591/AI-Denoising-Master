@@ -125,7 +125,7 @@
       },
       "bonusCredits": {
         "question": "如何获得免费积分？",
-        "answer": "我们提供每日登录奖励系统，用户每天登录并在个人资料页面领取可获得2个积分。这是我们奖励用户并鼓励持续使用我们服务的方式。请在您的个人资料页面的账户标签页领取每日奖励。"
+        "answer": "我们提供每日登录奖励系统，用户每天登录可自动获得5个积分。登录后会在消息中心收到奖励通知。这是我们奖励用户并鼓励持续使用我们服务的方式。您也可以点击右上角的礼物图标手动领取奖励。"
       }
     }
   },
@@ -176,6 +176,48 @@
       "fastProcessingDesc": "通常在30秒内完成处理，高效便捷",
       "multiFormat": "多格式支持",
       "multiFormatDesc": "支持JPG、PNG等常见图片格式"
+    }
+  },
+  "DailyReward": {
+    "title": "每日登录奖励",
+    "todayAvailable": "今日奖励可领取！",
+    "todayReceived": "今日奖励已领取",
+    "loginToEarn": "登录即可获得 5 积分",
+    "comeBackTomorrow": "明天记得再来领取哦～",
+    "claiming": "领取中...",
+    "claimButton": "领取 5 积分",
+    "loadFailed": "加载失败",
+    "claimFailed": "领取失败，请重试",
+    "notification": {
+      "title": "🎁 每日登录奖励",
+      "description": "恭喜您获得每日登录奖励 5 积分！明天记得再来领取哦～"
+    },
+    "messages": {
+      "alreadyReceived": "今天已经获得过登录奖励了",
+      "grantSuccess": "每日登录奖励发放成功",
+      "grantError": "发放奖励时出现错误"
+    },
+    "stats": {
+      "totalDays": "累计登录天数",
+      "totalCredits": "累计奖励积分",
+      "lastClaim": "上次领取",
+      "days": "天",
+      "credits": "积分"
+    }
+  },
+  "Image": {
+    "preview": {
+      "zoomIn": "放大",
+      "zoomOut": "缩小",
+      "rotateLeft": "向左旋转",
+      "rotateRight": "向右旋转",
+      "close": "关闭",
+      "operations": {
+        "wheelZoom": "滚轮缩放",
+        "dragMove": "拖拽移动",
+        "keyRotate": "方向键旋转",
+        "escClose": "ESC 关闭"
+      }
     }
   }
 }

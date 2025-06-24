@@ -1,14 +1,14 @@
 export const SEO_CONFIG = {
   description:
-    "Relivator is a robust ecommerce template built with next.js and other modern technologies. It's designed for developers who want a fast, modern, and scalable foundation without reinventing the backend.",
-  fullName: "Relivator Next.js Template",
-  name: "Relivator",
-  slogan: "Store which makes you happy.",
+    "Professional AI image denoising platform using advanced deep learning technology to intelligently remove image noise and enhance image quality. Supports JPG, PNG and other formats with fast processing and high-quality output.",
+  fullName: "AI Image Denoising Platform - Smart Denoising, Enhanced Quality",
+  name: "AI Denoising Master",
+  slogan: "Making every image crystal clear",
 };
 
 export const SYSTEM_CONFIG = {
-  redirectAfterSignIn: "/dashboard/uploads",
-  redirectAfterSignUp: "/dashboard/uploads",
+  redirectAfterSignIn: "/dashboard/generate",
+  redirectAfterSignUp: "/dashboard/generate",
   repoName: "relivator",
   repoOwner: "blefnk",
   repoStars: true,

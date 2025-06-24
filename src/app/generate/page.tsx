@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
 
-import { getCurrentUser } from "~/lib/auth";
+import { getTranslations } from "next-intl/server";
+
+import { getCurrentSupabaseUserOrRedirect } from "~/lib/supabase/supabase-auth";
 
 import ImageDenoisePageClient from "./page.client";
 
@@ -16,11 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ImageDenoisePage() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    redirect("/auth/sign-in");
-  }
+  // 确保用户已登录，如果未登录会自动重定向到登录页面
+  await getCurrentSupabaseUserOrRedirect();
 
   return <ImageDenoisePageClient />;
 }

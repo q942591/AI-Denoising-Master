@@ -59,12 +59,12 @@ export function LanguageToggle() {
       <DropdownMenuTrigger asChild>
         <Button disabled={isChanging} size="sm" variant="ghost">
           <Globe className="h-4 w-4" />
-          <span className="ml-1">
+          {/* <span className="ml-1">
             {isChanging
               ? "..."
               : languages.find((lang) => lang.code === currentLocale)?.name ||
                 "Language"}
-          </span>
+          </span> */}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

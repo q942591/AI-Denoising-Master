@@ -12,7 +12,6 @@
     { "rule": "readable-tailwind/*", "severity": "off" },
     { "rule": "perfectionist/*", "severity": "off" }
   ],
-  "i18n-ally.localesPaths": [
-    "messages"
-  ]
+  "i18n-ally.localesPaths": ["messages"],
+  "i18n-ally.keystyle": "nested"
 }

@@ -10,13 +10,13 @@ import {
   Zap,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { useCallback, useState } from "react";
 
 import { cn } from "~/lib/cn";
 import { Badge } from "~/ui/primitives/badge";
 import { Button } from "~/ui/primitives/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/ui/primitives/card";
+import { Image } from "~/ui/primitives/image";
 
 interface DenoiseResult {
   creditsUsed: number;
@@ -289,16 +289,13 @@ export default function ImageDenoisePageClient() {
             ) : (
               <div className="space-y-4">
                 {previewUrl && (
-                  <div
-                    className={`
-                      relative aspect-video overflow-hidden rounded-lg
-                    `}
-                  >
+                  <div className="overflow-hidden rounded-lg">
                     <Image
                       alt="Preview"
-                      className="object-contain"
-                      fill
+                      className="aspect-video w-full object-contain"
+                      height={300}
                       src={previewUrl}
+                      width={500}
                     />
                   </div>
                 )}
@@ -425,16 +422,13 @@ export default function ImageDenoisePageClient() {
                           {t("result.original")}
                         </p>
                         {previewUrl && (
-                          <div
-                            className={`
-                              relative aspect-square overflow-hidden rounded-lg
-                            `}
-                          >
+                          <div className="overflow-hidden rounded-lg">
                             <Image
                               alt="Original"
-                              className="object-cover"
-                              fill
+                              className="aspect-square w-full object-cover"
+                              height={250}
                               src={previewUrl}
+                              width={250}
                             />
                           </div>
                         )}
@@ -445,15 +439,13 @@ export default function ImageDenoisePageClient() {
                         <p className="mb-2 text-sm font-medium">
                           {t("result.denoised")}
                         </p>
-                        <div
-                          className={`
-                            relative aspect-square overflow-hidden rounded-lg
-                          `}
-                        >
-                          <img
+                        <div className="overflow-hidden rounded-lg">
+                          <Image
                             alt="Denoised"
-                            className="object-cover"
+                            className="aspect-square w-full object-cover"
+                            height={250}
                             src={result.outputUrl}
+                            width={250}
                           />
                         </div>
                       </div>

@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { db } from "~/db";
 import { userTable } from "~/db/schema";
+import { checkAndGrantDailyReward } from "~/lib/daily-login-reward";
 import { createSupabaseServerClient } from "~/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
@@ -67,6 +68,9 @@ export async function POST(request: NextRequest) {
             .where(eq(userTable.id, user.id));
           console.log("Updated login time for existing user:", user.id);
         }
+
+        // 检查并发放每日登录奖励
+        await checkAndGrantDailyReward(user.id);
       } catch (dbError) {
         console.error("Database error during user creation/update:", dbError);
         // 不阻止登录流程
