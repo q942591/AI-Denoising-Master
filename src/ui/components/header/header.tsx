@@ -31,6 +31,7 @@ export function Header({ showAuth = true }: HeaderProps) {
   const mainNavigation = [
     { href: "/", name: t("Nav.home") },
     { href: "/products", name: t("Nav.products") },
+    { href: "/pricing", name: t("Nav.pricing") },
   ];
 
   const dashboardNavigation = [
@@ -49,7 +50,8 @@ export function Header({ showAuth = true }: HeaderProps) {
   const renderContent = () => (
     <header
       className={`
-        sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur
+        sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md
+        transition-all duration-200
         supports-[backdrop-filter]:bg-background/60
       `}
     >
@@ -62,14 +64,25 @@ export function Header({ showAuth = true }: HeaderProps) {
       >
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link className="flex items-center gap-2" href="/">
+            <Link
+              className={`
+                group flex items-center gap-2 transition-all
+                hover:scale-105
+              `}
+              href="/"
+            >
               <span
                 className={cn(
-                  "text-xl font-bold",
-                  !isDashboard &&
+                  "text-xl font-bold transition-all",
+                  !isDashboard
+                    ? `
+                      bg-gradient-to-r from-primary via-primary/80 to-primary/60
+                      bg-clip-text tracking-tight text-transparent
+                      group-hover:from-primary/90 group-hover:to-primary/50
                     `
-                      bg-gradient-to-r from-primary to-primary/70 bg-clip-text
-                      tracking-tight text-transparent
+                    : `
+                      text-foreground
+                      group-hover:text-primary
                     `
                 )}
               >
@@ -99,11 +112,19 @@ export function Header({ showAuth = true }: HeaderProps) {
                           <Link
                             className={cn(
                               `
-                                text-sm font-medium transition-colors
-                                hover:text-primary
+                                relative text-sm font-medium transition-all
+                                duration-200
+                                after:absolute after:-bottom-1 after:left-0
+                                after:h-0.5 after:w-0 after:bg-primary
+                                after:transition-all after:duration-200
+                                hover:scale-105 hover:text-primary
+                                hover:after:w-full
                               `,
                               isActive
-                                ? "font-semibold text-primary"
+                                ? `
+                                  font-semibold text-primary
+                                  after:w-full
+                                `
                                 : "text-muted-foreground"
                             )}
                             href={item.href}
@@ -117,7 +138,7 @@ export function Header({ showAuth = true }: HeaderProps) {
             </nav>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {isLoading ? (
               <Skeleton className="h-9 w-9 rounded-full" />
             ) : (
@@ -141,16 +162,31 @@ export function Header({ showAuth = true }: HeaderProps) {
                     }
                   />
                 ) : isLoading ? (
-                  <Skeleton className="h-10 w-32" />
+                  <Skeleton className="h-10 w-32 rounded-lg" />
                 ) : (
                   <div className="flex items-center gap-2">
                     <Link href="/auth/sign-in">
-                      <Button size="sm" variant="ghost">
+                      <Button
+                        className={`
+                          transition-all
+                          hover:scale-105 hover:bg-primary/10
+                        `}
+                        size="sm"
+                        variant="ghost"
+                      >
                         {t("Auth.signIn")}
                       </Button>
                     </Link>
                     <Link href="/auth/sign-up">
-                      <Button size="sm">{t("Auth.signUp")}</Button>
+                      <Button
+                        className={`
+                          transition-all
+                          hover:scale-105 hover:shadow-md
+                        `}
+                        size="sm"
+                      >
+                        {t("Auth.signUp")}
+                      </Button>
                     </Link>
                   </div>
                 )}
@@ -161,21 +197,26 @@ export function Header({ showAuth = true }: HeaderProps) {
 
             {!isDashboard &&
               (isLoading ? (
-                <Skeleton className={`h-9 w-9 rounded-full`} />
+                <Skeleton className="h-9 w-9 rounded-full" />
               ) : (
                 <ThemeToggle />
               ))}
 
             {/* Mobile menu button */}
             <Button
-              className="md:hidden"
+              className={`
+                transition-all
+                hover:scale-105 hover:bg-primary/10
+                md:hidden
+              `}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              size="sm"
               variant="ghost"
             >
               {mobileMenuOpen ? (
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5 transition-transform duration-200" />
               ) : (
-                <Menu className="h-5 w-5" />
+                <Menu className="h-5 w-5 transition-transform duration-200" />
               )}
             </Button>
           </div>
@@ -184,8 +225,17 @@ export function Header({ showAuth = true }: HeaderProps) {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden">
-          <div className="space-y-1 border-b px-4 py-3">
+        <div
+          className={`
+            duration-200 animate-in slide-in-from-top-2
+            md:hidden
+          `}
+        >
+          <div
+            className={`
+              space-y-1 border-b bg-background/50 px-4 py-3 backdrop-blur-sm
+            `}
+          >
             {isLoading
               ? Array.from({ length: navigation.length }).map((_, i) => (
                   <div className="py-2" key={i}>
@@ -200,12 +250,16 @@ export function Header({ showAuth = true }: HeaderProps) {
                   return (
                     <Link
                       className={cn(
-                        "block rounded-md px-3 py-2 text-base font-medium",
+                        `
+                          block rounded-lg px-3 py-2 text-base font-medium
+                          transition-all duration-200
+                          hover:scale-105
+                        `,
                         isActive
-                          ? "bg-primary/10 text-primary"
+                          ? "bg-primary/10 text-primary shadow-sm"
                           : `
                             text-foreground
-                            hover:bg-muted/50 hover:text-primary
+                            hover:bg-primary/5 hover:text-primary
                           `
                       )}
                       href={item.href}
@@ -219,11 +273,12 @@ export function Header({ showAuth = true }: HeaderProps) {
           </div>
 
           {showAuth && !user && (
-            <div className="space-y-1 border-b px-4 py-3">
+            <div className="space-y-2 border-b bg-background/30 px-4 py-3">
               <Link
                 className={`
-                  block rounded-md px-3 py-2 text-base font-medium
-                  hover:bg-muted/50
+                  block rounded-lg px-3 py-2 text-base font-medium
+                  transition-all duration-200
+                  hover:scale-105 hover:bg-primary/5 hover:text-primary
                 `}
                 href="/auth/sign-in"
                 onClick={() => setMobileMenuOpen(false)}
@@ -232,9 +287,9 @@ export function Header({ showAuth = true }: HeaderProps) {
               </Link>
               <Link
                 className={`
-                  block rounded-md bg-primary px-3 py-2 text-base font-medium
-                  text-primary-foreground
-                  hover:bg-primary/90
+                  block rounded-lg bg-primary px-3 py-2 text-base font-medium
+                  text-primary-foreground shadow-sm transition-all duration-200
+                  hover:scale-105 hover:bg-primary/90 hover:shadow-md
                 `}
                 href="/auth/sign-up"
                 onClick={() => setMobileMenuOpen(false)}

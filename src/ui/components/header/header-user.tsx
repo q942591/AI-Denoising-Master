@@ -62,15 +62,33 @@ export function HeaderUserDropdown({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          className="relative overflow-hidden rounded-full"
+          className={`
+            group relative overflow-hidden rounded-full transition-all
+            duration-200
+            hover:scale-105 hover:shadow-md hover:ring-2 hover:ring-primary/20
+          `}
           variant="ghost"
         >
-          <Avatar className="h-9 w-9">
+          <Avatar
+            className={`
+              h-9 w-9 transition-all duration-200
+              group-hover:ring-2 group-hover:ring-primary/30
+            `}
+          >
             <AvatarImage
               alt={userName || "User"}
+              className={`
+                transition-all duration-200
+                group-hover:scale-110
+              `}
               src={userImage || undefined}
             />
-            <AvatarFallback>
+            <AvatarFallback
+              className={`
+                bg-gradient-to-br from-primary/10 to-primary/5 font-semibold
+                text-primary
+              `}
+            >
               {userName ? (
                 userName
                   .split(" ")
@@ -87,14 +105,27 @@ export function HeaderUserDropdown({
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <div className="flex items-center justify-start gap-2 p-2">
-          <Avatar className="h-8 w-8 bg-primary/10">
+      <DropdownMenuContent
+        align="end"
+        className="w-64 duration-200 animate-in slide-in-from-top-2"
+      >
+        <div
+          className={`
+            flex items-center justify-start gap-3 bg-gradient-to-r
+            from-primary/5 to-transparent p-3
+          `}
+        >
+          <Avatar className="h-10 w-10 shadow-sm ring-2 ring-primary/20">
             <AvatarImage
               alt={userName || "User"}
               src={userImage || undefined}
             />
-            <AvatarFallback>
+            <AvatarFallback
+              className={`
+                bg-gradient-to-br from-primary/15 to-primary/5 font-semibold
+                text-primary
+              `}
+            >
               {userName ? (
                 userName
                   .split(" ")
@@ -105,61 +136,99 @@ export function HeaderUserDropdown({
               ) : userEmail ? (
                 userEmail.charAt(0).toUpperCase()
               ) : (
-                <UserIcon className="h-4 w-4 text-primary" />
+                <UserIcon className="h-5 w-5 text-primary" />
               )}
             </AvatarFallback>
           </Avatar>
-          <div className="flex flex-col space-y-0.5">
-            <p className="text-sm font-medium">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-semibold text-foreground">
               {userName || userEmail?.split("@")[0] || "User"}
             </p>
-            <p
-              className={"max-w-[160px] truncate text-xs text-muted-foreground"}
-            >
+            <p className="max-w-[180px] truncate text-xs text-muted-foreground">
               {userEmail}
             </p>
           </div>
         </div>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="my-1" />
         <DropdownMenuItem asChild>
-          <Link className="cursor-pointer" href="/dashboard/stats">
-            <BarChart className="mr-2 h-4 w-4" />
+          <Link
+            className={`
+              cursor-pointer transition-all
+              hover:bg-primary/5
+              focus:bg-primary/5
+            `}
+            href="/dashboard/stats"
+          >
+            <BarChart className="mr-2 h-4 w-4 text-primary/60" />
             {t("Nav.stats")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link className="cursor-pointer" href="/dashboard/profile">
-            <UserIcon className="mr-2 h-4 w-4" />
+          <Link
+            className={`
+              cursor-pointer transition-all
+              hover:bg-primary/5
+              focus:bg-primary/5
+            `}
+            href="/dashboard/profile"
+          >
+            <UserIcon className="mr-2 h-4 w-4 text-primary/60" />
             {t("Nav.profile")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link className="cursor-pointer" href="/dashboard/settings">
-            <Settings className="mr-2 h-4 w-4" />
+          <Link
+            className={`
+              cursor-pointer transition-all
+              hover:bg-primary/5
+              focus:bg-primary/5
+            `}
+            href="/dashboard/settings"
+          >
+            <Settings className="mr-2 h-4 w-4 text-primary/60" />
             {t("Nav.settings")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link className="cursor-pointer" href="/dashboard/uploads">
-            <Upload className="mr-2 h-4 w-4" />
+          <Link
+            className={`
+              cursor-pointer transition-all
+              hover:bg-primary/5
+              focus:bg-primary/5
+            `}
+            href="/dashboard/uploads"
+          >
+            <Upload className="mr-2 h-4 w-4 text-primary/60" />
             {t("Nav.uploads")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link className="cursor-pointer" href="/admin/summary">
-            <Shield className="mr-2 h-4 w-4" />
+          <Link
+            className={`
+              cursor-pointer transition-all
+              hover:bg-primary/5
+              focus:bg-primary/5
+            `}
+            href="/admin/summary"
+          >
+            <Shield className="mr-2 h-4 w-4 text-primary/60" />
             {t("Nav.admin")}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="my-1" />
         <DropdownMenuItem
           className={cn(
-            "cursor-pointer",
+            "cursor-pointer transition-all",
             isDashboard
-              ? "text-red-600"
+              ? `
+                text-red-600
+                hover:bg-red-50
+                focus:bg-red-50
+              `
               : `
                 text-destructive
-                focus:text-destructive
+                hover:bg-destructive/5
+                focus:bg-destructive/5 focus:text-destructive
               `
           )}
           onClick={() => setShowLogoutDialog(true)}
@@ -171,19 +240,28 @@ export function HeaderUserDropdown({
 
       {/* 确认登出对话框 */}
       <AlertDialog onOpenChange={setShowLogoutDialog} open={showLogoutDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="duration-200 animate-in zoom-in-95">
           <AlertDialogHeader>
-            <AlertDialogTitle>{t("Auth.confirmSignOut")}</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-lg font-semibold">
+              {t("Auth.confirmSignOut")}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">
               {t("Auth.confirmSignOutDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>{t("Common.cancel")}</AlertDialogCancel>
+          <AlertDialogFooter className="gap-2">
+            <AlertDialogCancel
+              className={`
+                transition-all
+                hover:scale-105
+              `}
+            >
+              {t("Common.cancel")}
+            </AlertDialogCancel>
             <AlertDialogAction
               className={`
-                bg-destructive text-destructive-foreground
-                hover:bg-destructive/90
+                bg-destructive text-destructive-foreground transition-all
+                hover:scale-105 hover:bg-destructive/90 hover:shadow-md
               `}
               onClick={handleSignOut}
             >

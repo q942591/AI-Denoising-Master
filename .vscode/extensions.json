@@ -6,6 +6,7 @@
     "dbaeumer.vscode-eslint",
     "chunsen.bracket-select",
     "davidanson.vscode-markdownlint",
-    "yzhang.markdown-all-in-one"
+    "yzhang.markdown-all-in-one",
+    "stagewise.stagewise-vscode-extension"
   ]
 }

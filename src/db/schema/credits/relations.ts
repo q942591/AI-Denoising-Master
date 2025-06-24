@@ -1,50 +1,52 @@
 import { relations } from "drizzle-orm";
 
-import { uploadsTable } from "../uploads/tables";
 import { userTable } from "../users/tables";
 import {
-  creditRechargeTable,
+  creditPackageFeatureTable,
+  creditPackageTable,
   creditTransactionTable,
-  userCreditBalanceTable,
 } from "./tables";
-
-// 用户积分余额表关系
-export const userCreditBalanceRelations = relations(
-  userCreditBalanceTable,
-  ({ one }) => ({
-    user: one(userTable, {
-      fields: [userCreditBalanceTable.userId],
-      references: [userTable.id],
-    }),
-  }),
-);
 
 // 积分交易记录表关系
 export const creditTransactionRelations = relations(
   creditTransactionTable,
   ({ one }) => ({
-    recharge: one(creditRechargeTable, {
-      fields: [creditTransactionTable.relatedRechargeId],
-      references: [creditRechargeTable.id],
-    }),
-    upload: one(uploadsTable, {
-      fields: [creditTransactionTable.relatedUploadId],
-      references: [uploadsTable.id],
-    }),
     user: one(userTable, {
       fields: [creditTransactionTable.userId],
       references: [userTable.id],
     }),
+    // 通过 relatedEntityId 和 relatedEntityType 可以关联到不同类型的实体
+    // 例如：套餐购买时关联到 creditPackageTable
+    // 消费时可以关联到 uploadsTable 或 generationTable
   }),
 );
 
-// 积分充值记录表关系
-export const creditRechargeRelations = relations(
-  creditRechargeTable,
+// 积分套餐表关系
+export const creditPackageRelations = relations(
+  creditPackageTable,
+  ({ many }) => ({
+    features: many(creditPackageFeatureTable),
+    // 购买该套餐的交易记录
+    transactions: many(creditTransactionTable),
+  }),
+);
+
+// 积分套餐功能表关系
+export const creditPackageFeatureRelations = relations(
+  creditPackageFeatureTable,
   ({ one }) => ({
-    user: one(userTable, {
-      fields: [creditRechargeTable.userId],
-      references: [userTable.id],
+    package: one(creditPackageTable, {
+      fields: [creditPackageFeatureTable.packageId],
+      references: [creditPackageTable.id],
     }),
   }),
 );
+
+// 扩展用户关系以包含积分相关信息
+export const extendUserCreditRelations = relations(userTable, ({ many }) => ({
+  creditTransactions: many(creditTransactionTable),
+}));
+
+// 注意：以下关系已删除：
+// ❌ userCreditBalanceRelations - 表已删除
+// ❌ creditRechargeRelations - 表已删除，功能合并到 creditTransactionTable

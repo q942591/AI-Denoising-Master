@@ -1,5 +1,4 @@
 import { getRequestConfig } from "next-intl/server";
-import { notFound } from "next/navigation";
 
 // 支持的语言列表
 export const locales = ["en", "zh"] as const;
@@ -46,11 +45,17 @@ export function setStoredLocale(locale: Locale) {
   }
 }
 
-export default getRequestConfig(async ({ locale }) => {
-  // 验证传入的 locale 是否有效
-  if (!locales.includes(locale as any)) notFound();
+export default getRequestConfig(async ({ requestLocale }) => {
+  // 从请求中获取locale，如果没有则使用默认值
+  let locale = await requestLocale;
+
+  // 如果locale无效，使用默认英文
+  if (!locale || !locales.includes(locale as any)) {
+    locale = "en";
+  }
 
   return {
+    locale,
     messages: (await import(`../messages/${locale}.json`)).default,
   };
 });

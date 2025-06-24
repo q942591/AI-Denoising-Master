@@ -28,6 +28,7 @@
   "Nav": {
     "home": "首页",
     "products": "产品",
+    "pricing": "定价",
     "dashboard": "仪表板",
     "profile": "个人资料",
     "settings": "设置",
@@ -43,5 +44,88 @@
     "edit": "编辑",
     "confirm": "确认",
     "back": "返回"
+  },
+  "Pricing": {
+    "meta": {
+      "title": "积分充值 - AI 图像处理",
+      "description": "选择最适合您的积分套餐，享受专业的 AI 图像上色和超分辨率服务"
+    },
+    "title": "选择您的积分套餐",
+    "subtitle": "为您的图像处理需求选择完美的方案",
+    "basic": "基础套餐",
+    "standard": "标准套餐",
+    "popular": "热门套餐",
+    "professional": "专业套餐",
+    "basicDescription": "适合偶尔使用的用户",
+    "standardDescription": "最受欢迎的选择，适合常规用户",
+    "popularDescription": "专业用户和小团队的超值选择",
+    "professionalDescription": "专业用户和团队的理想选择",
+    "credits": "积分",
+    "discount": "节省 {percent}%",
+    "mostPopular": "最受欢迎",
+    "bestValue": "最超值",
+    "selectPlan": "选择套餐",
+    "features": {
+      "basic_credits": "{credits} 积分",
+      "image_processing": "图像处理",
+      "colorization": "图像上色",
+      "restoration": "图像修复",
+      "enhancement": "图像增强",
+      "super_resolution": "超分辨率",
+      "no_expiry": "积分永不过期",
+      "priority_support": "优先支持",
+      "commercial_use": "允许商业使用",
+      "bulk_processing": "批量处理",
+      "api_access": "API访问",
+      "live_portrait": "LivePortrait视频生成",
+      "custom_training": "自定义模型训练"
+    },
+    "usageInstructions": {
+      "title": "如何使用积分",
+      "step1": "1积分 = 处理1张图片",
+      "step2": "上传图片并选择处理类型",
+      "step3": "处理完成后自动扣除积分",
+      "step4": "在仪表板中查看积分余额"
+    },
+    "payment": {
+      "title": "完成购买",
+      "description": "您正在购买 {planName} 套餐，包含 {credits} 积分，价格为 ${price}",
+      "processing": "正在处理支付...",
+      "success": "支付成功！积分已添加到您的账户。",
+      "error": "支付失败，请重试。",
+      "cancel": "取消",
+      "payNow": "立即支付",
+      "creating": "正在创建支付...",
+      "failed": "创建支付失败",
+      "close": "关闭",
+      "loginRequired": "请先登录再进行支付"
+    },
+    "page": {
+      "title": "积分充值",
+      "subtitle": "选择最适合您需求的积分套餐，享受专业的 AI 图像处理服务。我们提供灵活的定价方案，满足个人用户到企业客户的不同需求。"
+    },
+    "faq": {
+      "title": "常见问题",
+      "howToUse": {
+        "question": "积分如何使用？",
+        "answer": "每次使用 AI 功能处理图片时会消耗相应积分。不同功能消耗的积分数量不同，图像上色通常消耗 4-6 积分，图像超分消耗 3-5 积分。"
+      },
+      "expiry": {
+        "question": "积分有有效期吗？",
+        "answer": "是的，积分自购买之日起 12 个月内有效。我们建议您根据实际使用频率选择合适的套餐。"
+      },
+      "paymentMethods": {
+        "question": "支持哪些支付方式？",
+        "answer": "我们支持信用卡、借记卡等多种支付方式，所有支付都通过 Stripe 安全处理，确保您的支付信息安全。"
+      },
+      "refund": {
+        "question": "可以退款吗？",
+        "answer": "如果您对服务不满意，可以在购买后 7 天内申请退款。已使用的积分将按比例扣除。"
+      },
+      "bonusCredits": {
+        "question": "如何获得免费积分？",
+        "answer": "我们提供每日登录奖励系统，用户每天登录并在个人资料页面领取可获得2个积分。这是我们奖励用户并鼓励持续使用我们服务的方式。请在您的个人资料页面的账户标签页领取每日奖励。"
+      }
+    }
   }
 }
