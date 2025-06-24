@@ -219,5 +219,124 @@
         "escClose": "ESC 关闭"
       }
     }
+  },
+  "Profile": {
+    "meta": {
+      "title": "个人资料 - 账户中心",
+      "description": "查看和管理您的个人资料、积分、生成记录和账户设置"
+    },
+    "title": "个人资料",
+    "welcome": "欢迎回来，{name}！",
+    "stats": {
+      "currentBalance": "当前积分",
+      "totalGenerations": "总生成次数",
+      "successfulGenerations": "成功生成",
+      "creditsEarned": "获得积分",
+      "creditsUsed": "已用积分",
+      "memberSince": "加入时间"
+    },
+    "tabs": {
+      "gallery": "画廊",
+      "billing": "账单",
+      "settings": "设置"
+    },
+    "gallery": {
+      "title": "我的作品画廊",
+      "subtitle": "查看您所有成功生成的图片作品",
+      "empty": "暂无生成记录",
+      "emptyDescription": "开始使用AI功能来创建您的第一个作品吧！",
+      "generation": {
+        "createdAt": "创建时间",
+        "type": "处理类型",
+        "cost": "消耗积分",
+        "viewOriginal": "查看原图",
+        "download": "下载",
+        "types": {
+          "colorization": "图像上色",
+          "super_resolution": "超分辨率"
+        }
+      },
+      "startCreating": "开始创作"
+    },
+    "billing": {
+      "title": "账单与积分",
+      "subtitle": "查看您的积分交易记录和使用情况",
+      "balance": "积分余额",
+      "transactions": "交易记录",
+      "empty": "暂无交易记录",
+      "emptyDescription": "开始使用AI功能或充值积分后，交易记录将显示在这里",
+      "transaction": {
+        "type": "类型",
+        "amount": "金额",
+        "balance": "余额",
+        "description": "描述",
+        "date": "日期",
+        "status": "状态",
+        "types": {
+          "purchase": "购买积分",
+          "consumption": "消费积分",
+          "bonus": "奖励积分",
+          "refund": "退款",
+          "adjustment": "管理员调整",
+          "subscription_grant": "订阅赠送",
+          "expiration": "积分过期"
+        },
+        "statuses": {
+          "completed": "已完成",
+          "pending": "处理中",
+          "failed": "失败",
+          "cancelled": "已取消"
+        }
+      },
+      "recharge": "充值积分"
+    },
+    "settings": {
+      "title": "账户设置",
+      "subtitle": "管理您的个人信息和偏好设置",
+      "profile": {
+        "title": "个人信息",
+        "displayName": "显示名称",
+        "displayNamePlaceholder": "请输入您的显示名称",
+        "bio": "个人简介",
+        "bioPlaceholder": "介绍一下您自己...",
+        "email": "邮箱地址",
+        "emailNote": "邮箱地址由认证系统管理，无法在此修改"
+      },
+      "preferences": {
+        "title": "偏好设置",
+        "language": "界面语言",
+        "theme": "主题设置",
+        "themes": {
+          "light": "浅色主题",
+          "dark": "深色主题",
+          "system": "跟随系统"
+        }
+      },
+      "password": {
+        "title": "密码安全",
+        "changePassword": "修改密码",
+        "currentPassword": "当前密码",
+        "newPassword": "新密码",
+        "confirmPassword": "确认新密码",
+        "passwordRequirements": "密码要求：至少8个字符",
+        "updating": "更新中...",
+        "success": "密码修改成功",
+        "error": "密码修改失败，请检查当前密码是否正确"
+      },
+      "account": {
+        "title": "账户管理",
+        "deleteAccount": "删除账户",
+        "deleteAccountDescription": "永久删除您的账户和所有数据。此操作不可撤销。",
+        "deleteAccountWarning": "⚠️ 此操作将永久删除您的账户、所有生成记录、积分余额和个人数据。请谨慎操作！",
+        "deleteConfirmation": "请输入 DELETE 来确认删除",
+        "confirmText": "DELETE",
+        "deleting": "删除中...",
+        "deleteSuccess": "账户删除成功",
+        "deleteError": "账户删除失败，请重试"
+      },
+      "saving": "保存中...",
+      "saved": "设置已保存",
+      "saveError": "保存失败，请重试"
+    }
   }
 }

@@ -144,6 +144,7 @@ export function Header(): React.ReactElement {
     { href: "/", name: t("Nav.home") },
     { href: "/generate", name: t("Nav.generate") },
     { href: "/pricing", name: t("Nav.pricing") },
+    ...(user ? [{ href: "/profile", name: t("Nav.profile") }] : []),
   ];
 
   const renderContent = () => (

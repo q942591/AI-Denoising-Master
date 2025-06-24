@@ -217,5 +217,124 @@
         "escClose": "ESC to close"
       }
     }
+  },
+  "Profile": {
+    "meta": {
+      "title": "Profile - Account Center",
+      "description": "View and manage your profile, credits, generation history and account settings"
+    },
+    "title": "Profile",
+    "welcome": "Welcome back, {name}!",
+    "stats": {
+      "currentBalance": "Current Balance",
+      "totalGenerations": "Total Generations",
+      "successfulGenerations": "Successful",
+      "creditsEarned": "Credits Earned",
+      "creditsUsed": "Credits Used",
+      "memberSince": "Member Since"
+    },
+    "tabs": {
+      "gallery": "Gallery",
+      "billing": "Billing",
+      "settings": "Settings"
+    },
+    "gallery": {
+      "title": "My Gallery",
+      "subtitle": "View all your successfully generated images",
+      "empty": "No generations yet",
+      "emptyDescription": "Start using AI features to create your first masterpiece!",
+      "generation": {
+        "createdAt": "Created",
+        "type": "Type",
+        "cost": "Credits Used",
+        "viewOriginal": "View Original",
+        "download": "Download",
+        "types": {
+          "colorization": "Colorization",
+          "super_resolution": "Super Resolution"
+        }
+      },
+      "startCreating": "Start Creating"
+    },
+    "billing": {
+      "title": "Billing & Credits",
+      "subtitle": "View your credit transactions and usage history",
+      "balance": "Credit Balance",
+      "transactions": "Transaction History",
+      "empty": "No transactions yet",
+      "emptyDescription": "Start using AI features or purchase credits to see your transaction history",
+      "transaction": {
+        "type": "Type",
+        "amount": "Amount",
+        "balance": "Balance",
+        "description": "Description",
+        "date": "Date",
+        "status": "Status",
+        "types": {
+          "purchase": "Credit Purchase",
+          "consumption": "Credit Usage",
+          "bonus": "Bonus Credits",
+          "refund": "Refund",
+          "adjustment": "Admin Adjustment",
+          "subscription_grant": "Subscription Grant",
+          "expiration": "Credit Expiration"
+        },
+        "statuses": {
+          "completed": "Completed",
+          "pending": "Pending",
+          "failed": "Failed",
+          "cancelled": "Cancelled"
+        }
+      },
+      "recharge": "Buy Credits"
+    },
+    "settings": {
+      "title": "Account Settings",
+      "subtitle": "Manage your personal information and preferences",
+      "profile": {
+        "title": "Personal Information",
+        "displayName": "Display Name",
+        "displayNamePlaceholder": "Enter your display name",
+        "bio": "Bio",
+        "bioPlaceholder": "Tell us about yourself...",
+        "email": "Email Address",
+        "emailNote": "Email is managed by the authentication system and cannot be changed here"
+      },
+      "preferences": {
+        "title": "Preferences",
+        "language": "Language",
+        "theme": "Theme",
+        "themes": {
+          "light": "Light",
+          "dark": "Dark",
+          "system": "System"
+        }
+      },
+      "password": {
+        "title": "Password & Security",
+        "changePassword": "Change Password",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm New Password",
+        "passwordRequirements": "Password must be at least 8 characters",
+        "updating": "Updating...",
+        "success": "Password updated successfully",
+        "error": "Failed to update password. Please check your current password."
+      },
+      "account": {
+        "title": "Account Management",
+        "deleteAccount": "Delete Account",
+        "deleteAccountDescription": "Permanently delete your account and all data. This action cannot be undone.",
+        "deleteAccountWarning": "⚠️ This will permanently delete your account, all generation history, credit balance, and personal data. Please proceed with caution!",
+        "deleteConfirmation": "Type DELETE to confirm deletion",
+        "confirmText": "DELETE",
+        "deleting": "Deleting...",
+        "deleteSuccess": "Account deleted successfully",
+        "deleteError": "Failed to delete account. Please try again."
+      },
+      "saving": "Saving...",
+      "saved": "Settings saved",
+      "saveError": "Failed to save settings. Please try again."
+    }
   }
 }
