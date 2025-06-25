@@ -69,6 +69,7 @@ export function DailyRewardWidget() {
         // 可以添加成功提示
         console.log("每日奖励领取成功:", data.credits, "积分");
       } else {
+        console.log("每日奖励领取失败:", data.message);
         setError(data.message || t("claimFailed"));
       }
     } catch (err) {

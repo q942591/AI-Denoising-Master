@@ -84,14 +84,15 @@ export async function getDailyRewardStats(userId: string): Promise<{
       (sum, reward) => sum + reward.amount,
       0,
     );
+
+    // convert last reward date to local date string
     const lastRewardDate =
       rewards.length > 0
-        ? rewards[0].createdAt.toISOString().split("T")[0]
+        ? new Date(rewards[0].createdAt).toLocaleDateString("en-CA") // YYYY-MM-DD format
         : undefined;
 
-    // check if already received today
-    const today = new Date().toISOString().split("T")[0];
-    const todayReceived = lastRewardDate === today;
+    // check if already received today using consistent logic
+    const todayReceived = await hasReceivedDailyReward(userId);
 
     return {
       lastRewardDate,
@@ -159,7 +160,7 @@ export async function grantDailyLoginReward(userId: string): Promise<{
       description: DAILY_LOGIN_REWARD.DESCRIPTION,
       id: transactionId,
       metadata: {
-        date: new Date().toISOString().split("T")[0],
+        date: getTodayDateString(),
         rewardType: "daily_login",
       },
       status: "completed",
@@ -209,9 +210,8 @@ export async function grantDailyLoginReward(userId: string): Promise<{
  */
 export async function hasReceivedDailyReward(userId: string): Promise<boolean> {
   try {
-    // get today's start time (midnight)
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // get today's start time (midnight in local timezone)
+    const todayStart = getTodayStartTime();
 
     // query if there's a login reward transaction record today
     const todayReward = await db
@@ -225,7 +225,7 @@ export async function hasReceivedDailyReward(userId: string): Promise<boolean> {
             creditTransactionTable.description,
             DAILY_LOGIN_REWARD.DESCRIPTION,
           ),
-          gte(creditTransactionTable.createdAt, today),
+          gte(creditTransactionTable.createdAt, todayStart),
         ),
       )
       .limit(1);
@@ -235,4 +235,24 @@ export async function hasReceivedDailyReward(userId: string): Promise<boolean> {
     console.error("failed to check daily reward status:", error);
     return false;
   }
+}
+
+/**
+ * get today's date string in YYYY-MM-DD format (using local timezone)
+ */
+function getTodayDateString(): string {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+/**
+ * get today's start time (midnight in local timezone)
+ */
+function getTodayStartTime(): Date {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
 }
