@@ -7,10 +7,10 @@ export const SEO_CONFIG = {
 };
 
 export const SYSTEM_CONFIG = {
-  redirectAfterSignIn: "/dashboard/generate",
-  redirectAfterSignUp: "/dashboard/generate",
-  repoName: "relivator",
-  repoOwner: "blefnk",
+  redirectAfterSignIn: "/generate",
+  redirectAfterSignUp: "/generate",
+  repoName: "AI-Denoising-Master",
+  repoOwner: "Allen",
   repoStars: true,
 };
 
