@@ -7,7 +7,6 @@ import { SEO_CONFIG } from "~/app";
 import "~/css/globals.css";
 import { IntlProvider } from "~/components/providers/intl-provider";
 import { NotificationsProvider } from "~/components/providers/notifications-provider";
-import { StagewiseProvider } from "~/components/providers/stagewise-provider";
 import { SupabaseProvider } from "~/components/providers/SupabaseProvider";
 import { Footer } from "~/ui/components/footer";
 import { Header } from "~/ui/components/header/header";
@@ -60,7 +59,6 @@ export const metadata: Metadata = {
     { color: "#1e40af", media: "(prefers-color-scheme: dark)" },
   ],
   title: `${SEO_CONFIG.fullName}`,
-  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
@@ -98,7 +96,6 @@ export default function RootLayout({
           </ThemeProvider>
         </IntlProvider>
         <SpeedInsights />
-        <StagewiseProvider />
       </body>
     </html>
   );

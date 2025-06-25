@@ -1,13 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
-// todo: replace with actual reui component imports
-// import { Button } from "~/ui/reui/button";
-// import { Card } from "~/ui/reui/card";
-
-// 临时保留 shadcn/ui 组件，后续替换为 reui
+import { STRIPE_CONFIG } from "~/lib/stripe/config";
 import { Button } from "~/ui/primitives/button";
 import {
   Card,
@@ -16,30 +11,24 @@ import {
   CardHeader,
   CardTitle,
 } from "~/ui/primitives/card";
-import { STRIPE_CONFIG } from "~/lib/stripe/config";
 
-interface StripeCheckoutProps {
-  userId: string;
-}
-
-export function StripeCheckout({ userId }: StripeCheckoutProps) {
-  const [loading, setLoading] = useState<string | null>(null);
-  const router = useRouter();
+export function StripeCheckout() {
+  const [loading, setLoading] = useState<null | string>(null);
 
   const handleCheckout = async (priceId: string) => {
     setLoading(priceId);
 
     try {
       const response = await fetch("/api/stripe/checkout", {
-        method: "POST",
+        body: JSON.stringify({
+          cancelUrl: `${window.location.origin}/dashboard/billing?canceled=true`,
+          priceId,
+          successUrl: `${window.location.origin}/dashboard/billing?success=true`,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          priceId,
-          successUrl: `${window.location.origin}/dashboard/billing?success=true`,
-          cancelUrl: `${window.location.origin}/dashboard/billing?canceled=true`,
-        }),
+        method: "POST",
       });
 
       if (!response.ok) {
@@ -61,57 +50,70 @@ export function StripeCheckout({ userId }: StripeCheckoutProps) {
 
   const plans = [
     {
-      name: "pro",
-      title: "pro plan",
       description: "perfect for growing businesses",
-      monthlyPrice: "$29",
-      monthlyPriceId: STRIPE_CONFIG.prices.pro.monthly,
-      yearlyPrice: "$290",
-      yearlyPriceId: STRIPE_CONFIG.prices.pro.yearly,
       features: [
         "unlimited projects",
         "priority support",
         "advanced analytics",
       ],
+      monthlyPrice: "$29",
+      monthlyPriceId: STRIPE_CONFIG.prices.pro.monthly,
+      name: "pro",
       popular: false,
+      title: "pro plan",
+      yearlyPrice: "$290",
+      yearlyPriceId: STRIPE_CONFIG.prices.pro.yearly,
     },
     {
-      name: "premium",
-      title: "premium plan",
       description: "for large organizations",
-      monthlyPrice: "$99",
-      monthlyPriceId: STRIPE_CONFIG.prices.premium.monthly,
-      yearlyPrice: "$990",
-      yearlyPriceId: STRIPE_CONFIG.prices.premium.yearly,
       features: [
         "everything in pro",
         "custom integrations",
         "dedicated account manager",
       ],
+      monthlyPrice: "$99",
+      monthlyPriceId: STRIPE_CONFIG.prices.premium.monthly,
+      name: "premium",
       popular: true,
+      title: "premium plan",
+      yearlyPrice: "$990",
+      yearlyPriceId: STRIPE_CONFIG.prices.premium.yearly,
     },
   ];
 
   return (
-    <div className="grid gap-8 md:grid-cols-2">
+    <div
+      className={`
+        grid gap-8
+        md:grid-cols-2
+      `}
+    >
       {plans.map((plan) => (
         <Card
+          className={`
+            relative
+            ${
+              plan.popular
+                ? "scale-105 border-primary shadow-lg"
+                : "border-border"
+            }
+          `}
           key={plan.name}
-          className={`relative ${
-            plan.popular
-              ? "border-primary shadow-lg scale-105"
-              : "border-border"
-          }`}
         >
           {plan.popular && (
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-              <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
+              <span
+                className={`
+                  rounded-full bg-primary px-3 py-1 text-sm font-medium
+                  text-primary-foreground
+                `}
+              >
                 most popular
               </span>
             </div>
           )}
 
-          <CardHeader className="text-center pb-8">
+          <CardHeader className="pb-8 text-center">
             <CardTitle className="text-2xl font-bold">{plan.title}</CardTitle>
             <CardDescription className="text-muted-foreground">
               {plan.description}
@@ -126,15 +128,20 @@ export function StripeCheckout({ userId }: StripeCheckoutProps) {
                 <div className="text-sm text-muted-foreground">per month</div>
               </div>
               <Button
-                size="lg"
                 className="w-full"
-                variant={plan.popular ? "default" : "outline"}
-                onClick={() => handleCheckout(plan.monthlyPriceId!)}
                 disabled={loading === plan.monthlyPriceId}
+                onClick={() => handleCheckout(plan.monthlyPriceId!)}
+                size="lg"
+                variant={plan.popular ? "primary" : "outline"}
               >
                 {loading === plan.monthlyPriceId ? (
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    <div
+                      className={`
+                        h-4 w-4 animate-spin rounded-full border-2
+                        border-current border-t-transparent
+                      `}
+                    />
                     processing...
                   </div>
                 ) : (
@@ -159,20 +166,25 @@ export function StripeCheckout({ userId }: StripeCheckoutProps) {
               <div className="text-center">
                 <div className="text-3xl font-bold">{plan.yearlyPrice}</div>
                 <div className="text-sm text-muted-foreground">per year</div>
-                <div className="text-xs text-green-600 font-medium">
+                <div className="text-xs font-medium text-green-600">
                   save 17%
                 </div>
               </div>
               <Button
+                className="w-full"
+                disabled={loading === plan.yearlyPriceId}
+                onClick={() => handleCheckout(plan.yearlyPriceId!)}
                 size="lg"
                 variant="outline"
-                className="w-full"
-                onClick={() => handleCheckout(plan.yearlyPriceId!)}
-                disabled={loading === plan.yearlyPriceId}
               >
                 {loading === plan.yearlyPriceId ? (
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    <div
+                      className={`
+                        h-4 w-4 animate-spin rounded-full border-2
+                        border-current border-t-transparent
+                      `}
+                    />
                     processing...
                   </div>
                 ) : (
@@ -182,24 +194,29 @@ export function StripeCheckout({ userId }: StripeCheckoutProps) {
             </div>
 
             {/* features list */}
-            <div className="pt-6 border-t border-border">
-              <h4 className="font-semibold mb-4 text-center">
+            <div className="border-t border-border pt-6">
+              <h4 className="mb-4 text-center font-semibold">
                 what's included:
               </h4>
               <ul className="space-y-3">
                 {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <div className="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <li className="flex items-center gap-3" key={index}>
+                    <div
+                      className={`
+                        flex h-5 w-5 flex-shrink-0 items-center justify-center
+                        rounded-full bg-green-100 text-green-600
+                      `}
+                    >
                       <svg
-                        className="w-3 h-3"
+                        aria-hidden="true"
+                        className="h-3 w-3"
                         fill="currentColor"
                         viewBox="0 0 20 20"
-                        aria-hidden="true"
                       >
                         <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                           clipRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          fillRule="evenodd"
                         />
                       </svg>
                     </div>

@@ -71,9 +71,12 @@ export async function seedCreditConsumptionConfig() {
     }
 
     // 插入种子数据
-    await db
-      .insert(creditConsumptionConfigTable)
-      .values(creditConsumptionConfigs);
+    await db.insert(creditConsumptionConfigTable).values(
+      creditConsumptionConfigs.map((config) => ({
+        ...config,
+        isActive: Boolean(config.isActive),
+      })),
+    );
 
     console.log(
       `✅ 成功插入 ${creditConsumptionConfigs.length} 个积分消费配置`,

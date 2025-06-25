@@ -1,9 +1,8 @@
 import { createId } from "@paralleldrive/cuid2";
-import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 
 import { db } from "~/db";
-import { uploadsTable, userTable } from "~/db/schema";
+import { uploadsTable } from "~/db/schema";
 import { getCurrentUser } from "~/lib/auth";
 import { getPublicUrl, uploadFile } from "~/lib/supabase/storage";
 

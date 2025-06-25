@@ -4,7 +4,7 @@ import { getCurrentSupabaseUserOrRedirect } from "~/lib/supabase/supabase-auth";
 import { SignUpPageClient } from "./page.client";
 
 interface PageProps {
-  searchParams: { redirect?: string };
+  searchParams: Promise<{ redirect?: string }>;
 }
 
 export default async function SignUpPage({ searchParams }: PageProps) {
@@ -16,8 +16,9 @@ export default async function SignUpPage({ searchParams }: PageProps) {
 
   // 如果用户已登录，重定向到指定页面或默认页面
   if (user) {
+    const resolvedSearchParams = await searchParams;
     const redirectTo =
-      searchParams.redirect || SYSTEM_CONFIG.redirectAfterSignUp;
+      resolvedSearchParams.redirect || SYSTEM_CONFIG.redirectAfterSignUp;
     // 这里需要使用 redirect 函数进行服务端重定向
     const { redirect } = await import("next/navigation");
     redirect(redirectTo);

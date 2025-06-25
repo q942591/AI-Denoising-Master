@@ -212,17 +212,6 @@ export default function Loading() {
               `}
             />
           </div>
-
-          {/* status steps */}
-          <div className="flex justify-between text-sm text-gray-500">
-            <span className="animate-pulse">加载模型</span>
-            <span className="animate-pulse" style={{ animationDelay: "0.5s" }}>
-              准备处理
-            </span>
-            <span className="animate-pulse" style={{ animationDelay: "1s" }}>
-              即将完成
-            </span>
-          </div>
         </div>
       </div>
     </div>

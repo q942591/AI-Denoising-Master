@@ -49,7 +49,7 @@ const GalleryMedia: React.FC<GalleryMediaProps> = React.memo(
             setIsVideoInViewport(entry.isIntersecting);
           }
         },
-        { root: null, rootMargin: "50px", threshold: 0.1 },
+        { root: null, rootMargin: "50px", threshold: 0.1 }
       );
       observer.observe(video);
 
@@ -108,7 +108,7 @@ const GalleryMedia: React.FC<GalleryMediaProps> = React.memo(
         onDelete?.(item.id);
         onClose?.();
       },
-      [onDelete, onClose, item.id],
+      [onDelete, onClose, item.id]
     );
 
     const handleImgError = useCallback(() => {
@@ -135,7 +135,6 @@ const GalleryMedia: React.FC<GalleryMediaProps> = React.memo(
                     hover:bg-red-500
                   `}
                   onClick={handleDelete}
-                  size="icon"
                   variant="destructive"
                 >
                   <Trash2 className="h-4 w-4 text-white" />
@@ -152,7 +151,6 @@ const GalleryMedia: React.FC<GalleryMediaProps> = React.memo(
                     e.stopPropagation();
                     onClose();
                   }}
-                  size="icon"
                   variant="ghost"
                 >
                   <X className="h-4 w-4" />
@@ -219,7 +217,6 @@ const GalleryMedia: React.FC<GalleryMediaProps> = React.memo(
                   hover:bg-red-500
                 `}
                 onClick={handleDelete}
-                size="icon"
                 variant="destructive"
               >
                 <Trash2 className="h-4 w-4 text-white" />
@@ -236,7 +233,6 @@ const GalleryMedia: React.FC<GalleryMediaProps> = React.memo(
                   e.stopPropagation();
                   onClose();
                 }}
-                size="icon"
                 variant="ghost"
               >
                 <X className="h-4 w-4" />
@@ -267,7 +263,7 @@ const GalleryMedia: React.FC<GalleryMediaProps> = React.memo(
         )}
       </div>
     );
-  },
+  }
 );
 
 interface GalleryMediaModalProps {
@@ -292,7 +288,7 @@ const GalleryMediaModal: React.FC<GalleryMediaModalProps> = ({
   const navigateToMediaItem = useCallback(
     (direction: "next" | "prev") => {
       const currentIndex = mediaItems.findIndex(
-        (item) => item.id === selectedItem.id,
+        (item) => item.id === selectedItem.id
       );
       let newIndex: number;
       if (direction === "next") {
@@ -304,7 +300,7 @@ const GalleryMediaModal: React.FC<GalleryMediaModalProps> = ({
       }
       setSelectedItem(mediaItems[newIndex]);
     },
-    [mediaItems, selectedItem, setSelectedItem],
+    [mediaItems, selectedItem, setSelectedItem]
   );
 
   // Keyboard navigation
@@ -568,7 +564,7 @@ export const BentoMediaGallery: React.FC<BentoMediaGalleryProps> = ({
   title,
 }) => {
   const [selectedItem, setSelectedItem] = useState<GalleryMediaItem | null>(
-    null,
+    null
   );
 
   return (
