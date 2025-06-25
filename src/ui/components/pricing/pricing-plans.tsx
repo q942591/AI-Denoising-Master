@@ -248,9 +248,16 @@ export function PricingPlans({
   return (
     <div className={cn("w-full", className)}>
       {/* 标题部分 */}
-      <div className="mb-12 text-center">
-        <h2 className="mb-4 text-3xl font-bold tracking-tight">{t("title")}</h2>
-        <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+      <div className="mb-16 text-center">
+        <h2
+          className={`
+            mb-6 text-4xl font-bold tracking-tight text-white
+            md:text-5xl
+          `}
+        >
+          {t("title")}
+        </h2>
+        <p className="mx-auto max-w-3xl text-xl text-gray-400">
           {t("subtitle")}
         </p>
       </div>
@@ -272,14 +279,15 @@ export function PricingPlans({
             <Card
               className={cn(
                 `
-                  relative transition-all duration-300
-                  hover:shadow-lg
+                  relative flex h-full min-h-[600px] flex-col border-gray-700
+                  bg-gray-900 transition-all duration-300
+                  hover:shadow-lg hover:shadow-primary/20
                 `,
-                plan.isPopular && "scale-105 border-primary shadow-md",
+                plan.isPopular &&
+                  `scale-105 border-blue-500 shadow-md shadow-blue-500/20`,
                 isSelected && "ring-2 ring-primary"
               )}
               key={plan.id}
-              variant="accent"
             >
               {/* 热门标签 */}
               {plan.badge && (
@@ -291,139 +299,130 @@ export function PricingPlans({
                   <Badge
                     className={cn(
                       "px-3 py-1 text-xs font-medium",
-                      plan.isPopular && "bg-primary text-primary-foreground"
+                      plan.isPopular && "border-blue-500 bg-blue-600 text-white"
                     )}
-                    variant={plan.isPopular ? "primary" : "secondary"}
                   >
                     {plan.badge}
                   </Badge>
                 </div>
               )}
 
-              <CardHeader className="relative p-8 text-center">
-                {/* 图标和标题组 */}
-                <div className="relative mb-6">
-                  {/* 装饰性背景圆圈 */}
-                  <div
-                    className={`
-                    absolute inset-0 flex items-center justify-center
-                  `}
-                  >
-                    <div
-                      className={cn(
-                        "h-20 w-20 rounded-full opacity-10",
-                        plan.isPopular ? "bg-primary" : "bg-muted-foreground"
-                      )}
-                    />
-                  </div>
-
-                  {/* 图标 */}
+              <CardHeader className="relative flex-shrink-0 p-6 text-center">
+                {/* 图标 */}
+                <div className="mb-4 flex justify-center">
                   <div
                     className={cn(
                       `
-                        relative mx-auto mb-4 flex h-16 w-16 items-center
-                        justify-center rounded-full border-2 shadow-sm
-                        transition-all duration-300
+                        flex h-12 w-12 items-center justify-center rounded-full
+                        border-2 shadow-sm transition-all duration-300
                       `,
                       plan.isPopular
                         ? `
-                          border-primary/20 bg-primary/10 text-primary
-                          shadow-primary/20
+                          border-blue-500/30 bg-blue-500/20 text-blue-400
+                          shadow-blue-500/20
                         `
-                        : `
-                          border-muted-foreground/20 bg-muted
-                          text-muted-foreground
-                        `
+                        : `border-gray-600 bg-gray-800 text-gray-300`
                     )}
                   >
-                    <div className="scale-125">{plan.icon}</div>
-                  </div>
-
-                  {/* 标题和描述 */}
-                  <div className="space-y-2">
-                    <h3
-                      className={cn(
-                        "text-2xl font-bold tracking-tight",
-                        plan.isPopular ? "text-primary" : "text-foreground"
-                      )}
-                    >
-                      {plan.name}
-                    </h3>
-                    <p
-                      className={`
-                      mx-auto max-w-48 text-sm leading-relaxed
-                      text-muted-foreground
-                    `}
-                    >
-                      {plan.description}
-                    </p>
+                    {plan.icon}
                   </div>
                 </div>
 
-                {/* 价格组 */}
-                <div className="space-y-3">
-                  <div className="flex items-baseline justify-center gap-3">
+                {/* 标题 */}
+                <h3
+                  className={cn(
+                    "mb-2 text-xl font-bold tracking-tight",
+                    plan.isPopular ? "text-blue-400" : "text-white"
+                  )}
+                >
+                  {plan.name}
+                </h3>
+
+                {/* 描述 */}
+                <p className="mb-4 text-sm text-gray-400">{plan.description}</p>
+
+                {/* 价格 */}
+                <div className="mb-2">
+                  <div className="flex items-baseline justify-center gap-2">
                     <span
                       className={cn(
-                        "text-4xl font-extrabold tracking-tight",
-                        plan.isPopular ? "text-primary" : "text-foreground"
+                        "text-3xl font-bold tracking-tight",
+                        plan.isPopular ? "text-blue-400" : "text-white"
                       )}
                     >
                       {formatPrice(plan.price)}
                     </span>
                     {plan.originalPrice && (
-                      <span
-                        className={`
-                        text-xl text-muted-foreground/60 line-through
-                      `}
-                      >
+                      <span className="text-lg text-gray-500 line-through">
                         {formatPrice(plan.originalPrice)}
                       </span>
                     )}
                   </div>
+                </div>
 
-                  {discount > 0 && (
-                    <div
+                {/* 折扣标签 */}
+                {discount > 0 && (
+                  <div className="mb-2">
+                    <span
                       className={`
-                      inline-flex items-center rounded-full bg-green-100 px-3
-                      py-1 text-sm font-semibold text-green-700
-                      dark:bg-green-900/20 dark:text-green-400
-                    `}
+                        inline-flex items-center rounded-full bg-green-100 px-2
+                        py-1 text-xs font-semibold text-green-700
+                        dark:bg-green-900/20 dark:text-green-400
+                      `}
                     >
                       {t("discount", { percent: discount })}
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="text-lg font-semibold text-foreground">
-                      {plan.credits}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {t("credits")}
                     </span>
                   </div>
+                )}
+
+                {/* 积分数量 */}
+                <div className="flex items-center justify-center gap-1">
+                  <span className="text-lg font-semibold text-white">
+                    {plan.credits}
+                  </span>
+                  <span className="text-sm text-gray-400">{t("credits")}</span>
                 </div>
               </CardHeader>
 
-              <CardContent className="px-6">
+              <CardContent className="flex-1 px-6 pb-4">
                 {/* 功能列表 */}
-                <ul className="space-y-3">
-                  {plan.features.map((feature: string, index: number) => (
-                    <li className="flex items-start gap-3" key={index}>
-                      <Check
-                        className={`mt-0.5 h-4 w-4 flex-shrink-0 text-green-500`}
-                      />
-                      <span className="text-sm text-muted-foreground">
-                        {feature}
-                      </span>
+                <ul className="space-y-2">
+                  {plan.features
+                    .slice(0, 6)
+                    .map((feature: string, index: number) => (
+                      <li className="flex items-start gap-2" key={index}>
+                        <Check
+                          className={`
+                            mt-0.5 h-4 w-4 flex-shrink-0 text-green-500
+                          `}
+                        />
+                        <span className={`text-sm text-gray-300`}>
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  {plan.features.length > 6 && (
+                    <li className="text-sm text-gray-400">
+                      + {plan.features.length - 6} more features
                     </li>
-                  ))}
+                  )}
                 </ul>
               </CardContent>
 
-              <CardFooter className="px-6">
+              <CardFooter className="flex-shrink-0">
                 <Button
-                  className="w-full"
+                  className={cn(
+                    "w-full",
+                    plan.isPopular
+                      ? `
+                        bg-blue-600 text-white
+                        hover:bg-blue-700
+                      `
+                      : `
+                        border-gray-600 bg-gray-800 text-gray-300
+                        hover:bg-gray-700
+                      `
+                  )}
                   disabled={loading}
                   onClick={() => handleSelectPlan(plan)}
                   size="lg"

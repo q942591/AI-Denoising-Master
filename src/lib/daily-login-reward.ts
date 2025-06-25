@@ -8,21 +8,21 @@ import {
   userTable,
 } from "~/db/schema";
 
-// 每日登录奖励配置
+// daily login reward configuration
 const DAILY_LOGIN_REWARD = {
   CREDITS: 5,
-  DESCRIPTION: "每日登录奖励",
+  DESCRIPTION: "Daily Login Reward",
   NOTIFICATION_DESCRIPTION:
-    "恭喜您获得每日登录奖励 5 积分！明天记得再来领取哦～",
-  NOTIFICATION_TITLE: "🎁 每日登录奖励",
+    "Congratulations! You've received 5 credits for your daily login. Remember to come back tomorrow!",
+  NOTIFICATION_TITLE: "🎁 Daily Login Reward",
 };
 
 /**
- * 检查并发放每日登录奖励（用于登录流程）
+ * check and grant daily login reward (used in login flow)
  */
 export async function checkAndGrantDailyReward(userId: string): Promise<void> {
   try {
-    // 确保用户存在
+    // ensure user exists
     const user = await db
       .select()
       .from(userTable)
@@ -30,28 +30,28 @@ export async function checkAndGrantDailyReward(userId: string): Promise<void> {
       .limit(1);
 
     if (user.length === 0) {
-      console.warn(`用户 ${userId} 不存在，跳过每日奖励检查`);
+      console.warn(`user ${userId} does not exist, skip daily reward check`);
       return;
     }
 
-    // 检查并发放每日奖励
+    // check and grant daily reward
     const result = await grantDailyLoginReward(userId);
 
     if (result.success) {
       console.log(
-        `✅ 每日登录奖励发放成功: 用户 ${userId} 获得 ${result.credits} 积分`,
+        `✅ daily login reward granted successfully: user ${userId} received ${result.credits} credits`,
       );
     } else {
-      console.log(`ℹ️  每日登录奖励: ${result.message}`);
+      console.log(`ℹ️  daily login reward: ${result.message}`);
     }
   } catch (error) {
-    console.error("检查每日登录奖励失败:", error);
-    // 不抛出错误，避免影响登录流程
+    console.error("failed to check daily login reward:", error);
+    // don't throw error to avoid affecting login flow
   }
 }
 
 /**
- * 获取用户的每日奖励统计信息
+ * get user's daily reward statistics
  */
 export async function getDailyRewardStats(userId: string): Promise<{
   lastRewardDate?: string;
@@ -60,7 +60,7 @@ export async function getDailyRewardStats(userId: string): Promise<{
   totalDays: number;
 }> {
   try {
-    // 获取所有每日登录奖励记录
+    // get all daily login reward records
     const rewards = await db
       .select({
         amount: creditTransactionTable.amount,
@@ -89,7 +89,7 @@ export async function getDailyRewardStats(userId: string): Promise<{
         ? rewards[0].createdAt.toISOString().split("T")[0]
         : undefined;
 
-    // 检查今天是否已领取
+    // check if already received today
     const today = new Date().toISOString().split("T")[0];
     const todayReceived = lastRewardDate === today;
 
@@ -100,7 +100,7 @@ export async function getDailyRewardStats(userId: string): Promise<{
       totalDays,
     };
   } catch (error) {
-    console.error("获取每日奖励统计失败:", error);
+    console.error("failed to get daily reward statistics:", error);
     return {
       todayReceived: false,
       totalCredits: 0,
@@ -110,7 +110,7 @@ export async function getDailyRewardStats(userId: string): Promise<{
 }
 
 /**
- * 获取用户当前积分余额
+ * get user's current credit balance
  */
 export async function getUserCreditBalance(userId: string): Promise<number> {
   try {
@@ -123,13 +123,13 @@ export async function getUserCreditBalance(userId: string): Promise<number> {
 
     return latestTransaction.length > 0 ? latestTransaction[0].balanceAfter : 0;
   } catch (error) {
-    console.error("获取用户积分余额失败:", error);
+    console.error("failed to get user credit balance:", error);
     return 0;
   }
 }
 
 /**
- * 为用户发放每日登录奖励
+ * grant daily login reward to user
  */
 export async function grantDailyLoginReward(userId: string): Promise<{
   credits?: number;
@@ -138,20 +138,20 @@ export async function grantDailyLoginReward(userId: string): Promise<{
   success: boolean;
 }> {
   try {
-    // 检查今天是否已经获得过奖励
+    // check if already received reward today
     const hasReward = await hasReceivedDailyReward(userId);
     if (hasReward) {
       return {
-        message: "今天已经获得过登录奖励了",
+        message: "Already received login reward today",
         success: false,
       };
     }
 
-    // 获取当前积分余额
+    // get current credit balance
     const currentBalance = await getUserCreditBalance(userId);
     const newBalance = currentBalance + DAILY_LOGIN_REWARD.CREDITS;
 
-    // 创建积分交易记录
+    // create credit transaction record
     const transactionId = createId();
     await db.insert(creditTransactionTable).values({
       amount: DAILY_LOGIN_REWARD.CREDITS,
@@ -167,7 +167,7 @@ export async function grantDailyLoginReward(userId: string): Promise<{
       userId,
     });
 
-    // 创建通知
+    // create notification
     const notificationId = createId();
     await db.insert(notificationsTable).values({
       description: DAILY_LOGIN_REWARD.NOTIFICATION_DESCRIPTION,
@@ -186,34 +186,34 @@ export async function grantDailyLoginReward(userId: string): Promise<{
     });
 
     console.log(
-      `用户 ${userId} 获得每日登录奖励: ${DAILY_LOGIN_REWARD.CREDITS} 积分`,
+      `user ${userId} received daily login reward: ${DAILY_LOGIN_REWARD.CREDITS} credits`,
     );
 
     return {
       credits: DAILY_LOGIN_REWARD.CREDITS,
-      message: "每日登录奖励发放成功",
+      message: "Daily login reward granted successfully",
       newBalance,
       success: true,
     };
   } catch (error) {
-    console.error("发放每日登录奖励失败:", error);
+    console.error("failed to grant daily login reward:", error);
     return {
-      message: "发放奖励时出现错误",
+      message: "Error occurred while granting reward",
       success: false,
     };
   }
 }
 
 /**
- * 检查用户今天是否已经获得过登录奖励
+ * check if user has already received daily login reward today
  */
 export async function hasReceivedDailyReward(userId: string): Promise<boolean> {
   try {
-    // 获取今天的开始时间（凌晨0点）
+    // get today's start time (midnight)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // 查询今天是否有登录奖励交易记录
+    // query if there's a login reward transaction record today
     const todayReward = await db
       .select()
       .from(creditTransactionTable)
@@ -232,7 +232,7 @@ export async function hasReceivedDailyReward(userId: string): Promise<boolean> {
 
     return todayReward.length > 0;
   } catch (error) {
-    console.error("检查每日奖励状态失败:", error);
+    console.error("failed to check daily reward status:", error);
     return false;
   }
 }

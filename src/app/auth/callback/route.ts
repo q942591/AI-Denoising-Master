@@ -76,7 +76,7 @@ export async function GET(request: NextRequest) {
       }
 
       // 检查并发放每日登录奖励
-      await checkAndGrantDailyReward(user.id);
+      // await checkAndGrantDailyReward(user.id);
     } catch (dbError) {
       console.error("Database error during user creation/update:", dbError);
       // 不阻止登录流程，但记录错误

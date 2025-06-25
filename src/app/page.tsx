@@ -1,71 +1,122 @@
-import { ArrowRight, Clock, ShoppingBag, Star, Truck } from "lucide-react";
-import Image from "next/image";
+"use client";
+
+import {
+  ArrowRight,
+  Clock,
+  Download,
+  Shield,
+  Sparkles,
+  Star,
+  Upload,
+  Zap,
+} from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-import United24Banner from "~/ui/components/banners/u24";
-import { HeroBadge } from "~/ui/components/hero-badge";
-import { ProductCard } from "~/ui/components/product-card";
-import { TestimonialsSection } from "~/ui/components/testimonials/testimonials-with-marquee";
+import { ImageComparisonSlider } from "~/ui/components/image-comparison-slider";
+import { Starfield } from "~/ui/components/starfield";
 import { Button } from "~/ui/primitives/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/ui/primitives/card";
-
-import { categories, featuredProductsHomepage, testimonials } from "./mocks";
-
-const featuresWhyChooseUs = [
-  {
-    description:
-      "Free shipping on all orders over $50. Fast and reliable delivery to your doorstep.",
-    icon: <Truck className="h-6 w-6 text-primary" />,
-    title: "Free Shipping",
-  },
-  {
-    description:
-      "Your payment information is always safe and secure with us. We use industry-leading encryption.",
-    icon: <ShoppingBag className="h-6 w-6 text-primary" />,
-    title: "Secure Checkout",
-  },
-  {
-    description:
-      "Our customer support team is always available to help with any questions or concerns.",
-    icon: <Clock className="h-6 w-6 text-primary" />,
-    title: "24/7 Support",
-  },
-  {
-    description:
-      "We stand behind the quality of every product we sell. 30-day money-back guarantee.",
-    icon: <Star className="h-6 w-6 text-primary" />,
-    title: "Quality Guarantee",
-  },
-];
+import { Card } from "~/ui/primitives/card";
 
 export default function HomePage() {
+  const t = useTranslations("HomePage");
+
+  const features = [
+    {
+      description: t("features.aiPowered.description"),
+      icon: <Sparkles className="h-8 w-8 text-blue-500" />,
+      title: t("features.aiPowered.title"),
+    },
+    {
+      description: t("features.instantProcessing.description"),
+      icon: <Zap className="h-8 w-8 text-yellow-500" />,
+      title: t("features.instantProcessing.title"),
+    },
+    {
+      description: t("features.qualityPreservation.description"),
+      icon: <Star className="h-8 w-8 text-purple-500" />,
+      title: t("features.qualityPreservation.title"),
+    },
+    {
+      description: t("features.securePrivate.description"),
+      icon: <Shield className="h-8 w-8 text-green-500" />,
+      title: t("features.securePrivate.title"),
+    },
+  ];
+
+  const howItWorksSteps = [
+    {
+      description: t("howItWorks.steps.upload.description"),
+      icon: <Upload className="h-16 w-16" />,
+      step: "01",
+      title: t("howItWorks.steps.upload.title"),
+    },
+    {
+      description: t("howItWorks.steps.process.description"),
+      icon: <Sparkles className="h-16 w-16" />,
+      step: "02",
+      title: t("howItWorks.steps.process.title"),
+    },
+    {
+      description: t("howItWorks.steps.download.description"),
+      icon: <Download className="h-16 w-16" />,
+      step: "03",
+      title: t("howItWorks.steps.download.title"),
+    },
+  ];
+
   return (
     <>
       <main
         className={`
-          flex min-h-screen flex-col gap-y-16 bg-gradient-to-b from-muted/50
-          via-muted/25 to-background
+          min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50
+          dark:from-black dark:via-gray-950 dark:to-slate-950
         `}
       >
-        {/* Hero Section */}
+        {/* Hero Section with Starfield */}
         <section
           className={`
-            relative overflow-hidden py-24
-            md:py-32
+            relative flex min-h-screen items-center justify-center
+            overflow-hidden
           `}
         >
-          <div
+          <Starfield
             className={`
-              bg-grid-black/[0.02] absolute inset-0
-              bg-[length:20px_20px]
+              opacity-30
+              dark:opacity-60
             `}
           />
+
+          {/* Animated background gradient */}
+          <div
+            className={`
+              absolute inset-0 animate-pulse bg-gradient-to-r from-blue-200/30
+              via-purple-200/30 to-pink-200/30
+              dark:from-blue-600/20 dark:via-purple-600/20 dark:to-pink-600/20
+            `}
+          />
+
+          {/* Floating particles animation */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 30 }).map((_, i) => (
+              <div
+                className={`
+                  absolute animate-bounce rounded-full bg-gray-400/20
+                  dark:bg-white/10
+                `}
+                key={i}
+                style={{
+                  animationDelay: `${Math.random() * 3}s`,
+                  animationDuration: `${Math.random() * 3 + 2}s`,
+                  height: `${Math.random() * 8 + 4}px`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: `${Math.random() * 8 + 4}px`,
+                }}
+              />
+            ))}
+          </div>
+
           <div
             className={`
               relative z-10 container mx-auto max-w-7xl px-4
@@ -73,249 +124,187 @@ export default function HomePage() {
               lg:px-8
             `}
           >
-            <div
-              className={`
-                grid items-center gap-10
-                lg:grid-cols-2 lg:gap-12
-              `}
-            >
-              <div className="flex flex-col justify-center space-y-6">
-                <div className="space-y-4">
-                  <HeroBadge />
-
-                  <h1
-                    className={`
-                      font-display text-4xl leading-tight font-bold
-                      tracking-tight text-foreground
-                      sm:text-5xl
-                      md:text-6xl
-                      lg:leading-[1.1]
-                    `}
-                  >
-                    Your One-Stop Shop for{" "}
-                    <span
-                      className={`
-                        bg-gradient-to-r from-primary to-primary/70 bg-clip-text
-                        text-transparent
-                      `}
-                    >
-                      Everything Tech
-                    </span>
-                  </h1>
-                  <p
-                    className={`
-                      max-w-[700px] text-lg text-muted-foreground
-                      md:text-xl
-                    `}
-                  >
-                    Discover premium products at competitive prices, with fast
-                    shipping and exceptional customer service.
-                  </p>
-                </div>
+            <div className="space-y-8 text-center">
+              {/* Badge with animation */}
+              <div className="animate-fadeInUp">
                 <div
                   className={`
-                    flex flex-col gap-3
+                    inline-flex items-center gap-2 rounded-full border
+                    border-gray-300/40 bg-gray-100/80 px-4 py-2 text-gray-800
+                    backdrop-blur-sm
+                    dark:border-white/20 dark:bg-white/10 dark:text-white
+                  `}
+                >
+                  <Sparkles
+                    className={`
+                      h-4 w-4 animate-spin text-blue-600
+                      dark:text-blue-400
+                    `}
+                  />
+                  {t("hero.badge")}
+                </div>
+              </div>
+
+              {/* Main heading with gradient text */}
+              <div className="animate-fadeInUp animation-delay-200">
+                <h1
+                  className={`
+                    text-6xl font-bold tracking-tight
+                    md:text-8xl
+                  `}
+                >
+                  <span
+                    className={`
+                      bg-gradient-to-r from-gray-900 via-blue-700 to-purple-700
+                      bg-clip-text text-transparent
+                      dark:from-white dark:via-blue-200 dark:to-purple-200
+                    `}
+                  >
+                    {t("hero.title")}
+                  </span>
+                  <br />
+                  <span
+                    className={`
+                      animate-pulse bg-gradient-to-r from-blue-600
+                      via-purple-600 to-pink-600 bg-clip-text text-transparent
+                      dark:from-blue-400 dark:via-purple-400 dark:to-pink-400
+                    `}
+                  >
+                    {t("hero.titleHighlight")}
+                  </span>
+                </h1>
+              </div>
+
+              {/* Subtitle */}
+              <div className="animate-fadeInUp animation-delay-400">
+                <p
+                  className={`
+                    mx-auto max-w-4xl text-xl leading-relaxed text-gray-700
+                    md:text-2xl
+                    dark:text-blue-100
+                  `}
+                >
+                  {t("hero.subtitle")}
+                </p>
+              </div>
+
+              {/* Feature badges */}
+              <div className="animate-fadeInUp animation-delay-600">
+                <div className="flex flex-wrap justify-center gap-4 text-sm">
+                  <div
+                    className={`
+                      flex items-center gap-2 rounded-full border
+                      border-gray-300/40 bg-gray-100/80 px-4 py-2 text-gray-800
+                      backdrop-blur-sm
+                      dark:border-white/20 dark:bg-white/10 dark:text-white
+                    `}
+                  >
+                    <Clock
+                      className={`
+                        h-4 w-4 text-blue-600
+                        dark:text-blue-400
+                      `}
+                    />
+                    {t("hero.features.instant")}
+                  </div>
+                  <div
+                    className={`
+                      flex items-center gap-2 rounded-full border
+                      border-gray-300/40 bg-gray-100/80 px-4 py-2 text-gray-800
+                      backdrop-blur-sm
+                      dark:border-white/20 dark:bg-white/10 dark:text-white
+                    `}
+                  >
+                    <Star
+                      className={`
+                        h-4 w-4 text-purple-600
+                        dark:text-purple-400
+                      `}
+                    />
+                    {t("hero.features.highQuality")}
+                  </div>
+                  <div
+                    className={`
+                      flex items-center gap-2 rounded-full border
+                      border-gray-300/40 bg-gray-100/80 px-4 py-2 text-gray-800
+                      backdrop-blur-sm
+                      dark:border-white/20 dark:bg-white/10 dark:text-white
+                    `}
+                  >
+                    <Shield
+                      className={`
+                        h-4 w-4 text-green-600
+                        dark:text-green-400
+                      `}
+                    />
+                    {t("hero.features.secure")}
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="animate-fadeInUp animation-delay-800">
+                <div
+                  className={`
+                    flex flex-col justify-center gap-4
                     sm:flex-row
                   `}
                 >
-                  <Link href="/products">
+                  <Link href="/generate">
                     <Button
                       className={`
-                        h-12 gap-1.5 px-8 transition-colors duration-200
+                        h-14 transform bg-gradient-to-r from-blue-600
+                        to-purple-600 px-8 text-lg shadow-lg transition-all
+                        duration-300
+                        hover:scale-105 hover:from-blue-700 hover:to-purple-700
+                        hover:shadow-xl
                       `}
                       size="lg"
                     >
-                      Shop Now <ArrowRight className="h-4 w-4" />
+                      {t("hero.cta.primary")}
+                      <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
-                  <Link href="/showcase">
+                  <Link href="/examples">
                     <Button
-                      className="h-12 px-8 transition-colors duration-200"
+                      className={`
+                        h-14 transform border-gray-300 px-8 text-lg
+                        text-gray-800 transition-all duration-300
+                        hover:scale-105 hover:bg-gray-100
+                        dark:border-white/30 dark:text-white
+                        dark:hover:bg-white/10
+                      `}
                       size="lg"
                       variant="outline"
                     >
-                      View Showcase
+                      {t("hero.cta.secondary")}
                     </Button>
                   </Link>
                 </div>
-                <div
-                  className={`
-                    flex flex-wrap gap-5 text-sm text-muted-foreground
-                  `}
-                >
-                  <div className="flex items-center gap-1.5">
-                    <Truck className="h-5 w-5 text-primary/70" />
-                    <span>Free shipping over $50</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="h-5 w-5 text-primary/70" />
-                    <span>24/7 Customer Support</span>
-                  </div>
-                </div>
               </div>
+            </div>
+          </div>
+
+          {/* Scroll indicator */}
+          <div
+            className={`
+              absolute bottom-8 left-1/2 -translate-x-1/2 transform
+              animate-bounce
+            `}
+          >
+            <div
+              className={`
+                flex h-10 w-6 justify-center rounded-full border-2
+                border-gray-400/40
+                dark:border-white/30
+              `}
+            >
               <div
                 className={`
-                  relative mx-auto hidden aspect-square w-full max-w-md
-                  overflow-hidden rounded-xl border shadow-lg
-                  lg:block
+                  mt-2 h-3 w-1 animate-pulse rounded-full bg-gray-500/60
+                  dark:bg-white/50
                 `}
-              >
-                <div
-                  className={`
-                    absolute inset-0 z-10 bg-gradient-to-tr from-primary/20
-                    via-transparent to-transparent
-                  `}
-                />
-                <Image
-                  alt="Shopping experience"
-                  className="object-cover"
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  src="https://images.unsplash.com/photo-1624767735494-1929dc24ad43?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            className={`
-              absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent
-              via-primary/20 to-transparent
-            `}
-          />
-        </section>
-
-        {/* Featured Categories */}
-        <section
-          className={`
-            py-12
-            md:py-16
-          `}
-        >
-          <div
-            className={`
-              container mx-auto max-w-7xl px-4
-              sm:px-6
-              lg:px-8
-            `}
-          >
-            <div className="mb-8 flex flex-col items-center text-center">
-              <h2
-                className={`
-                  font-display text-3xl leading-tight font-bold tracking-tight
-                  md:text-4xl
-                `}
-              >
-                Shop by Category
-              </h2>
-              <div className="mt-2 h-1 w-12 rounded-full bg-primary" />
-              <p className="mt-4 max-w-2xl text-center text-muted-foreground">
-                Find the perfect device for your needs from our curated
-                collections
-              </p>
-            </div>
-            <div
-              className={`
-                grid grid-cols-2 gap-4
-                md:grid-cols-4 md:gap-6
-              `}
-            >
-              {categories.map((category) => (
-                <Link
-                  aria-label={`Browse ${category.name} products`}
-                  className={`
-                    group relative flex flex-col space-y-4 overflow-hidden
-                    rounded-2xl border bg-card shadow transition-all
-                    duration-300
-                    hover:shadow-lg
-                  `}
-                  href={`/products?category=${category.name.toLowerCase()}`}
-                  key={category.name}
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <div
-                      className={`
-                        absolute inset-0 z-10 bg-gradient-to-t
-                        from-background/80 to-transparent
-                      `}
-                    />
-                    <Image
-                      alt={category.name}
-                      className={`
-                        object-cover transition duration-300
-                        group-hover:scale-105
-                      `}
-                      fill
-                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-                      src={category.image}
-                    />
-                  </div>
-                  <div className="relative z-20 -mt-6 p-4">
-                    <div className="mb-1 text-lg font-medium">
-                      {category.name}
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {category.productCount} products
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Products */}
-        <section
-          className={`
-            bg-muted/50 py-12
-            md:py-16
-          `}
-        >
-          <div
-            className={`
-              container mx-auto max-w-7xl px-4
-              sm:px-6
-              lg:px-8
-            `}
-          >
-            <div className="mb-8 flex flex-col items-center text-center">
-              <h2
-                className={`
-                  font-display text-3xl leading-tight font-bold tracking-tight
-                  md:text-4xl
-                `}
-              >
-                Featured Products
-              </h2>
-              <div className="mt-2 h-1 w-12 rounded-full bg-primary" />
-              <p className="mt-4 max-w-2xl text-center text-muted-foreground">
-                Check out our latest and most popular tech items
-              </p>
-            </div>
-            <div
-              className={`
-                grid grid-cols-1 gap-6
-                sm:grid-cols-2
-                lg:grid-cols-3
-                xl:grid-cols-4
-              `}
-            >
-              {featuredProductsHomepage.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-            <div className="mt-10 flex justify-center">
-              <Link href="/products">
-                <Button className="group h-12 px-8" size="lg" variant="outline">
-                  View All Products
-                  <ArrowRight
-                    className={`
-                      ml-2 h-4 w-4 transition-transform duration-300
-                      group-hover:translate-x-1
-                    `}
-                  />
-                </Button>
-              </Link>
+              />
             </div>
           </div>
         </section>
@@ -323,10 +312,9 @@ export default function HomePage() {
         {/* Features Section */}
         <section
           className={`
-            py-12
-            md:py-16
+            bg-gradient-to-br from-white via-blue-50 to-purple-50 py-24
+            dark:from-black dark:via-gray-950 dark:to-slate-950
           `}
-          id="features"
         >
           <div
             className={`
@@ -335,68 +323,219 @@ export default function HomePage() {
               lg:px-8
             `}
           >
-            <div className="mb-8 flex flex-col items-center text-center">
+            <div className="mb-16 text-center">
               <h2
                 className={`
-                  font-display text-3xl leading-tight font-bold tracking-tight
-                  md:text-4xl
+                  mb-4 text-4xl font-bold text-gray-900
+                  md:text-5xl
+                  dark:text-white
                 `}
               >
-                Why Choose Us
+                {t("features.title")}
               </h2>
-              <div className="mt-2 h-1 w-12 rounded-full bg-primary" />
               <p
                 className={`
-                  mt-4 max-w-2xl text-center text-muted-foreground
-                  md:text-lg
+                  mx-auto max-w-3xl text-xl text-gray-600
+                  dark:text-gray-300
                 `}
               >
-                We offer the best shopping experience with premium features
+                {t("features.subtitle")}
               </p>
             </div>
+
             <div
               className={`
-                grid gap-8
+                grid grid-cols-1 gap-6
                 md:grid-cols-2
                 lg:grid-cols-4
               `}
             >
-              {featuresWhyChooseUs.map((feature) => (
-                <Card
-                  className={`
-                    rounded-2xl border-none bg-background shadow transition-all
-                    duration-300
-                    hover:shadow-lg
-                  `}
+              {features.map((feature, index) => (
+                <div
+                  className="group relative h-full"
                   key={feature.title}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <CardHeader className="pb-2">
+                  <Card
+                    className={`
+                      flex h-full min-h-[280px] transform flex-col border-0
+                      bg-white/90 p-6 shadow-lg backdrop-blur-sm transition-all
+                      duration-300
+                      group-hover:bg-white
+                      hover:scale-105 hover:shadow-xl
+                      dark:bg-gray-900/90 dark:group-hover:bg-gray-900
+                    `}
+                  >
+                    {/* Icon */}
                     <div
                       className={`
-                        mb-3 flex h-12 w-12 items-center justify-center
-                        rounded-full bg-primary/10
+                        mb-4 flex h-14 w-14 flex-shrink-0 items-center
+                        justify-center rounded-xl bg-gradient-to-br
+                        from-blue-100 to-purple-100 transition-all duration-300
+                        group-hover:from-blue-200 group-hover:to-purple-200
+                        dark:from-blue-900/50 dark:to-purple-900/50
+                        dark:group-hover:from-blue-800/60
+                        dark:group-hover:to-purple-800/60
                       `}
                     >
                       {feature.icon}
                     </div>
-                    <CardTitle>{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base">
+
+                    {/* Title */}
+                    <h3
+                      className={`
+                        mb-3 text-lg leading-tight font-semibold text-gray-900
+                        dark:text-white
+                      `}
+                    >
+                      {feature.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p
+                      className={`
+                        flex-1 text-sm leading-relaxed text-gray-600
+                        dark:text-gray-300
+                      `}
+                    >
                       {feature.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
+                    </p>
+                  </Card>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Testimonials */}
+        {/* How It Works Section */}
+        <section className={`relative bg-black py-24`}>
+          {/* Starfield background */}
+          <Starfield className={`opacity-40`} />
+
+          <div
+            className={`
+              relative z-10 container mx-auto max-w-7xl px-4
+              sm:px-6
+              lg:px-8
+            `}
+          >
+            <div className="mb-20 text-center">
+              <h2
+                className={`
+                  mb-6 text-5xl font-bold text-white
+                  md:text-6xl
+                `}
+              >
+                {t("howItWorks.title")}
+              </h2>
+              <p className={`mx-auto max-w-3xl text-xl text-gray-400`}>
+                {t("howItWorks.subtitle")}
+              </p>
+            </div>
+
+            <div className={`relative mx-auto max-w-6xl`}>
+              {/* Connection lines */}
+              <div
+                className={`
+                  absolute top-32 right-0 left-0 hidden h-0.5
+                  lg:block
+                `}
+              >
+                <div
+                  className={`
+                    mx-auto flex h-full max-w-4xl items-center justify-between
+                  `}
+                >
+                  <div
+                    className={`
+                      h-0.5 w-1/3 bg-gradient-to-r from-blue-500 to-purple-500
+                    `}
+                  />
+                  <div className={`h-2 w-2 rounded-full bg-purple-500`} />
+                  <div
+                    className={`
+                      h-0.5 w-1/3 bg-gradient-to-r from-purple-500 to-green-500
+                    `}
+                  />
+                </div>
+              </div>
+
+              <div
+                className={`
+                  grid grid-cols-1 gap-12
+                  lg:grid-cols-3
+                `}
+              >
+                {howItWorksSteps.map((step, index) => (
+                  <div
+                    className="group relative text-center"
+                    key={step.step}
+                    style={{ animationDelay: `${index * 0.2}s` }}
+                  >
+                    <div className="relative z-10">
+                      {/* Step number circle */}
+                      <div
+                        className={`
+                          mb-8 inline-flex h-20 w-20 items-center justify-center
+                          rounded-full bg-gradient-to-r text-2xl font-bold
+                          text-white transition-transform duration-300
+                          group-hover:scale-110
+                          ${
+                            index === 0
+                              ? "from-blue-500 to-blue-600"
+                              : index === 1
+                              ? "from-purple-500 to-purple-600"
+                              : "from-green-500 to-green-600"
+                          }
+                        `}
+                      >
+                        {step.step}
+                      </div>
+
+                      {/* Icon container */}
+                      <div className={`mb-8 flex justify-center`}>
+                        <div
+                          className={`
+                            rounded-2xl border border-gray-700 bg-gray-900/80
+                            p-6 backdrop-blur-sm transition-all duration-300
+                            group-hover:border-gray-600
+                            group-hover:bg-gray-800/90
+                          `}
+                        >
+                          <div
+                            className={`
+                              ${
+                                index === 0
+                                  ? "text-blue-400"
+                                  : index === 1
+                                  ? "text-purple-400"
+                                  : "text-green-400"
+                              }
+                            `}
+                          >
+                            {step.icon}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <h3 className={`mb-4 text-2xl font-bold text-white`}>
+                        {step.title}
+                      </h3>
+                      <p className={`text-gray-400`}>{step.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Demo Section */}
         <section
           className={`
-            bg-muted/50 py-12
-            md:py-16
+            bg-gradient-to-br from-white via-purple-50 to-pink-50 py-24
+            dark:from-black dark:via-gray-950 dark:to-slate-950
           `}
         >
           <div
@@ -406,92 +545,228 @@ export default function HomePage() {
               lg:px-8
             `}
           >
-            <TestimonialsSection
-              className="py-0"
-              description="Don't just take our word for it - hear from our satisfied customers"
-              testimonials={testimonials}
-              title="What Our Customers Say"
-            />
+            <div className="mb-16 text-center">
+              <h2
+                className={`
+                  mb-4 text-4xl font-bold text-gray-900
+                  md:text-5xl
+                  dark:text-white
+                `}
+              >
+                {t("demo.title")}
+              </h2>
+              <p
+                className={`
+                  mx-auto max-w-3xl text-xl text-gray-600
+                  dark:text-gray-300
+                `}
+              >
+                {t("demo.subtitle")}
+              </p>
+            </div>
+
+            <div className="mx-auto max-w-4xl">
+              {/* 图像对比滑动组件 */}
+              <div
+                className={`
+                  hover:shadow-3xl
+                  mb-8 overflow-hidden rounded-2xl shadow-2xl transition-shadow
+                  duration-300
+                `}
+              >
+                <ImageComparisonSlider
+                  afterAlt="高清修复后的图像"
+                  afterImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&auto=format&q=95"
+                  afterLabel={t("demo.after")}
+                  beforeAlt="原始低质量图像"
+                  beforeImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&auto=format&q=20"
+                  beforeLabel={t("demo.before")}
+                  className={`
+                    h-96
+                    md:h-[500px]
+                  `}
+                  dragToCompareText="拖拽滑动对比效果"
+                  improvement="75%"
+                />
+              </div>
+
+              <div className="mt-8 text-center">
+                <Link href="/examples">
+                  <Button
+                    className={`
+                      h-12 transform border-purple-300 px-8 text-lg
+                      text-purple-700 transition-all duration-300
+                      hover:scale-105 hover:bg-purple-50
+                    `}
+                    size="lg"
+                    variant="outline"
+                  >
+                    {t("demo.viewMore")}
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing Section */}
+        <section
+          className={`
+            bg-gradient-to-br from-gray-100 via-blue-100 to-indigo-100 py-24
+            dark:from-black dark:via-gray-950 dark:to-slate-950
+          `}
+        >
+          <div
+            className={`
+              container mx-auto max-w-7xl px-4
+              sm:px-6
+              lg:px-8
+            `}
+          >
+            <div className="mb-16 text-center">
+              <h2
+                className={`
+                  mb-4 text-4xl font-bold text-gray-900
+                  md:text-5xl
+                  dark:text-white
+                `}
+              >
+                {t("pricing.title")}
+              </h2>
+              <p
+                className={`
+                  mx-auto max-w-3xl text-xl text-gray-700
+                  dark:text-blue-200
+                `}
+              >
+                {t("pricing.subtitle")}
+              </p>
+            </div>
+
+            <div className="text-center">
+              <Link href="/pricing">
+                <Button
+                  className={`
+                    h-14 transform bg-gradient-to-r from-purple-600 to-pink-600
+                    px-8 text-lg shadow-lg transition-all duration-300
+                    hover:scale-105 hover:from-purple-700 hover:to-pink-700
+                    hover:shadow-xl
+                  `}
+                  size="lg"
+                >
+                  {t("pricing.viewAllPlans")}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
 
         {/* CTA Section */}
         <section
           className={`
-            py-12
-            md:py-16
+            relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600
+            py-24
           `}
         >
+          <div className="absolute inset-0 bg-black/20" />
           <div
             className={`
-              container mx-auto max-w-7xl px-4
+              relative z-10 container mx-auto max-w-7xl px-4
               sm:px-6
               lg:px-8
             `}
           >
-            <div
-              className={`
-                relative overflow-hidden rounded-xl bg-primary/10 p-8 shadow-lg
-                md:p-12
-              `}
-            >
+            <div className="space-y-8 text-center">
+              <h2
+                className={`
+                  text-4xl font-bold text-white
+                  md:text-6xl
+                `}
+              >
+                {t("cta.title")}
+              </h2>
+              <p
+                className={`
+                  mx-auto max-w-3xl text-xl text-white/90
+                  md:text-2xl
+                `}
+              >
+                {t("cta.subtitle")}
+              </p>
               <div
                 className={`
-                  bg-grid-white/[0.05] absolute inset-0
-                  bg-[length:16px_16px]
+                  flex flex-col justify-center gap-4
+                  sm:flex-row
                 `}
-              />
-              <div className="relative z-10 mx-auto max-w-2xl text-center">
-                <h2
-                  className={`
-                    font-display text-3xl leading-tight font-bold tracking-tight
-                    md:text-4xl
-                  `}
-                >
-                  Ready to Upgrade Your Tech?
-                </h2>
-                <p
-                  className={`
-                    mt-4 text-lg text-muted-foreground
-                    md:text-xl
-                  `}
-                >
-                  Join thousands of satisfied customers and experience the best
-                  tech products on the market. Sign up today for exclusive deals
-                  and offers.
-                </p>
-                <div
-                  className={`
-                    mt-6 flex flex-col items-center justify-center gap-3
-                    sm:flex-row
-                  `}
-                >
-                  <Link href="/auth/sign-up">
-                    <Button
-                      className="h-12 px-8 transition-colors duration-200"
-                      size="lg"
-                    >
-                      Sign Up Now
-                    </Button>
-                  </Link>
-                  <Link href="/products">
-                    <Button
-                      className="h-12 px-8 transition-colors duration-200"
-                      size="lg"
-                      variant="outline"
-                    >
-                      Browse Products
-                    </Button>
-                  </Link>
-                </div>
+              >
+                <Link href="/generate">
+                  <Button
+                    className={`
+                      h-14 transform bg-white px-8 text-lg text-purple-600
+                      shadow-lg transition-all duration-300
+                      hover:scale-105 hover:bg-gray-100 hover:shadow-xl
+                    `}
+                    size="lg"
+                  >
+                    {t("cta.getStarted")}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/examples">
+                  <Button
+                    className={`
+                      h-14 transform border-white/30 px-8 text-lg text-white
+                      transition-all duration-300
+                      hover:scale-105 hover:bg-white/10
+                    `}
+                    size="lg"
+                    variant="outline"
+                  >
+                    {t("cta.learnMore")}
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
         </section>
 
         {/* Sample banner */}
-        <United24Banner animateGradient={false} />
+        {/* <United24Banner animateGradient={false} /> */}
       </main>
+
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animation-delay-200 {
+          animation-delay: 0.2s;
+        }
+
+        .animation-delay-400 {
+          animation-delay: 0.4s;
+        }
+
+        .animation-delay-600 {
+          animation-delay: 0.6s;
+        }
+
+        .animation-delay-800 {
+          animation-delay: 0.8s;
+        }
+      `}</style>
     </>
   );
 }

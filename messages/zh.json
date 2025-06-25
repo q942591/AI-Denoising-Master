@@ -46,13 +46,20 @@
     "confirm": "确认",
     "back": "返回"
   },
+  "Loading": {
+    "title": "AI 图像处理",
+    "subtitle": "正在加载中",
+    "processingImage": "正在处理图像",
+    "preparingResults": "正在准备结果",
+    "almostReady": "即将完成"
+  },
   "Pricing": {
     "meta": {
       "title": "积分充值 - AI 图像处理",
       "description": "选择最适合您的积分套餐，享受专业的 AI 图像上色和超分辨率服务"
     },
-    "title": "选择您的积分套餐",
-    "subtitle": "为您的图像处理需求选择完美的方案",
+    "title": "Choose Your Credit Package",
+    "subtitle": "Select the perfect plan for your image processing needs",
     "basic": "基础套餐",
     "standard": "标准套餐",
     "popular": "热门套餐",
@@ -127,6 +134,79 @@
         "question": "如何获得免费积分？",
         "answer": "我们提供每日登录奖励系统，用户每天登录可自动获得5个积分。登录后会在消息中心收到奖励通知。这是我们奖励用户并鼓励持续使用我们服务的方式。您也可以点击右上角的礼物图标手动领取奖励。"
       }
+    }
+  },
+  "HomePage": {
+    "hero": {
+      "badge": "🚀 最新AI降噪技术",
+      "title": "专业的AI图片降噪",
+      "titleHighlight": "降噪工具",
+      "subtitle": "使用最先进的人工智能技术，快速去除图片噪点，提升图像质量，让您的照片更加清晰自然",
+      "cta": {
+        "primary": "开始降噪",
+        "secondary": "查看演示"
+      },
+      "features": {
+        "instant": "即时处理",
+        "highQuality": "高质量输出",
+        "secure": "安全可靠"
+      }
+    },
+    "features": {
+      "title": "为什么选择我们",
+      "subtitle": "体验最前沿的AI降噪技术",
+      "aiPowered": {
+        "title": "AI驱动技术",
+        "description": "基于深度学习的先进算法，智能识别并精确去除各种类型的图像噪点"
+      },
+      "instantProcessing": {
+        "title": "极速处理",
+        "description": "通常在30秒内完成降噪处理，高效便捷，节省您的宝贵时间"
+      },
+      "qualityPreservation": {
+        "title": "细节保护",
+        "description": "在有效去除噪点的同时，完美保留图像原有的细节和纹理信息"
+      },
+      "securePrivate": {
+        "title": "安全私密",
+        "description": "采用端到端加密，您的图片数据完全安全，处理后自动删除"
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "简单三步，轻松获得高质量降噪图片",
+      "steps": {
+        "upload": {
+          "title": "上传图片",
+          "description": "支持JPG、PNG格式，文件大小最大4MB"
+        },
+        "process": {
+          "title": "AI降噪",
+          "description": "AI自动分析并去除图像中的噪点"
+        },
+        "download": {
+          "title": "下载结果",
+          "description": "获得高质量的降噪图片"
+        }
+      }
+    },
+    "demo": {
+      "title": "降噪效果展示",
+      "subtitle": "查看AI降噪前后的对比效果",
+      "before": "降噪前",
+      "after": "降噪后",
+      "viewMore": "查看更多示例"
+    },
+    "pricing": {
+      "title": "选择您的套餐",
+      "subtitle": "灵活的定价方案，满足不同需求",
+      "viewAllPlans": "查看所有套餐"
+    },
+    "cta": {
+      "title": "准备开始降噪了吗？",
+      "subtitle": "立即体验最先进的AI降噪技术，让您的图片焕然一新",
+      "getStarted": "立即开始",
+      "learnMore": "了解更多"
     }
   },
   "ImageDenoise": {
@@ -353,5 +433,385 @@
     "minutesAgo": "{minutes} 分钟前",
     "hoursAgo": "{hours} 小时前",
     "daysAgo": "{days} 天前"
+  },
+  "Footer": {
+    "product": {
+      "title": "产品功能",
+      "imageDenoising": "图像降噪",
+      "superResolution": "超分辨率",
+      "pricing": "价格套餐",
+      "examples": "示例展示"
+    },
+    "support": {
+      "title": "支持与帮助",
+      "helpCenter": "帮助中心",
+      "contact": "联系我们",
+      "faq": "常见问题",
+      "apiDocs": "API 文档"
+    },
+    "legal": {
+      "title": "法律信息",
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "cookies": "Cookie 政策",
+      "refund": "退款政策"
+    },
+    "copyright": "版权所有。",
+    "madeWith": "用",
+    "by": "制作"
+  },
+  "Help": {
+    "title": "帮助中心",
+    "subtitle": "快速找到您需要的答案和解决方案",
+    "gettingStarted": {
+      "title": "开始使用",
+      "howToUse": {
+        "question": "如何使用图像降噪功能？",
+        "answer": "只需上传您的图像，我们的 AI 系统会自动分析并去除噪点。整个过程通常在几秒钟内完成。"
+      },
+      "fileFormats": {
+        "question": "支持哪些文件格式？",
+        "answer": "我们支持 JPEG、PNG、WebP、TIFF 等主流图像格式。文件大小限制为 10MB。"
+      },
+      "processing": {
+        "question": "处理时间需要多久？",
+        "answer": "大多数图像的处理时间在 1-3 秒之间，具体取决于图像大小和复杂度。"
+      }
+    },
+    "credits": {
+      "title": "积分系统",
+      "howToEarn": {
+        "question": "如何获得积分？",
+        "answer": "您可以通过购买积分包、每日签到奖励或邀请朋友注册来获得积分。"
+      },
+      "howToUse": {
+        "question": "积分如何使用？",
+        "answer": "每次使用 AI 功能都会消耗相应的积分。不同功能的积分消耗可能不同。"
+      },
+      "expiry": {
+        "question": "积分会过期吗？",
+        "answer": "购买的积分永久有效，但免费获得的积分可能有有效期限制。"
+      }
+    },
+    "technical": {
+      "title": "技术问题",
+      "quality": {
+        "question": "如何保证处理质量？",
+        "answer": "我们使用最先进的 AI 模型，并持续优化算法以提供最佳的图像处理效果。"
+      },
+      "speed": {
+        "question": "为什么处理速度这么快？",
+        "answer": "我们采用了高性能的云计算基础设施和优化的 AI 模型推理技术。"
+      },
+      "privacy": {
+        "question": "我的图像数据安全吗？",
+        "answer": "我们严格保护用户隐私，所有图像都采用加密传输和存储，处理完成后会自动删除。"
+      }
+    },
+    "contact": {
+      "title": "仍需帮助？",
+      "description": "如果您没有找到想要的答案，请随时联系我们的支持团队。",
+      "email": "邮箱",
+      "response": "响应时间",
+      "responseTime": "24小时内回复"
+    }
+  },
+  "Contact": {
+    "title": "联系我们",
+    "subtitle": "有任何问题或建议？我们随时为您提供帮助",
+    "methods": {
+      "title": "联系方式",
+      "contact": "联系方式",
+      "responseTime": "响应时间",
+      "email": {
+        "title": "邮件支持",
+        "description": "发送邮件给我们，我们会尽快回复您",
+        "response": "24小时内回复"
+      },
+      "chat": {
+        "title": "在线客服",
+        "description": "实时与我们的客服团队对话",
+        "available": "工作日 9:00-18:00",
+        "response": "即时响应"
+      },
+      "phone": {
+        "title": "电话支持",
+        "description": "紧急问题可以直接致电我们",
+        "response": "工作时间内即时响应"
+      }
+    },
+    "form": {
+      "title": "发送消息",
+      "description": "填写下面的表单，我们会尽快回复您",
+      "name": "姓名",
+      "namePlaceholder": "请输入您的姓名",
+      "email": "邮箱",
+      "emailPlaceholder": "请输入您的邮箱地址",
+      "subject": "主题",
+      "subjectPlaceholder": "请输入消息主题",
+      "message": "消息内容",
+      "messagePlaceholder": "请详细描述您的问题或建议",
+      "submit": "发送消息"
+    },
+    "faq": {
+      "title": "常见问题",
+      "description": "在联系我们之前，您也可以查看常见问题解答",
+      "link": "查看 FAQ"
+    }
+  },
+  "FAQ": {
+    "title": "常见问题",
+    "subtitle": "快速找到常见问题的答案",
+    "general": {
+      "title": "一般问题",
+      "what": {
+        "question": "什么是图像降噪？",
+        "answer": "图像降噪是一种使用 AI 技术去除图像中噪点和颗粒的过程，让图像看起来更清晰、更专业。"
+      },
+      "how": {
+        "question": "降噪技术是如何工作的？",
+        "answer": "我们使用深度学习算法分析图像中的噪点模式，然后智能地去除这些噪点，同时保持图像的重要细节。"
+      },
+      "formats": {
+        "question": "支持哪些图像格式？",
+        "answer": "我们支持 JPEG、PNG、WebP、TIFF 等主流格式，最大文件大小为 10MB。"
+      },
+      "quality": {
+        "question": "会影响图像质量吗？",
+        "answer": "不会。我们的 AI 技术专门设计用于在去除噪点的同时保持甚至增强图像质量。"
+      }
+    },
+    "credits": {
+      "title": "积分相关",
+      "what": {
+        "question": "什么是积分？",
+        "answer": "积分是我们平台的虚拟货币，用于支付 AI 图像处理服务。每次使用功能都会消耗相应积分。"
+      },
+      "how": {
+        "question": "如何获得积分？",
+        "answer": "您可以购买积分包、参与每日签到活动或邀请朋友注册来获得积分。"
+      },
+      "cost": {
+        "question": "每次处理需要多少积分？",
+        "answer": "图像降噪通常消耗 1-5 个积分，具体取决于图像大小和处理复杂度。"
+      },
+      "expiry": {
+        "question": "积分会过期吗？",
+        "answer": "购买的积分永久有效，免费积分可能有 90 天的有效期。"
+      },
+      "refund": {
+        "question": "可以退款吗？",
+        "answer": "未使用的积分可以在购买后 30 天内申请退款。已使用的积分不支持退款。"
+      }
+    },
+    "technical": {
+      "title": "技术问题",
+      "time": {
+        "question": "处理一张图片需要多长时间？",
+        "answer": "大多数图像的处理时间在 1-3 秒之间。高分辨率图像可能需要稍长时间。"
+      },
+      "size": {
+        "question": "有文件大小限制吗？",
+        "answer": "目前支持最大 10MB 的图像文件。如需处理更大文件，请联系我们的企业客服。"
+      },
+      "privacy": {
+        "question": "图像隐私如何保护？",
+        "answer": "所有图像都采用端到端加密，处理完成后会在 24 小时内自动删除，绝不保留用户数据。"
+      },
+      "api": {
+        "question": "提供 API 接口吗？",
+        "answer": "是的，我们提供 RESTful API 接口供开发者集成。详情请查看 API 文档。"
+      }
+    },
+    "account": {
+      "title": "账户管理",
+      "create": {
+        "question": "如何创建账户？",
+        "answer": "点击注册按钮，使用邮箱或社交账户即可快速创建账户。"
+      },
+      "login": {
+        "question": "忘记密码怎么办？",
+        "answer": "在登录页面点击\"忘记密码\"，按照邮件提示即可重置密码。"
+      },
+      "reset": {
+        "question": "如何修改账户信息？",
+        "answer": "登录后进入个人中心，在设置页面可以修改您的个人信息。"
+      },
+      "delete": {
+        "question": "如何删除账户？",
+        "answer": "如需删除账户，请联系客服。删除后所有数据将无法恢复。"
+      }
+    },
+    "contact": {
+      "title": "找不到答案？",
+      "description": "如果您的问题没有在这里找到答案，请联系我们的支持团队",
+      "button": "联系客服",
+      "help": "查看帮助中心"
+    }
+  },
+  "Privacy": {
+    "title": "隐私政策",
+    "subtitle": "我们重视您的隐私并致力于保护您的个人信息",
+    "lastUpdated": "最后更新",
+    "date": "2024年1月1日",
+    "introduction": "本隐私政策说明了我们如何收集、使用和保护您在使用我们服务时提供的信息。使用我们的服务即表示您同意本政策中描述的做法。",
+    "collection": {
+      "title": "信息收集",
+      "content": "我们收集您主动提供的信息，包括：注册账户时的基本信息（邮箱、用户名）；您上传的图像文件（仅用于处理目的）；服务使用记录和偏好设置。\n\n我们还会自动收集技术信息，如：设备信息和浏览器类型；IP 地址和访问时间；使用模式和性能数据。"
+    },
+    "usage": {
+      "title": "信息使用",
+      "content": "我们使用收集的信息来：提供和改进我们的 AI 图像处理服务；维护账户安全和防止欺诈；发送重要的服务通知和更新；分析使用模式以优化用户体验。\n\n我们不会将您的个人信息用于未经授权的营销目的。"
+    },
+    "sharing": {
+      "title": "信息共享",
+      "content": "我们不会向第三方出售、交易或传输您的个人信息，除非：获得您的明确同意；法律要求或配合执法部门；保护我们的权利、财产或安全；与可信的服务提供商合作（均签署严格的保密协议）。"
+    },
+    "storage": {
+      "title": "数据存储",
+      "content": "您的个人信息存储在安全的服务器上，采用行业标准的加密技术保护。上传的图像仅在处理期间临时存储，处理完成后会在 24 小时内自动删除。\n\n我们定期备份数据以防止意外丢失，并采用多重安全措施保护数据中心。"
+    },
+    "security": {
+      "title": "安全措施",
+      "content": "我们实施多层安全保护：SSL/TLS 加密传输；定期安全审计和漏洞扫描；访问控制和员工培训；入侵检测和防护系统。\n\n尽管我们采取了合理的安全措施，但请注意互联网传输不是 100% 安全的。"
+    },
+    "rights": {
+      "title": "您的权利",
+      "content": "您有权：访问和查看我们持有的您的个人信息；要求更正不准确或不完整的信息；要求删除您的个人数据；撤回之前给予的同意；投诉我们的数据处理做法。\n\n要行使这些权利，请通过下方联系方式与我们联系。"
+    },
+    "cookies": {
+      "title": "Cookie 使用",
+      "content": "我们使用 Cookie 来：保持您的登录状态；记住您的偏好设置；分析网站使用情况；提供个性化体验。\n\n您可以通过浏览器设置控制 Cookie 的使用，但禁用某些 Cookie 可能影响网站功能。"
+    },
+    "changes": {
+      "title": "政策变更",
+      "content": "我们可能会不时更新本隐私政策。重大变更会通过邮件或网站通知您。建议您定期查看本页面以了解最新信息。\n\n继续使用我们的服务即表示您接受更新后的政策。"
+    },
+    "contact": {
+      "title": "联系我们",
+      "description": "如果您对本隐私政策有任何疑问或需要行使您的权利，请联系我们：",
+      "email": "隐私邮箱",
+      "address": "联系地址",
+      "addressText": "北京市朝阳区XXX大厦XXX室"
+    }
+  },
+  "Terms": {
+    "title": "服务条款",
+    "subtitle": "使用我们的服务前，请仔细阅读以下条款",
+    "lastUpdated": "最后更新",
+    "date": "2024年1月1日",
+    "introduction": "欢迎使用我们的 AI 图像处理服务。以下条款和条件构成您与我们之间的法律协议。使用我们的服务即表示您同意受这些条款的约束。",
+    "acceptance": {
+      "title": "条款接受",
+      "content": "通过访问或使用我们的服务，您确认已阅读、理解并同意受本服务条款的约束。如果您不同意这些条款，请不要使用我们的服务。\n\n这些条款适用于所有用户，包括免费用户和付费用户。"
+    },
+    "description": {
+      "title": "服务描述",
+      "content": "我们提供基于人工智能的图像处理服务，包括但不限于图像降噪、超分辨率等功能。服务通过网站和 API 接口提供。\n\n我们保留随时修改、暂停或终止任何服务功能的权利，但会提前通知用户。"
+    },
+    "account": {
+      "title": "账户责任",
+      "content": "您有责任保护您的账户信息和密码的安全。您对通过您账户进行的所有活动负责。\n\n请立即通知我们任何未经授权使用您账户的情况。我们不对因您未能保护账户信息而造成的损失负责。"
+    },
+    "usage": {
+      "title": "使用规则",
+      "content": "您同意不将服务用于：非法目的或违反当地法律；上传恶意软件或有害内容；侵犯他人的知识产权；干扰或破坏服务的正常运行；进行逆向工程或尝试获取源代码。\n\n违反这些规则可能导致账户暂停或终止。"
+    },
+    "payment": {
+      "title": "付款条款",
+      "content": "付费服务需要预先购买积分。所有价格均以人民币计价并含税。\n\n退款政策：未使用的积分可在购买后 30 天内申请退款。已使用的积分不支持退款。我们保留拒绝退款申请的权利。"
+    },
+    "content": {
+      "title": "内容和知识产权",
+      "content": "您上传的内容仍归您所有。但您授予我们使用、存储和处理这些内容以提供服务的许可。\n\n我们的服务、软件和内容受知识产权法保护。未经许可，您不得复制、修改或分发我们的内容。"
+    },
+    "termination": {
+      "title": "服务终止",
+      "content": "您可以随时停止使用我们的服务。我们也可能因违反条款或其他原因暂停或终止您的账户。\n\n终止后，您将无法访问您的账户和数据。我们可能在合理期限后删除您的数据。"
+    },
+    "liability": {
+      "title": "责任限制",
+      "content": "在法律允许的最大范围内，我们不对因使用或无法使用服务而产生的任何间接、偶然或后果性损害负责。\n\n我们的总责任不超过您在过去 12 个月内支付给我们的费用。"
+    },
+    "changes": {
+      "title": "条款变更",
+      "content": "我们可能会更新这些条款。重大变更会提前 30 天通知您。\n\n继续使用服务即表示您接受修改后的条款。如果您不同意变更，请停止使用服务。"
+    },
+    "governing": {
+      "title": "管辖法律",
+      "content": "这些条款受中华人民共和国法律管辖。任何争议将通过友好协商解决，协商不成的，提交北京仲裁委员会仲裁。"
+    },
+    "contact": {
+      "title": "联系我们",
+      "description": "如果您对这些条款有任何疑问，请联系我们：",
+      "email": "法务邮箱",
+      "address": "联系地址",
+      "addressText": "北京市朝阳区XXX大厦XXX室"
+    }
+  },
+  "Examples": {
+    "title": "效果展示",
+    "subtitle": "查看我们 AI 技术的真实处理效果",
+    "stats": {
+      "processed": "已处理图片",
+      "avgTime": "平均处理时间",
+      "avgImprovement": "平均质量提升"
+    },
+    "categories": {
+      "portrait": "人像照片",
+      "landscape": "风景照片",
+      "indoor": "室内场景",
+      "old": "老旧照片",
+      "document": "文档扫描",
+      "product": "产品图片"
+    },
+    "examples": {
+      "portrait": {
+        "title": "人像降噪处理",
+        "description": "去除肌肤噪点，保持自然细节"
+      },
+      "landscape": {
+        "title": "风景照片优化",
+        "description": "清理天空噪点，增强细节层次"
+      },
+      "indoor": {
+        "title": "室内低光降噪",
+        "description": "改善昏暗环境下的图像质量"
+      },
+      "old": {
+        "title": "老照片修复",
+        "description": "去除年代久远照片的颗粒和噪点"
+      },
+      "document": {
+        "title": "文档清理",
+        "description": "清理扫描文档中的噪点和污渍"
+      },
+      "product": {
+        "title": "产品图优化",
+        "description": "提升商品图片的专业质感"
+      }
+    },
+    "comparison": {
+      "before": "处理前",
+      "after": "处理后",
+      "beforeAlt": "处理前的图像",
+      "afterAlt": "处理后的图像",
+      "dragToCompare": "拖拽对比"
+    },
+    "actions": {
+      "view": "查看详情",
+      "download": "下载图片"
+    },
+    "details": {
+      "credits": "积分消耗",
+      "processTime": "处理时间",
+      "date": "处理日期"
+    },
+    "cta": {
+      "title": "准备体验 AI 图像处理？",
+      "description": "立即开始，让您的图片焕然一新",
+      "try": "免费试用",
+      "pricing": "查看价格"
+    }
   }
 }

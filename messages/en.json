@@ -46,6 +46,13 @@
     "confirm": "Confirm",
     "back": "Back"
   },
+  "Loading": {
+    "title": "AI Image Processing",
+    "subtitle": "Loading",
+    "processingImage": "Processing Image",
+    "preparingResults": "Preparing Results",
+    "almostReady": "Almost Ready"
+  },
   "Pricing": {
     "meta": {
       "title": "Credit Recharge - AI Image Processing",
@@ -127,6 +134,79 @@
         "question": "How can I get free credits?",
         "answer": "We offer a daily login bonus system where users can earn 5 credits each day by logging in. You'll automatically receive the reward and get a notification in the message center. This is our way of rewarding users and encouraging continued use of our service. You can also click the gift icon in the top right corner to manually claim your reward."
       }
+    }
+  },
+  "HomePage": {
+    "hero": {
+      "badge": "🚀 Latest AI Denoising Technology",
+      "title": "Professional AI Image",
+      "titleHighlight": "Denoising Tool",
+      "subtitle": "Using the most advanced artificial intelligence technology to quickly remove image noise, enhance image quality, and make your photos clearer and more natural",
+      "cta": {
+        "primary": "Start Denoising",
+        "secondary": "View Demo"
+      },
+      "features": {
+        "instant": "Instant Processing",
+        "highQuality": "High Quality Output",
+        "secure": "Secure & Reliable"
+      }
+    },
+    "features": {
+      "title": "Why Choose Us",
+      "subtitle": "Experience the most advanced AI denoising technology",
+      "aiPowered": {
+        "title": "AI-Powered Technology",
+        "description": "Advanced algorithms based on deep learning that intelligently identify and precisely remove various types of image noise"
+      },
+      "instantProcessing": {
+        "title": "Lightning Fast",
+        "description": "Usually completed within 30 seconds, efficient and convenient, saving your valuable time"
+      },
+      "qualityPreservation": {
+        "title": "Detail Preservation",
+        "description": "Effectively removes noise while perfectly preserving the original details and texture information of the image"
+      },
+      "securePrivate": {
+        "title": "Secure & Private",
+        "description": "End-to-end encryption ensures your image data is completely safe, automatically deleted after processing"
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Three simple steps to get high-quality denoised images",
+      "steps": {
+        "upload": {
+          "title": "Upload Image",
+          "description": "Supports JPG, PNG formats, max file size 4MB"
+        },
+        "process": {
+          "title": "AI Denoising",
+          "description": "AI automatically analyzes and removes noise from the image"
+        },
+        "download": {
+          "title": "Download Result",
+          "description": "Get your high-quality denoised image"
+        }
+      }
+    },
+    "demo": {
+      "title": "Denoising Results",
+      "subtitle": "See the before and after comparison of AI denoising",
+      "before": "Before",
+      "after": "After",
+      "viewMore": "View More Examples"
+    },
+    "pricing": {
+      "title": "Choose Your Plan",
+      "subtitle": "Flexible pricing plans to meet different needs",
+      "viewAllPlans": "View All Plans"
+    },
+    "cta": {
+      "title": "Ready to Start Denoising?",
+      "subtitle": "Experience the most advanced AI denoising technology and give your images a new look",
+      "getStarted": "Get Started",
+      "learnMore": "Learn More"
     }
   },
   "ImageDenoise": {
@@ -351,5 +431,385 @@
     "minutesAgo": "{minutes} minutes ago",
     "hoursAgo": "{hours} hours ago",
     "daysAgo": "{days} days ago"
+  },
+  "Footer": {
+    "product": {
+      "title": "Product Features",
+      "imageDenoising": "Image Denoising",
+      "superResolution": "Super Resolution",
+      "pricing": "Pricing Plans",
+      "examples": "Examples"
+    },
+    "support": {
+      "title": "Support & Help",
+      "helpCenter": "Help Center",
+      "contact": "Contact Us",
+      "faq": "FAQ",
+      "apiDocs": "API Documentation"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy",
+      "refund": "Refund Policy"
+    },
+    "copyright": "All rights reserved.",
+    "madeWith": "Made with",
+    "by": "by"
+  },
+  "Help": {
+    "title": "Help Center",
+    "subtitle": "Find quick answers and solutions to your questions",
+    "gettingStarted": {
+      "title": "Getting Started",
+      "howToUse": {
+        "question": "How to use image denoising feature?",
+        "answer": "Simply upload your image, and our AI system will automatically analyze and remove noise. The entire process typically completes within seconds."
+      },
+      "fileFormats": {
+        "question": "What file formats are supported?",
+        "answer": "We support mainstream image formats including JPEG, PNG, WebP, TIFF. File size limit is 10MB."
+      },
+      "processing": {
+        "question": "How long does processing take?",
+        "answer": "Most images are processed within 1-3 seconds, depending on image size and complexity."
+      }
+    },
+    "credits": {
+      "title": "Credit System",
+      "howToEarn": {
+        "question": "How to earn credits?",
+        "answer": "You can earn credits by purchasing credit packages, daily login rewards, or inviting friends to register."
+      },
+      "howToUse": {
+        "question": "How are credits used?",
+        "answer": "Each AI feature usage consumes corresponding credits. Different features may consume different amounts of credits."
+      },
+      "expiry": {
+        "question": "Do credits expire?",
+        "answer": "Purchased credits are permanent, but free credits may have expiration limits."
+      }
+    },
+    "technical": {
+      "title": "Technical Issues",
+      "quality": {
+        "question": "How to ensure processing quality?",
+        "answer": "We use state-of-the-art AI models and continuously optimize algorithms to provide the best image processing results."
+      },
+      "speed": {
+        "question": "Why is processing so fast?",
+        "answer": "We employ high-performance cloud computing infrastructure and optimized AI model inference technology."
+      },
+      "privacy": {
+        "question": "Is my image data secure?",
+        "answer": "We strictly protect user privacy with encrypted transmission and storage. Images are automatically deleted after processing."
+      }
+    },
+    "contact": {
+      "title": "Still Need Help?",
+      "description": "If you haven't found the answer you're looking for, feel free to contact our support team.",
+      "email": "Email",
+      "response": "Response Time",
+      "responseTime": "Reply within 24 hours"
+    }
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "subtitle": "Have questions or suggestions? We're here to help",
+    "methods": {
+      "title": "Contact Methods",
+      "contact": "Contact",
+      "responseTime": "Response Time",
+      "email": {
+        "title": "Email Support",
+        "description": "Send us an email and we'll get back to you soon",
+        "response": "Reply within 24 hours"
+      },
+      "chat": {
+        "title": "Live Chat",
+        "description": "Chat with our support team in real-time",
+        "available": "Weekdays 9:00-18:00",
+        "response": "Instant response"
+      },
+      "phone": {
+        "title": "Phone Support",
+        "description": "Call us directly for urgent issues",
+        "response": "Instant response during business hours"
+      }
+    },
+    "form": {
+      "title": "Send Message",
+      "description": "Fill out the form below and we'll get back to you soon",
+      "name": "Name",
+      "namePlaceholder": "Enter your name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email address",
+      "subject": "Subject",
+      "subjectPlaceholder": "Enter message subject",
+      "message": "Message",
+      "messagePlaceholder": "Please describe your question or suggestion in detail",
+      "submit": "Send Message"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "You can also check our FAQ before contacting us",
+      "link": "View FAQ"
+    }
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find quick answers to common questions",
+    "general": {
+      "title": "General Questions",
+      "what": {
+        "question": "What is image denoising?",
+        "answer": "Image denoising is a process that uses AI technology to remove noise and grain from images, making them look clearer and more professional."
+      },
+      "how": {
+        "question": "How does the denoising technology work?",
+        "answer": "We use deep learning algorithms to analyze noise patterns in images, then intelligently remove these noises while preserving important image details."
+      },
+      "formats": {
+        "question": "What image formats are supported?",
+        "answer": "We support mainstream formats including JPEG, PNG, WebP, TIFF, with a maximum file size of 10MB."
+      },
+      "quality": {
+        "question": "Does it affect image quality?",
+        "answer": "No. Our AI technology is specifically designed to remove noise while preserving or even enhancing image quality."
+      }
+    },
+    "credits": {
+      "title": "Credits Related",
+      "what": {
+        "question": "What are credits?",
+        "answer": "Credits are the virtual currency of our platform, used to pay for AI image processing services. Each feature usage consumes corresponding credits."
+      },
+      "how": {
+        "question": "How to get credits?",
+        "answer": "You can purchase credit packages, participate in daily check-in activities, or invite friends to register to earn credits."
+      },
+      "cost": {
+        "question": "How many credits does each processing cost?",
+        "answer": "Image denoising typically consumes 1-5 credits, depending on image size and processing complexity."
+      },
+      "expiry": {
+        "question": "Do credits expire?",
+        "answer": "Purchased credits are permanent, free credits may have a 90-day validity period."
+      },
+      "refund": {
+        "question": "Can I get a refund?",
+        "answer": "Unused credits can be refunded within 30 days of purchase. Used credits are non-refundable."
+      }
+    },
+    "technical": {
+      "title": "Technical Issues",
+      "time": {
+        "question": "How long does it take to process one image?",
+        "answer": "Most images are processed within 1-3 seconds. High-resolution images may take slightly longer."
+      },
+      "size": {
+        "question": "Is there a file size limit?",
+        "answer": "Currently supports image files up to 10MB. For larger files, please contact our enterprise support."
+      },
+      "privacy": {
+        "question": "How is image privacy protected?",
+        "answer": "All images use end-to-end encryption and are automatically deleted within 24 hours after processing. We never retain user data."
+      },
+      "api": {
+        "question": "Do you provide API access?",
+        "answer": "Yes, we provide RESTful API interfaces for developers to integrate. Please check our API documentation for details."
+      }
+    },
+    "account": {
+      "title": "Account Management",
+      "create": {
+        "question": "How to create an account?",
+        "answer": "Click the register button and quickly create an account using email or social accounts."
+      },
+      "login": {
+        "question": "What if I forget my password?",
+        "answer": "Click 'Forgot Password' on the login page and follow the email instructions to reset your password."
+      },
+      "reset": {
+        "question": "How to modify account information?",
+        "answer": "After logging in, go to your profile and modify your personal information in the settings page."
+      },
+      "delete": {
+        "question": "How to delete my account?",
+        "answer": "To delete your account, please contact customer service. All data will be unrecoverable after deletion."
+      }
+    },
+    "contact": {
+      "title": "Can't Find an Answer?",
+      "description": "If your question isn't answered here, please contact our support team",
+      "button": "Contact Support",
+      "help": "View Help Center"
+    }
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "We value your privacy and are committed to protecting your personal information",
+    "lastUpdated": "Last Updated",
+    "date": "January 1, 2024",
+    "introduction": "This privacy policy explains how we collect, use, and protect the information you provide when using our services. By using our services, you agree to the practices described in this policy.",
+    "collection": {
+      "title": "Information Collection",
+      "content": "We collect information you actively provide, including: Basic information when registering an account (email, username); Image files you upload (for processing purposes only); Service usage records and preference settings.\n\nWe also automatically collect technical information such as: Device information and browser type; IP address and access time; Usage patterns and performance data."
+    },
+    "usage": {
+      "title": "Information Usage",
+      "content": "We use collected information to: Provide and improve our AI image processing services; Maintain account security and prevent fraud; Send important service notifications and updates; Analyze usage patterns to optimize user experience.\n\nWe do not use your personal information for unauthorized marketing purposes."
+    },
+    "sharing": {
+      "title": "Information Sharing",
+      "content": "We do not sell, trade, or transfer your personal information to third parties, except when: We have your explicit consent; Required by law or to cooperate with law enforcement; To protect our rights, property, or safety; Working with trusted service providers (all bound by strict confidentiality agreements)."
+    },
+    "storage": {
+      "title": "Data Storage",
+      "content": "Your personal information is stored on secure servers, protected by industry-standard encryption technology. Uploaded images are only temporarily stored during processing and automatically deleted within 24 hours after completion.\n\nWe regularly backup data to prevent accidental loss and employ multiple security measures to protect data centers."
+    },
+    "security": {
+      "title": "Security Measures",
+      "content": "We implement multi-layer security protection: SSL/TLS encrypted transmission; Regular security audits and vulnerability scanning; Access control and staff training; Intrusion detection and protection systems.\n\nDespite our reasonable security measures, please note that internet transmission is not 100% secure."
+    },
+    "rights": {
+      "title": "Your Rights",
+      "content": "You have the right to: Access and view your personal information we hold; Request correction of inaccurate or incomplete information; Request deletion of your personal data; Withdraw previously given consent; Complain about our data processing practices.\n\nTo exercise these rights, please contact us using the information below."
+    },
+    "cookies": {
+      "title": "Cookie Usage",
+      "content": "We use cookies to: Maintain your login status; Remember your preference settings; Analyze website usage; Provide personalized experience.\n\nYou can control cookie usage through browser settings, but disabling certain cookies may affect website functionality."
+    },
+    "changes": {
+      "title": "Policy Changes",
+      "content": "We may update this privacy policy from time to time. Major changes will be notified via email or website notification. We recommend reviewing this page regularly for the latest information.\n\nContinued use of our services indicates acceptance of the updated policy."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "If you have any questions about this privacy policy or need to exercise your rights, please contact us:",
+      "email": "Privacy Email",
+      "address": "Contact Address",
+      "addressText": "XXX Building, XXX Room, Chaoyang District, Beijing"
+    }
+  },
+  "Terms": {
+    "title": "Terms of Service",
+    "subtitle": "Please read the following terms carefully before using our services",
+    "lastUpdated": "Last Updated",
+    "date": "January 1, 2024",
+    "introduction": "Welcome to our AI image processing service. The following terms and conditions constitute a legal agreement between you and us. By using our services, you agree to be bound by these terms.",
+    "acceptance": {
+      "title": "Terms Acceptance",
+      "content": "By accessing or using our services, you confirm that you have read, understood, and agree to be bound by these terms of service. If you do not agree to these terms, please do not use our services.\n\nThese terms apply to all users, including free and paid users."
+    },
+    "description": {
+      "title": "Service Description",
+      "content": "We provide artificial intelligence-based image processing services, including but not limited to image denoising, super resolution, and other features. Services are provided through website and API interfaces.\n\nWe reserve the right to modify, suspend, or terminate any service features at any time, but will notify users in advance."
+    },
+    "account": {
+      "title": "Account Responsibility",
+      "content": "You are responsible for protecting the security of your account information and password. You are responsible for all activities conducted through your account.\n\nPlease immediately notify us of any unauthorized use of your account. We are not responsible for losses caused by your failure to protect account information."
+    },
+    "usage": {
+      "title": "Usage Rules",
+      "content": "You agree not to use the service for: Illegal purposes or violating local laws; Uploading malware or harmful content; Infringing on others' intellectual property; Interfering with or disrupting normal service operation; Reverse engineering or attempting to obtain source code.\n\nViolating these rules may result in account suspension or termination."
+    },
+    "payment": {
+      "title": "Payment Terms",
+      "content": "Paid services require pre-purchasing credits. All prices are in RMB and include taxes.\n\nRefund policy: Unused credits can be refunded within 30 days of purchase. Used credits are non-refundable. We reserve the right to refuse refund requests."
+    },
+    "content": {
+      "title": "Content and Intellectual Property",
+      "content": "Content you upload remains yours. However, you grant us the license to use, store, and process this content to provide services.\n\nOur services, software, and content are protected by intellectual property laws. You may not copy, modify, or distribute our content without permission."
+    },
+    "termination": {
+      "title": "Service Termination",
+      "content": "You may stop using our services at any time. We may also suspend or terminate your account for violating terms or other reasons.\n\nAfter termination, you will lose access to your account and data. We may delete your data after a reasonable period."
+    },
+    "liability": {
+      "title": "Liability Limitation",
+      "content": "To the maximum extent permitted by law, we are not liable for any indirect, incidental, or consequential damages arising from the use or inability to use the service.\n\nOur total liability does not exceed the fees you paid to us in the past 12 months."
+    },
+    "changes": {
+      "title": "Terms Changes",
+      "content": "We may update these terms. Major changes will be notified 30 days in advance.\n\nContinued use of the service indicates acceptance of the modified terms. If you disagree with the changes, please stop using the service."
+    },
+    "governing": {
+      "title": "Governing Law",
+      "content": "These terms are governed by the laws of the People's Republic of China. Any disputes will be resolved through friendly negotiation, and if negotiation fails, submitted to Beijing Arbitration Commission for arbitration."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "If you have any questions about these terms, please contact us:",
+      "email": "Legal Email",
+      "address": "Contact Address",
+      "addressText": "XXX Building, XXX Room, Chaoyang District, Beijing"
+    }
+  },
+  "Examples": {
+    "title": "Effect Showcase",
+    "subtitle": "See the real processing effects of our AI technology",
+    "stats": {
+      "processed": "Images Processed",
+      "avgTime": "Average Processing Time",
+      "avgImprovement": "Average Quality Improvement"
+    },
+    "categories": {
+      "portrait": "Portrait Photos",
+      "landscape": "Landscape Photos",
+      "indoor": "Indoor Scenes",
+      "old": "Old Photos",
+      "document": "Document Scans",
+      "product": "Product Images"
+    },
+    "examples": {
+      "portrait": {
+        "title": "Portrait Denoising",
+        "description": "Remove skin noise while preserving natural details"
+      },
+      "landscape": {
+        "title": "Landscape Optimization",
+        "description": "Clean sky noise and enhance detail layers"
+      },
+      "indoor": {
+        "title": "Low-light Indoor Denoising",
+        "description": "Improve image quality in dim environments"
+      },
+      "old": {
+        "title": "Old Photo Restoration",
+        "description": "Remove grain and noise from aged photographs"
+      },
+      "document": {
+        "title": "Document Cleaning",
+        "description": "Clean noise and stains from scanned documents"
+      },
+      "product": {
+        "title": "Product Image Optimization",
+        "description": "Enhance professional quality of product images"
+      }
+    },
+    "comparison": {
+      "before": "Before",
+      "after": "After",
+      "beforeAlt": "Image before processing",
+      "afterAlt": "Image after processing",
+      "dragToCompare": "Drag to Compare"
+    },
+    "actions": {
+      "view": "View Details",
+      "download": "Download Image"
+    },
+    "details": {
+      "credits": "Credits Used",
+      "processTime": "Process Time",
+      "date": "Process Date"
+    },
+    "cta": {
+      "title": "Ready to Experience AI Image Processing?",
+      "description": "Start now and transform your images",
+      "try": "Try for Free",
+      "pricing": "View Pricing"
+    }
   }
 }

@@ -111,12 +111,7 @@ export function PricingPageClient() {
   };
 
   return (
-    <div
-      className={`
-        min-h-screen bg-gradient-to-br from-background via-background
-        to-primary/5
-      `}
-    >
+    <div className={`min-h-screen bg-black`}>
       <div className="container mx-auto px-4 py-16">
         {/* Page title */}
         <div className="mb-20 text-center">
@@ -127,13 +122,11 @@ export function PricingPageClient() {
           >
             <h1
               className={`
-                mb-6 bg-gradient-to-r from-foreground via-foreground
-                to-primary/80 bg-clip-text text-4xl font-bold tracking-tight
-                text-transparent
+                mb-6 text-4xl font-bold tracking-tight text-white
                 md:text-6xl
               `}
             >
-              {t("page.title")}
+              {t("title")}
             </h1>
             <div
               className={`
@@ -144,13 +137,13 @@ export function PricingPageClient() {
           </div>
           <p
             className={`
-              mx-auto max-w-3xl text-xl text-muted-foreground duration-700
-              animate-in fade-in-0 slide-in-from-bottom-4
+              mx-auto max-w-3xl text-xl text-gray-400 duration-700 animate-in
+              fade-in-0 slide-in-from-bottom-4
               [animation-delay:200ms]
               [animation-fill-mode:both]
             `}
           >
-            {t("page.subtitle")}
+            {t("subtitle")}
           </p>
         </div>
 

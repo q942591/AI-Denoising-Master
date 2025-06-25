@@ -1,0 +1,30 @@
+{
+  "name": "Relivator - AI图像处理平台",
+  "short_name": "Relivator",
+  "description": "专业的AI图像处理和去噪平台，提供高质量的图像增强服务",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#3b82f6",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "categories": ["photo", "graphics", "utilities"],
+  "lang": "zh-CN"
+}

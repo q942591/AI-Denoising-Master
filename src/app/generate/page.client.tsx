@@ -1,16 +1,18 @@
 "use client";
 
 import {
+  Calendar,
   CheckCircle,
   Clock,
   Download,
+  ImageIcon,
   Sparkles,
   Upload,
   XCircle,
   Zap,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { cn } from "~/lib/cn";
 import { Badge } from "~/ui/primitives/badge";
@@ -27,6 +29,17 @@ interface DenoiseResult {
   taskId: string;
 }
 
+interface GenerationRecord {
+  completedAt: Date | null;
+  createdAt: Date;
+  creditConsumed: number;
+  id: string;
+  inputUrl: string;
+  outputUrl: null | string;
+  status: string;
+  type: string;
+}
+
 export default function ImageDenoisePageClient() {
   const t = useTranslations("ImageDenoise");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -35,6 +48,10 @@ export default function ImageDenoisePageClient() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<DenoiseResult | null>(null);
   const [error, setError] = useState<null | string>(null);
+  const [generationRecords, setGenerationRecords] = useState<
+    GenerationRecord[]
+  >([]);
+  const [isLoadingRecords, setIsLoadingRecords] = useState(true);
 
   // file selection handler
   const handleFileSelect = useCallback(
@@ -222,6 +239,44 @@ export default function ImageDenoisePageClient() {
       document.body.removeChild(link);
     }
   };
+
+  // fetch user generation records
+  useEffect(() => {
+    const fetchGenerationRecords = async () => {
+      try {
+        setIsLoadingRecords(true);
+        const response = await fetch("/api/generations");
+        if (response.ok) {
+          const records = (await response.json()) as GenerationRecord[];
+          setGenerationRecords(records);
+        }
+      } catch (error) {
+        console.error("Failed to fetch generation records:", error);
+      } finally {
+        setIsLoadingRecords(false);
+      }
+    };
+
+    fetchGenerationRecords();
+  }, []); // only fetch once on mount
+
+  // refetch records when a new result is completed
+  useEffect(() => {
+    if (result?.status === "completed") {
+      const refetchRecords = async () => {
+        try {
+          const response = await fetch("/api/generations");
+          if (response.ok) {
+            const records = (await response.json()) as GenerationRecord[];
+            setGenerationRecords(records);
+          }
+        } catch (error) {
+          console.error("Failed to refetch generation records:", error);
+        }
+      };
+      refetchRecords();
+    }
+  }, [result?.status]);
 
   return (
     <div className="container mx-auto max-w-6xl px-4 py-8">
@@ -643,6 +698,115 @@ export default function ImageDenoisePageClient() {
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Generation Gallery */}
+      <Card className="mt-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <ImageIcon className="h-5 w-5" />
+            Your Generated Images
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isLoadingRecords ? (
+            <div
+              className={`
+                grid gap-4
+                md:grid-cols-2
+                lg:grid-cols-3
+              `}
+            >
+              {[...Array(6)].map((_, i) => (
+                <div className="space-y-2" key={i}>
+                  <Skeleton className="aspect-square w-full rounded-lg" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-3 w-2/3" />
+                </div>
+              ))}
+            </div>
+          ) : generationRecords.length > 0 ? (
+            <div
+              className={`
+                grid gap-4
+                md:grid-cols-2
+                lg:grid-cols-3
+              `}
+            >
+              {generationRecords.map((record) => (
+                <div className="group relative" key={record.id}>
+                  <div
+                    className={`
+                      aspect-square overflow-hidden rounded-lg bg-muted
+                    `}
+                  >
+                    <Image
+                      alt="Generated image"
+                      className={`
+                        h-full w-full object-cover transition-transform
+                        group-hover:scale-105
+                      `}
+                      height={300}
+                      src={record.outputUrl || record.inputUrl}
+                      width={300}
+                    />
+                  </div>
+                  <div className="mt-2 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <Badge variant="secondary">
+                        {record.type === "super_resolution"
+                          ? "Super Resolution"
+                          : "Denoising"}
+                      </Badge>
+                      <div
+                        className={`
+                          flex items-center gap-1 text-xs text-muted-foreground
+                        `}
+                      >
+                        <Calendar className="h-3 w-3" />
+                        {new Date(record.createdAt).toLocaleDateString()}
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Credits used: {record.creditConsumed}
+                    </p>
+                  </div>
+                  {record.outputUrl && (
+                    <Button
+                      className={`
+                        absolute top-2 right-2 opacity-0 transition-opacity
+                        group-hover:opacity-100
+                      `}
+                      onClick={() => {
+                        if (typeof window !== "undefined") {
+                          const link = document.createElement("a");
+                          link.href = record.outputUrl!;
+                          link.download = `generated_${record.id}.jpg`;
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                        }
+                      }}
+                      size="sm"
+                      variant="secondary"
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="py-8 text-center">
+              <ImageIcon
+                className={`mx-auto mb-4 h-12 w-12 text-muted-foreground`}
+              />
+              <p className="text-muted-foreground">
+                No generated images yet. Start by uploading an image above!
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
