@@ -1,8 +1,7 @@
-# 🎨 Relivator - AI图像处理平台
+# 🎨  AI图像处理平台
 
-[演示](http://localhost:3002) — [GitHub](https://github.com/blefnk/relivator) — [文档](https://deepwiki.com/blefnk/relivator-nextjs-template)
 
-> **Relivator** 是一个先进的AI图像处理平台，专注于图像去噪、增强和修复。基于Next.js构建，提供专业级的图像处理服务。
+> **AI-Denoising-Master** 是一个先进的AI图像处理平台，专注于图像去噪、增强和修复。基于Next.js构建，提供专业级的图像处理服务。
 
 ## ✨ 核心功能
 
@@ -74,7 +73,7 @@
 1. **克隆项目**
 
    ```bash
-   git clone https://github.com/blefnk/relivator.git
+   git clone https://github.com/blefnk/relivator.git](https://github.com/q942591/AI-Denoising-Master
    cd relivator
    ```
 
@@ -273,37 +272,6 @@ messages/
 1. 构建项目：`bun build`
 2. 启动服务：`bun start`
 3. 配置反向代理（Nginx等）
-
-## 🤝 贡献指南
-
-欢迎贡献代码！请遵循以下步骤：
-
-1. Fork项目
-2. 创建功能分支：`git checkout -b feature/AmazingFeature`
-3. 提交更改：`git commit -m 'Add some AmazingFeature'`
-4. 推送到分支：`git push origin feature/AmazingFeature`
-5. 打开Pull Request
-
-## 📄 许可证
-
-MIT © 2025 [Nazar Kornienko (blefnk)](https://github.com/blefnk), [Reliverse](https://github.com/reliverse)
-
-## 🌟 支持项目
-
-如果这个项目对你有帮助，请考虑：
-
-- ⭐ [给项目加星](https://github.com/blefnk/relivator)
-- 🐛 [报告问题](https://github.com/blefnk/relivator/issues)
-- 💡 [提出建议](https://github.com/blefnk/relivator/discussions)
-- 🦄 [赞助开发](https://github.com/sponsors/blefnk)
-
-## 🔗 相关链接
-
-- [Reliverse生态系统](https://github.com/reliverse)
-- [Versator项目](https://github.com/blefnk/versator)
-- [项目文档](https://docs.reliverse.org)
-- [社区Discord](https://discord.gg/Pb8uKbwpsJ)
-
 ---
 
 <div align="center">
