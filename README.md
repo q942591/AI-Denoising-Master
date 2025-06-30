@@ -73,7 +73,7 @@
 1. **克隆项目**
 
    ```bash
-   git clone https://github.com/blefnk/relivator.git](https://github.com/q942591/AI-Denoising-Master
+   git clone https://github.com/q942591/AI-Denoising-Master
    cd relivator
    ```
 
